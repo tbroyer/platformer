@@ -2,6 +2,9 @@ import js from "@eslint/js";
 import globals from "globals";
 
 export default [
+  {
+    ignores: ["packages/harness/gecko.js", "packages/harness/wpt.js"],
+  },
   js.configs.recommended,
   {
     languageOptions: {
