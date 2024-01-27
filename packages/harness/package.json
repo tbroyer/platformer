@@ -1,0 +1,8 @@
+{
+  "name": "@ce-reflection-tests/harness",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "chai": "^5.0.3"
+  }
+}
