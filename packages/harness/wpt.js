@@ -170,11 +170,6 @@ const typeMap = {
      * "If a reflecting IDL attribute is a DOMString but doesn't fall into any
      * of the above categories, then the getting and setting must be done in a
      * transparent, case-preserving manner."
-     *
-     * The data object passed to reflects() can contain an optional key
-     * treatNullAsEmptyString, whose value is ignored.  If it does contain the
-     * key, null will be cast to "" instead of "null", per WebIDL
-     * [TreatNullAs=EmptyString].
      */
     "string": {
         "jsType": "string",
@@ -798,16 +793,6 @@ export function reflects(data, idlName, idlObj, domName, domObj) {
                 idlIdlExpected.push(null);
             } else {
                 idlIdlExpected.push(enumExpected(data.keywords, data.nonCanon, data.invalidVal, idlTests[i]));
-            }
-        }
-        break;
-
-        case "string":
-        if ("treatNullAsEmptyString" in data) {
-            for (let i = 0; i < idlTests.length; i++) {
-                if (idlTests[i] === null) {
-                    idlDomExpected[i] = idlIdlExpected[i] = "";
-                }
             }
         }
         break;
