@@ -1,0 +1,8 @@
+{
+  "name": "@ce-reflection-tests/vanilla",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "wtr index.js"
+  }
+}
