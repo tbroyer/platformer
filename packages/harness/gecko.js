@@ -42,7 +42,6 @@ function todo_is(a, b, name) {
  * @param {Element} aParameters.element         node to test
  * @param {AttributeName} aParameters.attribute name of the attribute
  * @param {string[]=} otherValues               [optional] other values to test in addition of the default ones
- * @param {{TreatNullAs?:"EmptyString"}=} extendedAttributes    object which can have 'TreatNullAs': "EmptyString"
  */
 export function reflectString(aParameters) {
   var element = aParameters.element;
@@ -56,9 +55,6 @@ export function reflectString(aParameters) {
       : aParameters.attribute.idl;
   var otherValues =
     aParameters.otherValues !== undefined ? aParameters.otherValues : [];
-  var treatNullAs = aParameters.extendedAttributes
-    ? aParameters.extendedAttributes.TreatNullAs
-    : null;
 
   ok(
     idlAttr in element,
@@ -100,29 +96,16 @@ export function reflectString(aParameters) {
   element.removeAttribute(contentAttr);
 
   element[idlAttr] = null;
-  if (treatNullAs == "EmptyString") {
-    is(
-      element.getAttribute(contentAttr),
-      "",
-      "null should have been stringified to '' for '" + contentAttr + "'"
-    );
-    is(
-      element[idlAttr],
-      "",
-      "null should have been stringified to '' for '" + idlAttr + "'"
-    );
-  } else {
-    is(
-      element.getAttribute(contentAttr),
-      "null",
-      "null should have been stringified to 'null' for '" + contentAttr + "'"
-    );
-    is(
-      element[idlAttr],
-      "null",
-      "null should have been stringified to 'null' for '" + contentAttr + "'"
-    );
-  }
+  is(
+    element.getAttribute(contentAttr),
+    "null",
+    "null should have been stringified to 'null' for '" + contentAttr + "'"
+  );
+  is(
+    element[idlAttr],
+    "null",
+    "null should have been stringified to 'null' for '" + contentAttr + "'"
+  );
   element.removeAttribute(contentAttr);
 
   // Tests various strings.
