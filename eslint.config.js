@@ -3,7 +3,7 @@ import globals from "globals";
 
 export default [
   {
-    ignores: ["packages/harness/gecko.js", "packages/harness/wpt.js"],
+    ignores: ["packages/harness/wpt.js"],
   },
   js.configs.recommended,
   {

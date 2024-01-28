@@ -1,3 +1,24 @@
+import { assert } from "chai";
+
+/**
+ * @typedef {string | { content: string, idl: string }} AttributeName
+ */
+
+
+// Inspired by https://github.com/mozilla/gecko-dev/blob/b75080bb8b11844d18cb5f9ac6e68a866ef8e243/testing/mochitest/tests/SimpleTest/SimpleTest.js
+
+function ok(condition, name) {
+  assert(condition, name);
+}
+function is(a, b, name) {
+  assert(Object.is(a, b), name);
+}
+function todo_is(a, b, name) {
+  // TODO: I have no idea what todo_is is supposed to do!
+  is(a, b, name);
+}
+
+
 // Copied from https://github.com/mozilla/gecko-dev/blob/b75080bb8b11844d18cb5f9ac6e68a866ef8e243/dom/html/test/reflect.js
 
 /* Any copyright is dedicated to the Public Domain.
@@ -17,15 +38,13 @@
 /**
  * Checks that a given attribute is correctly reflected as a string.
  *
- * @param aParameters   Object    object containing the parameters, which are:
- *  - element           Element   node to test
- *  - attribute         String    name of the attribute
- *     OR
- *    attribute         Object    object containing two attributes, 'content' and 'idl'
- *  - otherValues       Array     [optional] other values to test in addition of the default ones
- *  - extendedAttributes Object   object which can have 'TreatNullAs': "EmptyString"
+ * @param {object} aParameters                  object containing the parameters, which are:
+ * @param {Element} aParameters.element         node to test
+ * @param {AttributeName} aParameters.attribute name of the attribute
+ * @param {string[]=} otherValues               [optional] other values to test in addition of the default ones
+ * @param {{TreatNullAs?:"EmptyString"}=} extendedAttributes    object which can have 'TreatNullAs': "EmptyString"
  */
-function reflectString(aParameters) {
+export function reflectString(aParameters) {
   var element = aParameters.element;
   var contentAttr =
     typeof aParameters.attribute === "string"
@@ -217,13 +236,14 @@ function reflectString(aParameters) {
  * Checks that a given attribute name for a given element is correctly reflected
  * as an unsigned int.
  *
- * @param aParameters   Object    object containing the parameters, which are:
- *  - element           Element   node to test on
- *  - attribute         String    name of the attribute
- *  - nonZero           Boolean   whether the attribute should be non-null
- *  - defaultValue      Integer   [optional] default value, if different from the default one
+ * @param {object} aParameters                  object containing the parameters, which are:
+ * @param {Element} aParameters.element         node to test on
+ * @param {string} aParameters.attribute        name of the attribute
+ * @param {boolean} aParameters.nonZero         whether the attribute should be non-null
+ * @param {number=} aParameters.defaultValue    [optional] default value, if different from the default one
+ * @param {boolean=} aParameters.fallback
  */
-function reflectUnsignedInt(aParameters) {
+export function reflectUnsignedInt(aParameters) {
   var element = aParameters.element;
   var attr = aParameters.attribute;
   var nonZero = aParameters.nonZero;
@@ -299,7 +319,7 @@ function reflectUnsignedInt(aParameters) {
   // 2^31 and 2^32 - 1, so per spec they return the default value.
   var nonValidValues = [-2147483648, -1, 3147483647];
 
-  for (var value of nonValidValues) {
+  for (let value of nonValidValues) {
     element[attr] = value;
     is(
       element.getAttribute(attr),
@@ -313,7 +333,7 @@ function reflectUnsignedInt(aParameters) {
     );
   }
 
-  for (var values of nonValidValues) {
+  for (let values of nonValidValues) {
     element.setAttribute(attr, values[0]);
     is(
       element.getAttribute(attr),
@@ -365,20 +385,16 @@ function reflectUnsignedInt(aParameters) {
  * Checks that a given attribute is correctly reflected as limited to known
  * values enumerated attribute.
  *
- * @param aParameters     Object   object containing the parameters, which are:
- *  - element             Element  node to test on
- *  - attribute           String   name of the attribute
- *     OR
- *    attribute           Object   object containing two attributes, 'content' and 'idl'
- *  - validValues         Array    valid values we support
- *  - invalidValues       Array    invalid values
- *  - defaultValue        String   [optional] default value when no valid value is set
- *     OR
- *    defaultValue        Object   [optional] object containing two attributes, 'invalid' and 'missing'
- *  - unsupportedValues   Array    [optional] valid values we do not support
- *  - nullable            boolean  [optional] whether the attribute is nullable
+ * @param {object} aParameters  object containing the parameters, which are:
+ * @param {Element} aParameters.element             node to test on
+ * @param {AttributeName} aParameters.attribute     name of the attribute
+ * @param {Array} aParameters.validValues           valid values we support
+ * @param {Array} aParameters.invalidValues         invalid values
+ * @param {string | { invalid: string, missing: string } =} aParameters.defaultValue   [optional] default value when no valid value is set
+ * @param {string[]=} aParameters.unsupportedValues [optional] valid values we do not support
+ * @param {boolean=} aParameters.nullable           [optional] whether the attribute is nullable
  */
-function reflectLimitedEnumerated(aParameters) {
+export function reflectLimitedEnumerated(aParameters) {
   var element = aParameters.element;
   var contentAttr =
     typeof aParameters.attribute === "string"
@@ -615,13 +631,11 @@ function reflectLimitedEnumerated(aParameters) {
 /**
  * Checks that a given attribute is correctly reflected as a boolean.
  *
- * @param aParameters    Object    object containing the parameters, which are:
- *  - element            Element   node to test on
- *  - attribute          String    name of the attribute
- *     OR
- *    attribute          Object    object containing two attributes, 'content' and 'idl'
+ * @param {object} aParameters                  object containing the parameters, which are:
+ * @param {Element} aParameters.element         node to test on
+ * @param {AttributeName} aParameters.attribute name of the attribute
  */
-function reflectBoolean(aParameters) {
+export function reflectBoolean(aParameters) {
   var element = aParameters.element;
   var contentAttr =
     typeof aParameters.attribute === "string"
@@ -788,13 +802,13 @@ function reflectBoolean(aParameters) {
  * Checks that a given attribute name for a given element is correctly reflected
  * as an signed integer.
  *
- * @param aParameters   Object    object containing the parameters, which are:
- *  - element           Element   node to test on
- *  - attribute         String    name of the attribute
- *  - nonNegative       Boolean   true if the attribute is limited to 'non-negative numbers', false otherwise
- *  - defaultValue      Integer   [optional] default value, if one exists
+ * @param {object} aParameters                  object containing the parameters, which are:
+ * @param {Element} aParameters.element         node to test on
+ * @param {string} aParameters.attribute        name of the attribute
+ * @param {boolean} aParameters.nonNegative     true if the attribute is limited to 'non-negative numbers', false otherwise
+ * @param {number=} aParameters.defaultValue    [optional] default value, if one exists
  */
-function reflectInt(aParameters) {
+export function reflectInt(aParameters) {
   // Expected value returned by .getAttribute() when |value| has been previously passed to .setAttribute().
   function expectedGetAttributeResult(value) {
     return String(value);
@@ -802,7 +816,7 @@ function reflectInt(aParameters) {
 
   function stringToInteger(value, nonNegative, defaultValue) {
     // Parse: Ignore leading whitespace, find [+/-][numbers]
-    var result = /^[ \t\n\f\r]*([\+\-]?[0-9]+)/.exec(value);
+    var result = /^[ \t\n\f\r]*([+-]?[0-9]+)/.exec(value);
     if (result) {
       var resultInt = parseInt(result[1], 10);
       if (
@@ -1054,14 +1068,13 @@ function reflectInt(aParameters) {
 /**
  * Checks that a given attribute is correctly reflected as a url.
  *
- * @param aParameters   Object    object containing the parameters, which are:
- *  - element           Element   node to test
- *  - attribute         String    name of the attribute
- *     OR
- *    attribute         Object    object containing two attributes, 'content' and 'idl'
+ * @param {object} aParameters                  object containing the parameters, which are:
+ * @param {Element} aParameters.element         node to test
+ * @param {AttributeName} aParameters.attribute name of the attribute
  */
-function reflectURL(aParameters) {
+export function reflectURL(aParameters) {
   var element = aParameters.element;
+  // eslint-disable-next-line no-unused-vars
   var contentAttr =
     typeof aParameters.attribute === "string"
       ? aParameters.attribute
