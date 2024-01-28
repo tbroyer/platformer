@@ -13,10 +13,6 @@ function ok(condition, name) {
 function is(a, b, name) {
   assert(Object.is(a, b), name);
 }
-function todo_is(a, b, name) {
-  // TODO: I have no idea what todo_is is supposed to do!
-  is(a, b, name);
-}
 
 
 // Copied from https://github.com/mozilla/gecko-dev/blob/b75080bb8b11844d18cb5f9ac6e68a866ef8e243/dom/html/test/reflect.js
@@ -374,7 +370,6 @@ export function reflectUnsignedInt(aParameters) {
  * @param {Array} aParameters.validValues           valid values we support
  * @param {Array} aParameters.invalidValues         invalid values
  * @param {string | { invalid: string, missing: string } =} aParameters.defaultValue   [optional] default value when no valid value is set
- * @param {string[]=} aParameters.unsupportedValues [optional] valid values we do not support
  * @param {boolean=} aParameters.nullable           [optional] whether the attribute is nullable
  */
 export function reflectLimitedEnumerated(aParameters) {
@@ -401,10 +396,6 @@ export function reflectLimitedEnumerated(aParameters) {
       : typeof aParameters.defaultValue === "string"
       ? aParameters.defaultValue
       : aParameters.defaultValue.missing;
-  var unsupportedValues =
-    aParameters.unsupportedValues !== undefined
-      ? aParameters.unsupportedValues
-      : [];
   var nullable = aParameters.nullable;
 
   ok(
@@ -531,62 +522,6 @@ export function reflectLimitedEnumerated(aParameters) {
       element.getAttribute(contentAttr),
       v,
       "Content attribute should not have been changed."
-    );
-    element.removeAttribute(contentAttr);
-  });
-
-  // Check valid values we currently do not support.
-  // Basically, it's like the checks for the valid values but with some todo's.
-  unsupportedValues.forEach(function (v) {
-    element.setAttribute(contentAttr, v);
-    todo_is(
-      element[idlAttr],
-      v,
-      "'" + v + "' should be accepted as a valid value for " + idlAttr
-    );
-    is(
-      element.getAttribute(contentAttr),
-      v,
-      "Content attribute should return the value it has been set to."
-    );
-    element.removeAttribute(contentAttr);
-
-    element.setAttribute(contentAttr, v.toUpperCase());
-    todo_is(
-      element[idlAttr],
-      v,
-      "Enumerated attributes should be case-insensitive."
-    );
-    is(
-      element.getAttribute(contentAttr),
-      v.toUpperCase(),
-      "Content attribute should not be lower-cased."
-    );
-    element.removeAttribute(contentAttr);
-
-    element[idlAttr] = v;
-    todo_is(
-      element[idlAttr],
-      v,
-      "'" + v + "' should be accepted as a valid value for " + idlAttr
-    );
-    is(
-      element.getAttribute(contentAttr),
-      v,
-      "Content attribute should return the value it has been set to."
-    );
-    element.removeAttribute(contentAttr);
-
-    element[idlAttr] = v.toUpperCase();
-    todo_is(
-      element[idlAttr],
-      v,
-      "Enumerated attributes should be case-insensitive."
-    );
-    is(
-      element.getAttribute(contentAttr),
-      v.toUpperCase(),
-      "Content attribute should not be lower-cased."
     );
     element.removeAttribute(contentAttr);
   });
