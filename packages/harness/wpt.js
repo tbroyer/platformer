@@ -845,32 +845,6 @@ export function reflects(data, idlName, idlObj, domName, domObj) {
         });
         break;
     }
-    if (domObj.tagName.toLowerCase() == "canvas" && (domName == "width" || domName == "height")) {
-        // Opera tries to allocate a canvas with the given width and height, so
-        // it OOMs when given excessive sizes.  This is permissible under the
-        // hardware-limitations clause, so cut out those checks.  TODO: Must be
-        // a way to make this more succinct.
-        domTests = domTests.filter(function(_, index) { return domExpected[index] < 1000; });
-        domExpected = domExpected.filter(function(element) { return element < 1000; });
-        idlTests = idlTests.filter(function(_, index) { return idlIdlExpected[index] < 1000; });
-        idlDomExpected = idlDomExpected.filter(function(_, index) { return idlIdlExpected[index] < 1000; });
-        idlIdlExpected = idlIdlExpected.filter(function(_, index) { return idlIdlExpected[index] < 1000; });
-    }
-    if ((domObj.localName === "form" && domName === "action") ||
-        (["button", "input"].includes(domObj.localName) &&
-         domName === "formAction")) {
-        // Hard-coded special case
-        for (let i = 0; i < domTests.length; i++) {
-            if (domTests[i] === "") {
-                domExpected[i] = domObj.ownerDocument.URL;
-            }
-        }
-        for (let i = 0; i < idlTests.length; i++) {
-            if (idlTests[i] === "") {
-                idlIdlExpected[i] = domObj.ownerDocument.URL;
-            }
-        }
-    }
     if (data.customGetter) {
         // These are reflected only on setting, not getting
         domTests = [];
