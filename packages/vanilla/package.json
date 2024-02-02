@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "wtr index.js"
+    "test": "wtr index.js cached.js"
   }
 }
