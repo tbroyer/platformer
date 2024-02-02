@@ -48,6 +48,17 @@ function stringToInteger(value, nonNegative, defaultValue) {
   return defaultValue;
 }
 
+function stringToDouble(value, onlyPositive, defaultValue) {
+  let result = /^[ \t\n\f\r]*([0-9.eE+-]+)/.exec(value);
+  if (result) {
+    let resultFloat = parseFloat(result[1]);
+    if (!Number.isNaN(resultFloat) && (!onlyPositive || resultFloat > 0)) {
+      return resultFloat;
+    }
+  }
+  return defaultValue;
+}
+
 customElements.define(
   "test-long",
   class extends HTMLElement {
@@ -149,6 +160,32 @@ customElements.define(
     }
   },
 );
-// TODO: double
+customElements.define(
+  "test-double",
+  class extends HTMLElement {
+    get test() {
+      return stringToDouble(this.getAttribute("test") ?? "", false, 0.0);
+    }
+    set test(value) {
+      value = webidl["double"](value);
+      this.setAttribute("test", value);
+    }
+  },
+);
+customElements.define(
+  "test-limited-double",
+  class extends HTMLElement {
+    get test() {
+      return stringToDouble(this.getAttribute("test") ?? "", true, 1.0);
+    }
+    set test(value) {
+      value = webidl["double"](value);
+      if (value <= 0) {
+        return;
+      }
+      this.setAttribute("test", value);
+    }
+  },
+);
 
 runTests();

@@ -113,4 +113,18 @@ export function runTests() {
       );
     });
   });
+  suite("double", () => {
+    test("with WPT harness", () => {
+      reflects("double", "test", "test-double");
+    });
+  });
+  suite("limited double", () => {
+    test("with WPT harness", () => {
+      reflects(
+        { type: "limited double", defaultVal: 1.0 },
+        "test",
+        "test-limited-double",
+      );
+    });
+  });
 }
