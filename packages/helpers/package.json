@@ -1,0 +1,9 @@
+{
+  "name": "@ce-reflection-tests/helpers",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  }
+}

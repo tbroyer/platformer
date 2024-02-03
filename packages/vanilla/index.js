@@ -1,4 +1,5 @@
 import { runTests } from "@ce-reflection-tests/harness";
+import { stringToInteger, stringToDouble } from "@ce-reflection-tests/helpers";
 import webidl from "webidl-conversions";
 
 customElements.define(
@@ -49,36 +50,6 @@ customElements.define(
     }
   },
 );
-
-// Copied from Gecko's reflectInt
-function stringToInteger(value, nonNegative, defaultValue) {
-  // Parse: Ignore leading whitespace, find [+/-][numbers]
-  var result = /^[ \t\n\f\r]*([+-]?[0-9]+)/.exec(value);
-  if (result) {
-    var resultInt = parseInt(result[1], 10);
-    if (
-      (nonNegative ? 0 : -0x80000000) <= resultInt &&
-      resultInt <= 0x7fffffff
-    ) {
-      // If the value is within allowed value range for signed/unsigned
-      // integer, return it -- but add 0 to it to convert a possible -0 into
-      // +0, the only zero present in the signed integer range.
-      return resultInt + 0;
-    }
-  }
-  return defaultValue;
-}
-
-function stringToDouble(value, onlyPositive, defaultValue) {
-  let result = /^[ \t\n\f\r]*([0-9.eE+-]+)/.exec(value);
-  if (result) {
-    let resultFloat = parseFloat(result[1]);
-    if (!Number.isNaN(resultFloat) && (!onlyPositive || resultFloat > 0)) {
-      return resultFloat;
-    }
-  }
-  return defaultValue;
-}
 
 customElements.define(
   "test-long",
