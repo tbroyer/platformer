@@ -1,2 +1,3 @@
 packages/harness/gecko.js
 packages/harness/wpt.js
+packages/helpers/webidl-conversions.js
