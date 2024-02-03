@@ -1,3 +1,5 @@
+export { default as webidl } from "./webidl-conversions.js";
+
 /**
  * Implement the [rules for parsing integers](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-integers)
  * and part of the getter [steps for reflecting integer properties](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-long)

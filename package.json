@@ -14,10 +14,6 @@
     "prettier": "^3.2.4"
   },
   "dependencies": {
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@web/dev-server-rollup": "^0.6.1",
-    "@web/test-runner": "^0.18.0",
-    "webidl-conversions": "^7.0.0"
+    "@web/test-runner": "^0.18.0"
   }
 }

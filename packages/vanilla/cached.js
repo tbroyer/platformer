@@ -1,6 +1,9 @@
 import { runTests } from "@ce-reflection-tests/harness";
-import { stringToInteger, stringToDouble } from "@ce-reflection-tests/helpers";
-import webidl from "webidl-conversions";
+import {
+  stringToInteger,
+  stringToDouble,
+  webidl,
+} from "@ce-reflection-tests/helpers";
 
 customElements.define(
   "test-string",
