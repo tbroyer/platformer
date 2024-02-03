@@ -20,7 +20,18 @@ export function runTests() {
       reflects("string", "test", "test-string");
     });
   });
-  // TODO: url, enum, nullable enum
+  suite("url", () => {
+    test("with Gecko harness", () => {
+      reflectURL({
+        element: document.createElement("test-url"),
+        attribute: "test",
+      });
+    });
+    test("with WPT harness", () => {
+      reflects("url", "test", "test-url");
+    });
+  });
+  // TODO: enum, nullable enum
   suite("boolean", () => {
     test("with Gecko harness", () => {
       reflectBoolean({

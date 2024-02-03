@@ -14,7 +14,28 @@ customElements.define(
   },
 );
 
-// TODO: URL, enum, nullable enum
+customElements.define(
+  "test-url",
+  class extends HTMLElement {
+    get test() {
+      let value = this.getAttribute("test");
+      if (value == null) {
+        return "";
+      }
+      try {
+        return new URL(value, this.ownerDocument.baseURI).toString();
+      } catch (e) {
+        return value;
+      }
+    }
+    set test(value) {
+      value = webidl["USVString"](value);
+      this.setAttribute("test", value);
+    }
+  },
+);
+
+// TODO: enum, nullable enum
 
 customElements.define(
   "test-boolean",
