@@ -1,6 +1,7 @@
-// Copied from the webid-conversions@7.0.0 NPM package
+const exports = {};
+export default exports;
 
-"use strict";
+// Copied from the webid-conversions@7.0.0 NPM package
 
 function makeException(ErrorType, message, options) {
   if (options.globals) {
