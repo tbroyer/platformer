@@ -2,6 +2,7 @@ import { runTests } from "@ce-reflection-tests/harness";
 import {
   stringToInteger,
   stringToDouble,
+  toASCIILowerCase,
   webidl,
 } from "@ce-reflection-tests/helpers";
 import { LitElement } from "lit";
@@ -48,7 +49,78 @@ customElements.define(
   },
 );
 
-// TODO: enum, nullable enum
+customElements.define(
+  "test-enum",
+  class extends LitElement {
+    static properties = {
+      [TEST]: {
+        attribute: "test",
+        converter(value) {
+          if (value == null) {
+            return "missing";
+          }
+          switch (toASCIILowerCase(value)) {
+            case "":
+            case "empty":
+              return "";
+            case "one":
+            case "un":
+              return "one";
+            case "two":
+            case "deux":
+              return "two";
+            case "three":
+            case "trois":
+              return "three";
+            case "missing":
+              return "missing";
+            default:
+              return "invalid";
+          }
+        },
+      },
+    };
+    get test() {
+      return this[TEST] ?? "missing";
+    }
+    set test(value) {
+      value = webidl["DOMString"](value);
+      this.setAttribute("test", value);
+    }
+  },
+);
+customElements.define(
+  "test-nullable-enum",
+  class extends LitElement {
+    static properties = {
+      [TEST]: {
+        attribute: "test",
+        converter(value) {
+          if (value == null) {
+            return null;
+          }
+          switch (toASCIILowerCase(value)) {
+            case "use-credentials":
+              return "use-credentials";
+            default:
+              return "anonymous";
+          }
+        },
+      },
+    };
+    get test() {
+      return this[TEST] ?? null;
+    }
+    set test(value) {
+      if (value == null) {
+        this.removeAttribute("test");
+      } else {
+        value = webidl["DOMString"](value);
+        this.setAttribute("test", value);
+      }
+    }
+  },
+);
 
 customElements.define(
   "test-boolean",

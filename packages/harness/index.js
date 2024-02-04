@@ -31,7 +31,60 @@ export function runTests() {
       reflects("url", "test", "test-url");
     });
   });
-  // TODO: enum, nullable enum
+  suite("enum", () => {
+    test("with Gecko harness", () => {
+      reflectLimitedEnumerated({
+        element: document.createElement("test-enum"),
+        attribute: "test",
+        // Gecko harness only allows testing canonical keywords.
+        validValues: ["", "one", "two", "three", "missing", "invalid"],
+        invalidValues: ["foo", "bar", "baz"],
+        defaultValue: { invalid: "invalid", missing: "missing" },
+      });
+    });
+    test("with WPT harness", () => {
+      reflects(
+        {
+          type: "enum",
+          defaultVal: "missing",
+          invalidVal: "invalid",
+          keywords: ["", "one", "two", "three", "missing", "invalid"],
+          nonCanon: { empty: "", un: "one", deux: "two", trois: "three" },
+        },
+        "test",
+        "test-enum",
+      );
+    });
+  });
+  suite("nullable enum", () => {
+    test("with Gecko harness", () => {
+      reflectLimitedEnumerated({
+        element: document.createElement("test-nullable-enum"),
+        attribute: "test",
+        // Gecko harness only accepts canonical keywords here.
+        // Non-canonical keyworks cannot be tested, unless they
+        // map to the defaultValue.invalid, which is the case here.
+        validValues: ["anonymous", "use-credentials"],
+        invalidValues: ["", "foo", "bar", "baz"],
+        defaultValue: { invalid: "anonymous", missing: null },
+        nullable: true,
+      });
+    });
+    test("with WPT harness", () => {
+      reflects(
+        {
+          type: "enum",
+          isNullable: true,
+          defaultVal: null,
+          invalidVal: "anonymous",
+          keywords: ["anonymous", "use-credentials"],
+          nonCanon: { "": "anonymous" },
+        },
+        "test",
+        "test-nullable-enum",
+      );
+    });
+  });
   suite("boolean", () => {
     test("with Gecko harness", () => {
       reflectBoolean({

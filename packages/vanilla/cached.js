@@ -2,6 +2,7 @@ import { runTests } from "@ce-reflection-tests/harness";
 import {
   stringToInteger,
   stringToDouble,
+  toASCIILowerCase,
   webidl,
 } from "@ce-reflection-tests/helpers";
 
@@ -51,7 +52,75 @@ customElements.define(
   },
 );
 
-// TODO: enum, nullable enum
+customElements.define(
+  "test-enum",
+  class extends HTMLElement {
+    #test = "missing";
+    get test() {
+      return this.#test;
+    }
+    set test(value) {
+      value = webidl["DOMString"](value);
+      this.setAttribute("test", value);
+    }
+    static observedAttributes = ["test"];
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.#test = newValue == null ? "missing" : this.#parseEnum(newValue);
+    }
+    #parseEnum(value) {
+      if (value == null) {
+        return "missing";
+      }
+      switch (toASCIILowerCase(value)) {
+        case "":
+        case "empty":
+          return "";
+        case "one":
+        case "un":
+          return "one";
+        case "two":
+        case "deux":
+          return "two";
+        case "three":
+        case "trois":
+          return "three";
+        case "missing":
+          return "missing";
+        default:
+          return "invalid";
+      }
+    }
+  },
+);
+customElements.define(
+  "test-nullable-enum",
+  class extends HTMLElement {
+    #test = null;
+    get test() {
+      return this.#test;
+    }
+    set test(value) {
+      if (value == null) {
+        this.removeAttribute("test");
+      } else {
+        value = webidl["DOMString"](value);
+        this.setAttribute("test", value);
+      }
+    }
+    static observedAttributes = ["test"];
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.#test = newValue == null ? null : this.#parseEnum(newValue);
+    }
+    #parseEnum(value) {
+      switch (toASCIILowerCase(value)) {
+        case "use-credentials":
+          return "use-credentials";
+        default:
+          return "anonymous";
+      }
+    }
+  },
+);
 
 customElements.define(
   "test-boolean",

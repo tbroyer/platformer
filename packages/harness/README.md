@@ -32,7 +32,25 @@ The `test-url` element's reflected `test` attribute is of type `USVString` and c
 
 This is equivalent to the `cite` attribute of a `blockquote` element for example.
 
-<!-- TODO: enum, nullable enum -->
+### test-enum
+
+The `test-enum` element's reflected `test` attribute is an enumerated attribute of type `DOMString` limited to only known values.
+
+- keywords `empty` and the empty string map to the _empty_ state, whose canonical keyword is the empty string
+- keywords `one` et `un` map to the _one_ state, whose canonical keyword is `one`
+- keywords `two` et `deux` map to the _two_ state, whose canonical keyword is `two`
+- keywords `three` et `trois` map to the _three_ state, whose canonical keyword is `three`
+- keyword `missing` map to the _missing_ state and is the _missing value default_
+- keyword `invalid` map to the _invalid_ state and is the _invalid value default_
+
+### test-nullable-enum
+
+The `test-nullable-enum` element's reflected `test` attribute is an enumerated attribute of type `DOMString?` limited to only known values.
+It mimics the `crossorigin` attribute of a `link` or `a` element:
+
+- keywords `anonymous` and the empty string map to the _Anonymous_ state, `anonymous` being the canonical keyword
+- keyword `use-credentials` map to the _Use Credentials_ state
+- the _missing value default_ is the _No CORS_ state, and the _invalid value default_ is the _Anonymous_ state.
 
 ### test-boolean
 

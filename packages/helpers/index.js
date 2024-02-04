@@ -47,3 +47,14 @@ export function stringToDouble(value, onlyPositive, defaultValue) {
   }
   return defaultValue;
 }
+
+/**
+ * Implement the [ASCII lowercase](https://infra.spec.whatwg.org/#ascii-lowercase) transformation
+ * to help implement [ASCII case-insensitive match](https://infra.spec.whatwg.org/#ascii-case-insensitive).
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+export function toASCIILowerCase(value) {
+  return value.replace(/[A-Z]/g, (u) => u.toLowerCase());
+}
