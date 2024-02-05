@@ -12,3 +12,4 @@ and test suites of various implementations.
 
 - A [vanilla implementation](packages/vanilla/README.md) (i.e. without any library/framework) serving as a reference implementation
 - A [Lit implementation](packages/lit/README.md)
+- A [FAST implementation](packages/fast/README.md)
