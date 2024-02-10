@@ -1,9 +1,14 @@
 import { runTests } from "@ce-reflection-tests/harness";
 import {
+  coerceToBoolean,
+  coerceToDOMString,
+  coerceToDouble,
+  coerceToLong,
+  coerceToUnsignedLong,
+  coerceToUSVString,
   stringToInteger,
   stringToDouble,
   toASCIILowerCase,
-  webidl,
 } from "@ce-reflection-tests/helpers";
 
 customElements.define(
@@ -13,7 +18,7 @@ customElements.define(
       return this.getAttribute("test") ?? "";
     }
     set test(value) {
-      value = webidl["DOMString"](value);
+      value = coerceToDOMString(value);
       this.setAttribute("test", value);
     }
   },
@@ -34,7 +39,7 @@ customElements.define(
       }
     }
     set test(value) {
-      value = webidl["USVString"](value);
+      value = coerceToUSVString(value);
       this.setAttribute("test", value);
     }
   },
@@ -68,7 +73,7 @@ customElements.define(
       }
     }
     set test(value) {
-      value = webidl["DOMString"](value);
+      value = coerceToDOMString(value);
       this.setAttribute("test", value);
     }
   },
@@ -92,7 +97,7 @@ customElements.define(
       if (value == null) {
         this.removeAttribute("test");
       } else {
-        value = webidl["DOMString"](value);
+        value = coerceToDOMString(value);
         this.setAttribute("test", value);
       }
     }
@@ -106,7 +111,7 @@ customElements.define(
       return this.hasAttribute("test");
     }
     set test(value) {
-      value = webidl["boolean"](value);
+      value = coerceToBoolean(value);
       this.toggleAttribute("test", value);
     }
   },
@@ -119,7 +124,7 @@ customElements.define(
       return stringToInteger(this.getAttribute("test") ?? "", false, 42);
     }
     set test(value) {
-      value = webidl["long"](value);
+      value = coerceToLong(value);
       this.setAttribute("test", value);
     }
   },
@@ -131,7 +136,7 @@ customElements.define(
       return stringToInteger(this.getAttribute("test") ?? "", true, -1);
     }
     set test(value) {
-      value = webidl["long"](value);
+      value = coerceToLong(value);
       if (value < 0) {
         throw new DOMException("", "IndexSizeError");
       }
@@ -146,7 +151,7 @@ customElements.define(
       return stringToInteger(this.getAttribute("test") ?? "", true, 42);
     }
     set test(value) {
-      value = webidl["unsigned long"](value);
+      value = coerceToUnsignedLong(value);
       if (value < 0 || 0x7fffffff < value) {
         value = 42;
       }
@@ -162,7 +167,7 @@ customElements.define(
       return value <= 0 ? 1 : value;
     }
     set test(value) {
-      value = webidl["unsigned long"](value);
+      value = coerceToUnsignedLong(value);
       if (value === 0) {
         throw new DOMException("", "IndexSizeError");
       }
@@ -181,7 +186,7 @@ customElements.define(
       return value <= 0 ? 1 : value;
     }
     set test(value) {
-      value = webidl["unsigned long"](value);
+      value = coerceToUnsignedLong(value);
       if (value < 1 || 0x7fffffff < value) {
         value = 1;
       }
@@ -205,7 +210,7 @@ customElements.define(
       return 100;
     }
     set test(value) {
-      value = webidl["unsigned long"](value);
+      value = coerceToUnsignedLong(value);
       if (value < 0 || 0x7fffffff < value) {
         value = 100;
       }
@@ -220,7 +225,7 @@ customElements.define(
       return stringToDouble(this.getAttribute("test") ?? "", false, 0.0);
     }
     set test(value) {
-      value = webidl["double"](value);
+      value = coerceToDouble(value);
       this.setAttribute("test", value);
     }
   },
@@ -232,7 +237,7 @@ customElements.define(
       return stringToDouble(this.getAttribute("test") ?? "", true, 1.0);
     }
     set test(value) {
-      value = webidl["double"](value);
+      value = coerceToDouble(value);
       if (value <= 0) {
         return;
       }

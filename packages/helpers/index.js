@@ -1,4 +1,64 @@
-export { default as webidl } from "./webidl-conversions.js";
+import webidl from "./webidl-conversions.js";
+
+/**
+ * Coerce value to WebIDL DOMString.
+ *
+ * @param {any} value
+ * @returns {string}
+ */
+export function coerceToDOMString(value) {
+  return webidl["DOMString"](value);
+}
+
+/**
+ * Coerce value to WebIDL USVString.
+ *
+ * @param {any} value
+ * @returns {string}
+ */
+export function coerceToUSVString(value) {
+  return webidl["USVString"](value);
+}
+
+/**
+ * Coerce value to WebIDL boolean.
+ *
+ * @param {any} value
+ * @returns {string}
+ */
+export function coerceToBoolean(value) {
+  return webidl["boolean"](value);
+}
+
+/**
+ * Coerce value to WebIDL long.
+ *
+ * @param {any} value
+ * @returns {number}
+ */
+export function coerceToLong(value) {
+  return webidl["long"](value);
+}
+
+/**
+ * Coerce value to WebIDL unsigned long.
+ *
+ * @param {any} value
+ * @returns {number}
+ */
+export function coerceToUnsignedLong(value) {
+  return webidl["unsigned long"](value);
+}
+
+/**
+ * Coerce value to WebIDL double.
+ *
+ * @param {any} value
+ * @returns {number}
+ */
+export function coerceToDouble(value) {
+  return webidl["double"](value);
+}
 
 /**
  * Implement the [rules for parsing integers](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-integers)

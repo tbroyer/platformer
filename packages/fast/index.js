@@ -1,9 +1,14 @@
 import { runTests } from "@ce-reflection-tests/harness";
 import {
+  coerceToBoolean,
+  coerceToDOMString,
+  coerceToDouble,
+  coerceToLong,
+  coerceToUnsignedLong,
+  coerceToUSVString,
   stringToInteger,
   stringToDouble,
   toASCIILowerCase,
-  webidl,
 } from "@ce-reflection-tests/helpers";
 import { DOM, FASTElement } from "@microsoft/fast-element";
 
@@ -17,7 +22,7 @@ FASTElement.define(
       return this._test ?? "";
     }
     set test(value) {
-      value = webidl["DOMString"](value);
+      value = coerceToDOMString(value);
       this.setAttribute("test", value);
     }
   },
@@ -41,7 +46,7 @@ FASTElement.define(
       }
     }
     set test(value) {
-      value = webidl["USVString"](value);
+      value = coerceToUSVString(value);
       this.setAttribute("test", value);
     }
   },
@@ -88,7 +93,7 @@ FASTElement.define(
       return this._test ?? "missing";
     }
     set test(value) {
-      value = webidl["DOMString"](value);
+      value = coerceToDOMString(value);
       this.setAttribute("test", value);
     }
   },
@@ -123,7 +128,7 @@ FASTElement.define(
     }
     set test(value) {
       if (value != null) {
-        value = webidl["DOMString"](value);
+        value = coerceToDOMString(value);
       }
       DOM.setAttribute(this, "test", value);
     }
@@ -151,7 +156,7 @@ FASTElement.define(
       return this._test ?? false;
     }
     set test(value) {
-      value = webidl["boolean"](value);
+      value = coerceToBoolean(value);
       this.toggleAttribute("test", value);
     }
   },
@@ -176,7 +181,7 @@ FASTElement.define(
       return this._test ?? 42;
     }
     set test(value) {
-      value = webidl["long"](value);
+      value = coerceToLong(value);
       this.setAttribute("test", value);
     }
   },
@@ -200,7 +205,7 @@ FASTElement.define(
       return this._test ?? -1;
     }
     set test(value) {
-      value = webidl["long"](value);
+      value = coerceToLong(value);
       if (value < 0) {
         throw new DOMException("", "IndexSizeError");
       }
@@ -227,7 +232,7 @@ FASTElement.define(
       return this._test ?? 42;
     }
     set test(value) {
-      value = webidl["unsigned long"](value);
+      value = coerceToUnsignedLong(value);
       if (value < 0 || 0x7fffffff < value) {
         value = 42;
       }
@@ -257,7 +262,7 @@ FASTElement.define(
       return this._test ?? 1;
     }
     set test(value) {
-      value = webidl["unsigned long"](value);
+      value = coerceToUnsignedLong(value);
       if (value === 0) {
         throw new DOMException("", "IndexSizeError");
       }
@@ -290,7 +295,7 @@ FASTElement.define(
       return this._test ?? 1;
     }
     set test(value) {
-      value = webidl["unsigned long"](value);
+      value = coerceToUnsignedLong(value);
       if (value < 1 || 0x7fffffff < value) {
         value = 1;
       }
@@ -326,7 +331,7 @@ FASTElement.define(
       return this._test ?? 100;
     }
     set test(value) {
-      value = webidl["unsigned long"](value);
+      value = coerceToUnsignedLong(value);
       if (value < 0 || 0x7fffffff < value) {
         value = 100;
       }
@@ -353,7 +358,7 @@ FASTElement.define(
       return this._test ?? 0.0;
     }
     set test(value) {
-      value = webidl["double"](value);
+      value = coerceToDouble(value);
       this.setAttribute("test", value);
     }
   },
@@ -377,7 +382,7 @@ FASTElement.define(
       return this._test ?? 1.0;
     }
     set test(value) {
-      value = webidl["double"](value);
+      value = coerceToDouble(value);
       if (value <= 0) {
         return;
       }
