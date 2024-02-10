@@ -1,5 +1,5 @@
 {
-  "name": "ce-reflection-tests",
+  "name": "platformer",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -10,10 +10,8 @@
     "lint": "prettier -l . && eslint ."
   },
   "devDependencies": {
+    "@web/test-runner": "^0.18.0",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4"
-  },
-  "dependencies": {
-    "@web/test-runner": "^0.18.0"
   }
 }

@@ -1,8 +1,8 @@
 {
-  "name": "@ce-reflection-tests/vanilla",
+  "name": "@platformer/vanilla",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "wtr index.js cached.js"
+    "test": "wtr test.js cached.test.js"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@ce-reflection-tests/helpers",
+  "name": "@platformer/helpers",
   "private": true,
   "type": "module",
   "main": "index.js",

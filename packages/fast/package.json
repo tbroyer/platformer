@@ -1,9 +1,9 @@
 {
-  "name": "@ce-reflection-tests/fast",
+  "name": "@platformer/fast",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "wtr index.js"
+    "test": "wtr test.js"
   },
   "dependencies": {
     "@microsoft/fast-element": "^1.12.0"

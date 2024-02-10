@@ -1,5 +1,5 @@
 {
-  "name": "@ce-reflection-tests/harness",
+  "name": "@platformer/harness",
   "private": true,
   "type": "module",
   "main": "index.js",

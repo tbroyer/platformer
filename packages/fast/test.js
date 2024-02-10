@@ -1,4 +1,4 @@
-import { runTests } from "@ce-reflection-tests/harness";
+import { runTests } from "@platformer/harness";
 import {
   coerceToBoolean,
   coerceToDOMString,
@@ -9,7 +9,7 @@ import {
   stringToInteger,
   stringToDouble,
   toASCIILowerCase,
-} from "@ce-reflection-tests/helpers";
+} from "@platformer/helpers";
 import { DOM, FASTElement } from "@microsoft/fast-element";
 
 FASTElement.define(
