@@ -1,0 +1,17 @@
+{
+  "name": "@platformer/types",
+  "private": true,
+  "type": "module",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts"
+    },
+    "./direct.js": {
+      "types": "./direct.d.ts"
+    }
+  },
+  "scripts": {
+    "test": ""
+  }
+}
