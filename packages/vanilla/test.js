@@ -6,10 +6,9 @@ import {
   coerceToLong,
   coerceToUnsignedLong,
   coerceToUSVString,
-  stringToInteger,
-  stringToDouble,
-  toASCIILowerCase,
-} from "@platformer/helpers";
+} from "@platformer/webidl";
+import { enumerated } from "@platformer/microsyntaxes";
+import { stringToInteger, stringToDouble } from "@platformer/helpers";
 
 customElements.define(
   "test-string",
@@ -45,32 +44,17 @@ customElements.define(
   },
 );
 
+const testEnum = enumerated({
+  keywords: ["", "one", "two", "three", "missing", "invalid"],
+  aliases: { empty: "", un: "one", deux: "two", trois: "three" },
+  missing: "missing",
+  invalid: "invalid",
+});
 customElements.define(
   "test-enum",
   class extends HTMLElement {
     get test() {
-      let value = this.getAttribute("test");
-      if (value == null) {
-        return "missing";
-      }
-      switch (toASCIILowerCase(value)) {
-        case "":
-        case "empty":
-          return "";
-        case "one":
-        case "un":
-          return "one";
-        case "two":
-        case "deux":
-          return "two";
-        case "three":
-        case "trois":
-          return "three";
-        case "missing":
-          return "missing";
-        default:
-          return "invalid";
-      }
+      return testEnum(this.getAttribute("test")) ?? "";
     }
     set test(value) {
       value = coerceToDOMString(value);
@@ -78,20 +62,15 @@ customElements.define(
     }
   },
 );
+const testNullableEnum = enumerated({
+  keywords: ["use-credentials", "anonymous"],
+  invalid: "anonymous",
+});
 customElements.define(
   "test-nullable-enum",
   class extends HTMLElement {
     get test() {
-      let value = this.getAttribute("test");
-      if (value == null) {
-        return null; // No CORS
-      }
-      switch (toASCIILowerCase(value)) {
-        case "use-credentials":
-          return "use-credentials";
-        default:
-          return "anonymous";
-      }
+      return testNullableEnum(this.getAttribute("test")) ?? null;
     }
     set test(value) {
       if (value == null) {

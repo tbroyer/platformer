@@ -1,64 +1,8 @@
-import webidl from "./webidl-conversions.js";
-
-/**
- * Coerce value to WebIDL DOMString.
- *
- * @param {any} value
- * @returns {string}
- */
-export function coerceToDOMString(value) {
-  return webidl["DOMString"](value);
-}
-
-/**
- * Coerce value to WebIDL USVString.
- *
- * @param {any} value
- * @returns {string}
- */
-export function coerceToUSVString(value) {
-  return webidl["USVString"](value);
-}
-
-/**
- * Coerce value to WebIDL boolean.
- *
- * @param {any} value
- * @returns {string}
- */
-export function coerceToBoolean(value) {
-  return webidl["boolean"](value);
-}
-
-/**
- * Coerce value to WebIDL long.
- *
- * @param {any} value
- * @returns {number}
- */
-export function coerceToLong(value) {
-  return webidl["long"](value);
-}
-
-/**
- * Coerce value to WebIDL unsigned long.
- *
- * @param {any} value
- * @returns {number}
- */
-export function coerceToUnsignedLong(value) {
-  return webidl["unsigned long"](value);
-}
-
-/**
- * Coerce value to WebIDL double.
- *
- * @param {any} value
- * @returns {number}
- */
-export function coerceToDouble(value) {
-  return webidl["double"](value);
-}
+import {
+  parseDouble,
+  parseInteger,
+  parseNonNegativeInteger,
+} from "@platformer/microsyntaxes";
 
 /**
  * Implement the [rules for parsing integers](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-integers)
@@ -69,21 +13,16 @@ export function coerceToDouble(value) {
  * @param {number} defaultValue the default value
  * @returns {number} 'value' parsed as an integer and normalized, or the default value
  */
-// Copied from Gecko's reflectInt
 export function stringToInteger(value, nonNegative, defaultValue) {
-  // Parse: Ignore leading whitespace, find [+/-][numbers]
-  var result = /^[ \t\n\f\r]*([+-]?[0-9]+)/.exec(value);
-  if (result) {
-    var resultInt = parseInt(result[1], 10);
-    if (
-      (nonNegative ? 0 : -0x80000000) <= resultInt &&
-      resultInt <= 0x7fffffff
-    ) {
-      // If the value is within allowed value range for signed/unsigned
-      // integer, return it -- but add 0 to it to convert a possible -0 into
-      // +0, the only zero present in the signed integer range.
-      return resultInt + 0;
-    }
+  const result = nonNegative
+    ? parseNonNegativeInteger(value)
+    : parseInteger(value);
+  if (
+    result != null &&
+    (nonNegative ? 0 : -0x80000000) <= result &&
+    result <= 0x7fffffff
+  ) {
+    return result;
   }
   return defaultValue;
 }
@@ -98,23 +37,9 @@ export function stringToInteger(value, nonNegative, defaultValue) {
  * @returns {number} 'vaue' parsed as a floating-point number and normalized, or the default value
  */
 export function stringToDouble(value, onlyPositive, defaultValue) {
-  let result = /^[ \t\n\f\r]*([0-9.eE+-]+)/.exec(value);
-  if (result) {
-    let resultFloat = parseFloat(result[1]);
-    if (!Number.isNaN(resultFloat) && (!onlyPositive || resultFloat > 0)) {
-      return resultFloat;
-    }
+  const result = parseDouble(value);
+  if (result == null || (onlyPositive && result <= 0)) {
+    return defaultValue;
   }
-  return defaultValue;
-}
-
-/**
- * Implement the [ASCII lowercase](https://infra.spec.whatwg.org/#ascii-lowercase) transformation
- * to help implement [ASCII case-insensitive match](https://infra.spec.whatwg.org/#ascii-case-insensitive).
- *
- * @param {string} value
- * @returns {string}
- */
-export function toASCIILowerCase(value) {
-  return value.replace(/[A-Z]/g, (u) => u.toLowerCase());
+  return result;
 }

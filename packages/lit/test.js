@@ -6,10 +6,9 @@ import {
   coerceToLong,
   coerceToUnsignedLong,
   coerceToUSVString,
-  stringToInteger,
-  stringToDouble,
-  toASCIILowerCase,
-} from "@platformer/helpers";
+} from "@platformer/webidl";
+import { enumerated } from "@platformer/microsyntaxes";
+import { stringToInteger, stringToDouble } from "@platformer/helpers";
 import { LitElement } from "lit";
 
 const TEST = Symbol();
@@ -54,35 +53,19 @@ customElements.define(
   },
 );
 
+const testEnum = enumerated({
+  keywords: ["", "one", "two", "three", "missing", "invalid"],
+  aliases: { empty: "", un: "one", deux: "two", trois: "three" },
+  missing: "missing",
+  invalid: "invalid",
+});
 customElements.define(
   "test-enum",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter(value) {
-          if (value == null) {
-            return "missing";
-          }
-          switch (toASCIILowerCase(value)) {
-            case "":
-            case "empty":
-              return "";
-            case "one":
-            case "un":
-              return "one";
-            case "two":
-            case "deux":
-              return "two";
-            case "three":
-            case "trois":
-              return "three";
-            case "missing":
-              return "missing";
-            default:
-              return "invalid";
-          }
-        },
+        converter: (value) => testEnum(value) ?? "",
       },
     };
     get test() {
@@ -94,23 +77,17 @@ customElements.define(
     }
   },
 );
+const testNullableEnum = enumerated({
+  keywords: ["use-credentials", "anonymous"],
+  invalid: "anonymous",
+});
 customElements.define(
   "test-nullable-enum",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter(value) {
-          if (value == null) {
-            return null;
-          }
-          switch (toASCIILowerCase(value)) {
-            case "use-credentials":
-              return "use-credentials";
-            default:
-              return "anonymous";
-          }
-        },
+        converter: (value) => testNullableEnum(value) ?? null,
       },
     };
     get test() {

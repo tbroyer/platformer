@@ -6,10 +6,9 @@ import {
   coerceToLong,
   coerceToUnsignedLong,
   coerceToUSVString,
-  stringToInteger,
-  stringToDouble,
-  toASCIILowerCase,
-} from "@platformer/helpers";
+} from "@platformer/webidl";
+import { enumerated } from "@platformer/microsyntaxes";
+import { stringToInteger, stringToDouble } from "@platformer/helpers";
 import { DOM, FASTElement } from "@microsoft/fast-element";
 
 FASTElement.define(
@@ -52,6 +51,12 @@ FASTElement.define(
   },
 );
 
+const testEnum = enumerated({
+  keywords: ["", "one", "two", "three", "missing", "invalid"],
+  aliases: { empty: "", un: "one", deux: "two", trois: "three" },
+  missing: "missing",
+  invalid: "invalid",
+});
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -62,29 +67,7 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView(value) {
-              if (value == null) {
-                return "missing";
-              }
-              switch (toASCIILowerCase(value)) {
-                case "":
-                case "empty":
-                  return "";
-                case "one":
-                case "un":
-                  return "one";
-                case "two":
-                case "deux":
-                  return "two";
-                case "three":
-                case "trois":
-                  return "three";
-                case "missing":
-                  return "missing";
-                default:
-                  return "invalid";
-              }
-            },
+            fromView: (value) => testEnum(value) ?? "",
           },
         },
       ],
@@ -98,6 +81,10 @@ FASTElement.define(
     }
   },
 );
+const testNullableEnum = enumerated({
+  keywords: ["use-credentials", "anonymous"],
+  invalid: "anonymous",
+});
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -108,17 +95,7 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView(value) {
-              if (value == null) {
-                return null;
-              }
-              switch (toASCIILowerCase(value)) {
-                case "use-credentials":
-                  return "use-credentials";
-                default:
-                  return "anonymous";
-              }
-            },
+            fromView: (value) => testNullableEnum(value) ?? null,
           },
         },
       ],
