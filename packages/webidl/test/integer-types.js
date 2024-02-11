@@ -1,10 +1,57 @@
-"use strict";
-const assert = require("assert");
+import assert from "node:assert";
+import { describe, it } from 'node:test';
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-const conversions = require("..");
-const assertThrows = require("./helpers/assertThrows");
+import {
+  coerceToByte,
+  coerceToEnforcedByte,
+  coerceToClampedByte,
+  coerceToOctet,
+  coerceToEnforcedOctet,
+  coerceToClampedOctet,
+  coerceToShort,
+  coerceToEnforcedShort,
+  coerceToClampedShort,
+  coerceToUnsignedShort,
+  coerceToEnforcedUnsignedShort,
+  coerceToClampedUnsignedShort,
+  coerceToLong,
+  coerceToEnforcedLong,
+  coerceToClampedLong,
+  coerceToUnsignedLong,
+  coerceToEnforcedUnsignedLong,
+  coerceToClampedUnsignedLong,
+  coerceToLongLong,
+  coerceToEnforcedLongLong,
+  coerceToClampedLongLong,
+  coerceToUnsignedLongLong,
+  coerceToEnforcedUnsignedLongLong,
+  coerceToClampedUnsignedLongLong,
+} from "../index.js";
+import assertThrows from "./helpers/assertThrows.js";
+
+function conversionAdapter(sut, enforcedSut, clampedSut) {
+  return (value, { enforceRange = false, clamp = false } = {}) => {
+    if (enforceRange) {
+      return enforcedSut(value);
+    }
+    if (clamp) {
+      return clampedSut(value);
+    }
+    return sut(value);
+  }
+}
+const conversions = {
+  "byte": conversionAdapter(coerceToByte, coerceToEnforcedByte, coerceToClampedByte),
+  "octet": conversionAdapter(coerceToOctet, coerceToEnforcedOctet, coerceToClampedOctet),
+  "short": conversionAdapter(coerceToShort, coerceToEnforcedShort, coerceToClampedShort),
+  "unsigned short": conversionAdapter(coerceToUnsignedShort, coerceToEnforcedUnsignedShort, coerceToClampedUnsignedShort),
+  "long": conversionAdapter(coerceToLong, coerceToEnforcedLong, coerceToClampedLong),
+  "unsigned long": conversionAdapter(coerceToUnsignedLong, coerceToEnforcedUnsignedLong, coerceToClampedUnsignedLong),
+  "long long": conversionAdapter(coerceToLongLong, coerceToEnforcedLongLong, coerceToClampedLongLong),
+  "unsigned long long": conversionAdapter(coerceToUnsignedLongLong, coerceToEnforcedUnsignedLongLong, coerceToClampedUnsignedLongLong),
+};
 
 // For extraordinarily large (in magnitude) numbers, we can't rely on toString() to give the most accurate output. See
 // the note at https://tc39.es/ecma262/#sec-number.prototype.tofixed:

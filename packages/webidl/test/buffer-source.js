@@ -1,12 +1,42 @@
-"use strict";
-const assert = require("assert");
-const vm = require("vm");
-const { MessageChannel } = require("worker_threads");
+import assert from "node:assert";
+import { describe, it } from 'node:test';
+import vm from "node:vm";
+import { MessageChannel } from "node:worker_threads";
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-const assertThrows = require("./helpers/assertThrows");
-const conversions = require("..");
+import assertThrows from "./helpers/assertThrows.js";
+import {
+  coerceToArrayBufferView,
+  coerceToBufferSource,
+  coerceToDataView,
+  coerceToArrayBuffer,
+  coerceToInt8Array,
+  coerceToInt16Array,
+  coerceToInt32Array,
+  coerceToUint8Array,
+  coerceToUint16Array,
+  coerceToUint32Array,
+  coerceToUint8ClampedArray,
+  coerceToFloat32Array,
+  coerceToFloat64Array,
+} from "../index.js";
+
+const conversions = {
+  "ArrayBufferView": coerceToArrayBufferView,
+  "BufferSource": coerceToBufferSource,
+  "DataView": coerceToDataView,
+  "ArrayBuffer": coerceToArrayBuffer,
+  "Int8Array": coerceToInt8Array,
+  "Int16Array": coerceToInt16Array,
+  "Int32Array": coerceToInt32Array,
+  "Uint8Array": coerceToUint8Array,
+  "Uint16Array": coerceToUint16Array,
+  "Uint32Array": coerceToUint32Array,
+  "Uint8ClampedArray": coerceToUint8ClampedArray,
+  "Float32Array": coerceToFloat32Array,
+  "Float64Array": coerceToFloat64Array
+};
 
 function commonNotOk(sut) {
   it("should throw a TypeError for `undefined`", () => {

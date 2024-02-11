@@ -1,10 +1,15 @@
-"use strict";
-const assert = require("assert");
+import assert from "node:assert";
+import { describe, it } from 'node:test';
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-const conversions = require("..");
-const assertThrows = require("./helpers/assertThrows");
+import {
+  coerceToDouble,
+  coerceToUnrestrictedDouble,
+  coerceToFloat,
+  coerceToUnrestrictedFloat,
+} from "../index.js";
+import assertThrows from "./helpers/assertThrows.js";
 
 function assertIs(actual, expected, message) {
   if (!Object.is(actual, expected)) {
@@ -131,7 +136,7 @@ function commonFloat(sut) {
 }
 
 describe("WebIDL double type", () => {
-  const sut = conversions.double;
+  const sut = coerceToDouble;
 
   commonTest(sut);
   commonRestricted(sut);
@@ -139,7 +144,7 @@ describe("WebIDL double type", () => {
 });
 
 describe("WebIDL unrestricted double type", () => {
-  const sut = conversions["unrestricted double"];
+  const sut = coerceToUnrestrictedDouble;
 
   commonTest(sut);
   commonUnrestricted(sut);
@@ -147,7 +152,7 @@ describe("WebIDL unrestricted double type", () => {
 });
 
 describe("WebIDL float type", () => {
-  const sut = conversions.float;
+  const sut = coerceToFloat;
 
   commonTest(sut);
   commonRestricted(sut);
@@ -163,7 +168,7 @@ describe("WebIDL float type", () => {
 });
 
 describe("WebIDL unrestricted float type", () => {
-  const sut = conversions["unrestricted float"];
+  const sut = coerceToUnrestrictedFloat;
 
   commonTest(sut);
   commonUnrestricted(sut);

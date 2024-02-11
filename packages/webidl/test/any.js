@@ -1,13 +1,11 @@
-"use strict";
-const assert = require("assert");
+import assert from "node:assert";
+import { describe, it } from 'node:test';
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-const conversions = require("..");
+import { coerceToAny as sut } from "../index.js";
 
 describe("WebIDL any type", () => {
-  const sut = conversions.any;
-
   it("should return `undefined` for `undefined`", () => {
     assert.strictEqual(sut(undefined), undefined);
   });

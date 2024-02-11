@@ -1,10 +1,19 @@
-"use strict";
-const assert = require("assert");
+import assert from "node:assert";
+import { describe, it } from 'node:test';
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-const conversions = require("..");
-const assertThrows = require("./helpers/assertThrows");
+import {
+  coerceToByteString,
+  coerceToDOMString,
+  coerceToUSVString,
+} from "../index.js";
+import assertThrows from "./helpers/assertThrows.js";
+const conversions = {
+  ByteString: coerceToByteString,
+  DOMString: coerceToDOMString,
+  USVString: coerceToUSVString,
+};
 
 function commonTest(sut) {
   it("should return `\"undefined\"` for `undefined`", () => {
@@ -13,10 +22,6 @@ function commonTest(sut) {
 
   it("should return `\"null\"` for `null`", () => {
     assert.strictEqual(sut(null), "null");
-  });
-
-  it("should return `\"\"` for `null` with [TreatNullAsEmptyString]", () => {
-    assert.strictEqual(sut(null, { treatNullAsEmptyString: true }), "");
   });
 
   it("should return `\"true\"` for `true`", () => {

@@ -1,14 +1,12 @@
-"use strict";
-const assert = require("assert");
+import assert from "node:assert";
+import { describe, it } from 'node:test';
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-const conversions = require("..");
-const assertThrows = require("./helpers/assertThrows");
+import { coerceToObject as sut} from "../index.js";
+import assertThrows from "./helpers/assertThrows.js";
 
 describe("WebIDL object type", () => {
-  const sut = conversions.object;
-
   it("should return `{}` for `{}`", () => {
     const obj = {};
     assert.strictEqual(sut(obj), obj);

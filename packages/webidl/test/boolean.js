@@ -1,14 +1,12 @@
-"use strict";
 /* eslint-disable no-new-wrappers */
-const assert = require("assert");
+import assert from "node:assert";
+import { describe, it } from 'node:test';
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-const conversions = require("..");
+import { coerceToBoolean as sut } from "../index.js";
 
 describe("WebIDL boolean type", () => {
-  const sut = conversions.boolean;
-
   it("should return `false` for `undefined`", () => {
     assert.strictEqual(sut(undefined), false);
   });
