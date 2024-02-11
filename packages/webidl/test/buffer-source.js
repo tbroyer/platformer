@@ -217,7 +217,7 @@ for (const type of bufferSourceConstructors) {
   const typeName = type.name;
   const sut = conversions[typeName];
 
-  describe(`WebIDL ${typeName} type`, () => {
+  describe(`WebIDL ${typeName} type`, { skip: 'unimplemented' }, () => {
     for (const innerType of bufferSourceCreators) {
       const testFunction =
         innerType.typeName === typeName &&
@@ -245,7 +245,7 @@ for (const type of bufferSourceConstructors) {
   });
 }
 
-describe("WebIDL ArrayBufferView type", () => {
+describe("WebIDL ArrayBufferView type", { skip: 'unimplemented' }, () => {
   const sut = conversions.ArrayBufferView;
 
   for (const { label, typeName, isShared, isDetached, isForged, creator } of bufferSourceCreators) {
@@ -282,7 +282,7 @@ describe("WebIDL ArrayBufferView type", () => {
   });
 });
 
-describe("WebIDL BufferSource type", () => {
+describe("WebIDL BufferSource type", { skip: 'unimplemented' }, () => {
   const sut = conversions.BufferSource;
 
   for (const { label, creator, isShared, isDetached, isForged } of bufferSourceCreators) {

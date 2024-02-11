@@ -7,6 +7,6 @@
     ".": "./index.js"
   },
   "scripts": {
-    "test": ""
+    "test": "node --test"
   }
 }

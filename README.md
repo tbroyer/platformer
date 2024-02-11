@@ -16,6 +16,8 @@ This repository forked from [Custom Elements Reflection Tests](https://github.co
 
 ## Libraries
 
+- [**@platformer/webidl**](packages/webidl/README.md) implements the [WebIDL type coercion rules](https://webidl.spec.whatwg.org/#js-type-mapping)
+
 - A [vanilla implementation](packages/vanilla/README.md) (i.e. without any library/framework)
 - A [Lit implementation](packages/lit/README.md)
 - A [FAST implementation](packages/fast/README.md)

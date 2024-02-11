@@ -67,4 +67,17 @@ describe("WebIDL any type", () => {
     const func = () => {};
     assert.strictEqual(sut(func), func);
   });
+
+  it("should return `Symbol.iterator` for `Symbol.iterator`", () => {
+    assert.strictEqual(sut(Symbol.iterator), Symbol.iterator);
+  });
+
+  it("should return `Symbol('a')` for `Symbol('a')`", () => {
+    const sym = Symbol('a');
+    assert.strictEqual(sut(sym), sym);
+  });
+
+  it("should return `0n` for `0n`", () => {
+    assert.strictEqual(sut(0n), 0n);
+  });
 });
