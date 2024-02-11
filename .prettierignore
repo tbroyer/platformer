@@ -1,3 +1,12 @@
 packages/harness/gecko.js
 packages/harness/wpt.js
 packages/helpers/webidl-conversions.js
+packages/webidl/test/boolean.js
+packages/webidl/test/undefined.js
+packages/webidl/test/object.js
+packages/webidl/test/double.js
+packages/webidl/test/helpers/assertThrows.js
+packages/webidl/test/buffer-source.js
+packages/webidl/test/string-types.js
+packages/webidl/test/integer-types.js
+packages/webidl/test/any.js
