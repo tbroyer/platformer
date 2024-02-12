@@ -6,6 +6,7 @@
     "test": "wtr test.js cached.test.js"
   },
   "dependencies": {
-    "@platformer/reflect": "*"
+    "@platformer/reflect": "*",
+    "@platformer/types": "*"
   }
 }

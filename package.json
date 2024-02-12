@@ -10,6 +10,10 @@
     "lint": "prettier -l . && eslint ."
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.23.10",
+    "@babel/plugin-proposal-decorators": "^7.23.9",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@web/dev-server-rollup": "^0.6.1",
     "@web/test-runner": "^0.18.0",
     "eslint": "^8.56.0",
     "prettier": "^3.2.4"

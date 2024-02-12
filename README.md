@@ -13,8 +13,8 @@ See [this blog post](https://blog.ltgt.net/web-component-properties/ "Making Web
 - [**@platformer/microsyntaxes**](packages/microsyntaxes/README.md) implements the [HTML common microsyntaxes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html)
 - [**@platformer/reflect**](packages/reflect/README.md) implements the [HTML attribute reflection rules](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes)
 - [**@platformer/types**](packages/types/README.md) contains TypeScript types for decorators (to be implemented in framework-specific libraries) that could theoretically encapsulate the _@platform/reflect_ package to cut verbosity by at least 50%
+- [**@platform/vanilla**](packages/vanilla/README.md) implements decorators for use with vanilla (i.e. without any library/framework) custom elements
 - The [test harness](packages/harness/README.md)
 
-- A [vanilla implementation](packages/vanilla/README.md) (i.e. without any library/framework)
 - A [Lit implementation](packages/lit/README.md)
 - A [FAST implementation](packages/fast/README.md)
