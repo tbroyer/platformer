@@ -1,14 +1,19 @@
 import { runTests } from "@platformer/harness";
 import {
-  coerceToBoolean,
-  coerceToDOMString,
-  coerceToDouble,
-  coerceToLong,
-  coerceToUnsignedLong,
-  coerceToUSVString,
-} from "@platformer/webidl";
-import { enumerated } from "@platformer/microsyntaxes";
-import { stringToInteger, stringToDouble } from "@platformer/helpers";
+  reflectBoolean,
+  reflectClampedInt,
+  reflectDouble,
+  reflectEnum,
+  reflectInt,
+  reflectNonNegativeInt,
+  reflectNullableEnum,
+  reflectPositiveDouble,
+  reflectPositiveInt,
+  reflectPositiveIntWithFallback,
+  reflectString,
+  reflectURL,
+  reflectUnsignedInt,
+} from "@platformer/reflect";
 import { LitElement } from "lit";
 
 const TEST = Symbol();
@@ -20,11 +25,11 @@ customElements.define(
       [TEST]: { attribute: "test" },
     };
     get test() {
-      return this[TEST] ?? "";
+      return reflectString.fromAttribute(this[TEST]);
     }
     set test(value) {
-      value = coerceToDOMString(value);
-      this.setAttribute("test", value);
+      value = reflectString.coerceValue(value);
+      reflectString.setAttribute(this, "test", value);
     }
   },
 );
@@ -36,24 +41,16 @@ customElements.define(
       [TEST]: { attribute: "test" },
     };
     get test() {
-      let value = this[TEST];
-      if (value == null) {
-        return "";
-      }
-      try {
-        return new URL(value, this.ownerDocument.baseURI).toString();
-      } catch (e) {
-        return value;
-      }
+      return reflectURL.fromAttribute(this, this[TEST]);
     }
     set test(value) {
-      value = coerceToUSVString(value);
-      this.setAttribute("test", value);
+      value = reflectURL.coerceValue(value);
+      reflectURL.setAttribute(this, "test", value);
     }
   },
 );
 
-const testEnum = enumerated({
+const testEnum = reflectEnum({
   keywords: ["", "one", "two", "three", "missing", "invalid"],
   aliases: { empty: "", un: "one", deux: "two", trois: "three" },
   missing: "missing",
@@ -65,19 +62,19 @@ customElements.define(
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter: (value) => testEnum(value) ?? "",
+        converter: testEnum.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? "missing";
+      return this[TEST] ?? testEnum.defaultValue;
     }
     set test(value) {
-      value = coerceToDOMString(value);
-      this.setAttribute("test", value);
+      value = testEnum.coerceValue(value);
+      testEnum.setAttribute(this, "test", value);
     }
   },
 );
-const testNullableEnum = enumerated({
+const testNullableEnum = reflectNullableEnum({
   keywords: ["use-credentials", "anonymous"],
   invalid: "anonymous",
 });
@@ -87,19 +84,15 @@ customElements.define(
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter: (value) => testNullableEnum(value) ?? null,
+        converter: testNullableEnum.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? null;
+      return this[TEST] ?? testNullableEnum.defaultValue;
     }
     set test(value) {
-      if (value == null) {
-        this.removeAttribute("test");
-      } else {
-        value = coerceToDOMString(value);
-        this.setAttribute("test", value);
-      }
+      value = testNullableEnum.coerceValue(value);
+      testNullableEnum.setAttribute(this, "test", value);
     }
   },
 );
@@ -108,197 +101,171 @@ customElements.define(
   "test-boolean",
   class extends LitElement {
     static properties = {
-      test: { type: Boolean },
+      [TEST]: { attribute: "test", converter: reflectBoolean.fromAttribute },
     };
-    #test = false;
     get test() {
-      return this.#test;
+      return this[TEST] ?? reflectBoolean.defaultValue;
     }
     set test(value) {
-      value = coerceToBoolean(value);
-      this.#test = value;
-      this.toggleAttribute("test", value);
+      value = reflectBoolean.coerceValue(value);
+      reflectBoolean.setAttribute(this, "test", value);
     }
   },
 );
 
+const testLong = reflectInt({ defaultValue: 42 });
 customElements.define(
   "test-long",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter: (value) => stringToInteger(value ?? "", false, 42),
+        converter: testLong.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? 42;
+      return this[TEST] ?? testLong.defaultValue;
     }
     set test(value) {
-      value = coerceToLong(value);
-      this.setAttribute("test", value);
+      value = testLong.coerceValue(value);
+      testLong.setAttribute(this, "test", value);
     }
   },
 );
+const testLimitedLong = reflectNonNegativeInt();
 customElements.define(
   "test-limited-long",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter: (value) => stringToInteger(value ?? "", true, -1),
+        converter: testLimitedLong.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? -1;
+      return this[TEST] ?? testLimitedLong.defaultValue;
     }
     set test(value) {
-      value = coerceToLong(value);
-      if (value < 0) {
-        throw new DOMException("", "IndexSizeError");
-      }
-      this.setAttribute("test", value);
+      value = testLimitedLong.coerceValue(value);
+      testLimitedLong.setAttribute(this, "test", value);
     }
   },
 );
+const testUnsignedLong = reflectUnsignedInt({ defaultValue: 42 });
 customElements.define(
   "test-unsigned-long",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter: (value) => stringToInteger(value ?? "", true, 42),
+        converter: testUnsignedLong.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? 42;
+      return this[TEST] ?? testUnsignedLong.defaultValue;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 0 || 0x7fffffff < value) {
-        value = 42;
-      }
-      this.setAttribute("test", value);
+      value = testUnsignedLong.coerceValue(value);
+      testUnsignedLong.setAttribute(this, "test", value);
     }
   },
 );
+const testLimitedUnsignedLong = reflectPositiveInt();
 customElements.define(
   "test-limited-unsigned-long",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter(value) {
-          value = stringToInteger(value ?? "", true, 1);
-          return value <= 0 ? 1 : value;
-        },
+        converter: testLimitedUnsignedLong.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? 1;
+      return this[TEST] ?? testLimitedUnsignedLong.defaultValue;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value === 0) {
-        throw new DOMException("", "IndexSizeError");
-      }
-      if (value < 1 || 0x7fffffff < value) {
-        value = 1;
-      }
-      this.setAttribute("test", value);
+      value = testLimitedUnsignedLong.coerceValue(value);
+      testLimitedUnsignedLong.setAttribute(this, "test", value);
     }
   },
 );
+const testLimitedUnsignedLongWithFallback = reflectPositiveIntWithFallback();
 customElements.define(
   "test-limited-unsigned-long-with-fallback",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter(value) {
-          value = stringToInteger(value ?? "", true, 1);
-          return value <= 0 ? 1 : value;
-        },
+        converter: testLimitedUnsignedLongWithFallback.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? 1;
+      return this[TEST] ?? testLimitedUnsignedLongWithFallback.defaultValue;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 1 || 0x7fffffff < value) {
-        value = 1;
-      }
-      this.setAttribute("test", value);
+      value = testLimitedUnsignedLongWithFallback.coerceValue(value);
+      testLimitedUnsignedLongWithFallback.setAttribute(this, "test", value);
     }
   },
 );
+const testClampedUnsignedLong = reflectClampedInt({
+  min: 42,
+  defaultValue: 100,
+  max: 1337,
+});
 customElements.define(
   "test-clamped-unsigned-long",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter(value) {
-          let result = /^[ \t\n\f\r]*([+-]?[0-9]+)/.exec(value ?? "");
-          if (result) {
-            var resultInt = parseInt(result[1], 10);
-            if (resultInt >= 0) {
-              return Math.max(42, Math.min(resultInt, 1337));
-            }
-          }
-          return 100;
-        },
+        converter: testClampedUnsignedLong.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? 100;
+      return this[TEST] ?? testClampedUnsignedLong.defaultValue;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 0 || 0x7fffffff < value) {
-        value = 100;
-      }
-      this.setAttribute("test", value);
+      value = testClampedUnsignedLong.coerceValue(value);
+      testClampedUnsignedLong.setAttribute(this, "test", value);
     }
   },
 );
+const testDouble = reflectDouble();
 customElements.define(
   "test-double",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter: (value) => stringToDouble(value ?? "", false, 0.0),
+        converter: testDouble.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? 0.0;
+      return this[TEST] ?? testDouble.defaultValue;
     }
     set test(value) {
-      value = coerceToDouble(value);
-      this.setAttribute("test", value);
+      value = testDouble.coerceValue(value);
+      testDouble.setAttribute(this, "test", value);
     }
   },
 );
+const testLimitedDouble = reflectPositiveDouble();
 customElements.define(
   "test-limited-double",
   class extends LitElement {
     static properties = {
       [TEST]: {
         attribute: "test",
-        converter: (value) => stringToDouble(value ?? "", true, 1.0),
+        converter: testLimitedDouble.fromAttribute,
       },
     };
     get test() {
-      return this[TEST] ?? 1.0;
+      return this[TEST] ?? testLimitedDouble.defaultValue;
     }
     set test(value) {
-      value = coerceToDouble(value);
-      if (value <= 0) {
-        return;
-      }
-      this.setAttribute("test", value);
+      value = testLimitedDouble.coerceValue(value);
+      testLimitedDouble.setAttribute(this, "test", value);
     }
   },
 );

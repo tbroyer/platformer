@@ -1,29 +1,34 @@
 import { runTests } from "@platformer/harness";
 import {
-  coerceToBoolean,
-  coerceToDOMString,
-  coerceToDouble,
-  coerceToLong,
-  coerceToUnsignedLong,
-  coerceToUSVString,
-} from "@platformer/webidl";
-import { enumerated } from "@platformer/microsyntaxes";
-import { stringToInteger, stringToDouble } from "@platformer/helpers";
+  reflectBoolean,
+  reflectClampedInt,
+  reflectDouble,
+  reflectEnum,
+  reflectInt,
+  reflectNonNegativeInt,
+  reflectNullableEnum,
+  reflectPositiveDouble,
+  reflectPositiveInt,
+  reflectPositiveIntWithFallback,
+  reflectString,
+  reflectURL,
+  reflectUnsignedInt,
+} from "@platformer/reflect";
 
 customElements.define(
   "test-string",
   class extends HTMLElement {
-    #test = "";
+    #test = reflectString.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToDOMString(value);
-      this.setAttribute("test", value);
+      value = reflectString.coerceValue(value);
+      reflectString.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = newValue ?? "";
+      this.#test = reflectString.fromAttribute(newValue);
     }
   },
 );
@@ -31,32 +36,22 @@ customElements.define(
 customElements.define(
   "test-url",
   class extends HTMLElement {
-    #test = "";
+    #test = null;
     get test() {
-      return this.#test;
+      return reflectURL.fromAttribute(this, this.#test);
     }
     set test(value) {
-      value = coerceToUSVString(value);
-      this.setAttribute("test", value);
+      value = reflectURL.coerceValue(value);
+      reflectURL.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = this.#parseURL(newValue);
-    }
-    #parseURL(value) {
-      if (value == null) {
-        return "";
-      }
-      try {
-        return new URL(value, this.ownerDocument.baseURI).toString();
-      } catch (e) {
-        return value;
-      }
+      this.#test = newValue;
     }
   },
 );
 
-const testEnum = enumerated({
+const testEnum = reflectEnum({
   keywords: ["", "one", "two", "three", "missing", "invalid"],
   aliases: { empty: "", un: "one", deux: "two", trois: "three" },
   missing: "missing",
@@ -65,42 +60,38 @@ const testEnum = enumerated({
 customElements.define(
   "test-enum",
   class extends HTMLElement {
-    #test = "missing";
+    #test = testEnum.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToDOMString(value);
-      this.setAttribute("test", value);
+      value = testEnum.coerceValue(value);
+      testEnum.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = testEnum(newValue) ?? "";
+      this.#test = testEnum.fromAttribute(newValue);
     }
   },
 );
-const testNullableEnum = enumerated({
+const testNullableEnum = reflectNullableEnum({
   keywords: ["use-credentials", "anonymous"],
   invalid: "anonymous",
 });
 customElements.define(
   "test-nullable-enum",
   class extends HTMLElement {
-    #test = null;
+    #test = testNullableEnum.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      if (value == null) {
-        this.removeAttribute("test");
-      } else {
-        value = coerceToDOMString(value);
-        this.setAttribute("test", value);
-      }
+      value = testNullableEnum.coerceValue(value);
+      testNullableEnum.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = testNullableEnum(newValue) ?? null;
+      this.#test = testNullableEnum.fromAttribute(newValue);
     }
   },
 );
@@ -108,17 +99,17 @@ customElements.define(
 customElements.define(
   "test-boolean",
   class extends HTMLElement {
-    #test = false;
+    #test = reflectBoolean.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToBoolean(value);
-      this.toggleAttribute("test", value);
+      value = reflectBoolean.coerceValue(value);
+      reflectBoolean.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = newValue != null;
+      this.#test = reflectBoolean.fromAttribute(newValue);
     }
   },
 );
@@ -126,169 +117,148 @@ customElements.define(
 customElements.define(
   "test-long",
   class extends HTMLElement {
-    #test = 42;
+    #reflectInt = reflectInt({ defaultValue: 42 });
+    #test = this.#reflectInt.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToLong(value);
-      this.setAttribute("test", value);
+      value = this.#reflectInt.coerceValue(value);
+      this.#reflectInt.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = stringToInteger(newValue ?? "", false, 42);
+      this.#test = this.#reflectInt.fromAttribute(newValue);
     }
   },
 );
 customElements.define(
   "test-limited-long",
   class extends HTMLElement {
-    #test = -1;
+    #reflectInt = reflectNonNegativeInt();
+    #test = this.#reflectInt.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToLong(value);
-      if (value < 0) {
-        throw new DOMException("", "IndexSizeError");
-      }
-      this.setAttribute("test", value);
+      value = this.#reflectInt.coerceValue(value);
+      this.#reflectInt.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = stringToInteger(newValue ?? "", true, -1);
+      this.#test = this.#reflectInt.fromAttribute(newValue);
     }
   },
 );
 customElements.define(
   "test-unsigned-long",
   class extends HTMLElement {
-    #test = 42;
+    #reflectInt = reflectUnsignedInt({ defaultValue: 42 });
+    #test = this.#reflectInt.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 0 || 0x7fffffff < value) {
-        value = 42;
-      }
-      this.setAttribute("test", value);
+      value = this.#reflectInt.coerceValue(value);
+      this.#reflectInt.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = stringToInteger(newValue ?? "", true, 42);
+      this.#test = this.#reflectInt.fromAttribute(newValue);
     }
   },
 );
 customElements.define(
   "test-limited-unsigned-long",
   class extends HTMLElement {
-    #test = 1;
+    #reflectInt = reflectPositiveInt();
+    #test = this.#reflectInt.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value === 0) {
-        throw new DOMException("", "IndexSizeError");
-      }
-      if (value < 1 || 0x7fffffff < value) {
-        value = 1;
-      }
-      this.setAttribute("test", value);
+      value = this.#reflectInt.coerceValue(value);
+      this.#reflectInt.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      let value = stringToInteger(newValue ?? "", true, 1);
-      this.#test = value <= 0 ? 1 : value;
+      this.#test = this.#reflectInt.fromAttribute(newValue);
     }
   },
 );
 customElements.define(
   "test-limited-unsigned-long-with-fallback",
   class extends HTMLElement {
-    #test = 1;
+    #reflectInt = reflectPositiveIntWithFallback();
+    #test = this.#reflectInt.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 1 || 0x7fffffff < value) {
-        value = 1;
-      }
-      this.setAttribute("test", value);
+      value = this.#reflectInt.coerceValue(value);
+      this.#reflectInt.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      let value = stringToInteger(newValue ?? "", true, 1);
-      this.#test = value <= 0 ? 1 : value;
+      this.#test = this.#reflectInt.fromAttribute(newValue);
     }
   },
 );
 customElements.define(
   "test-clamped-unsigned-long",
   class extends HTMLElement {
-    #test = 100;
+    #reflectInt = reflectClampedInt({
+      min: 42,
+      defaultValue: 100,
+      max: 1337,
+    });
+    #test = this.#reflectInt.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 0 || 0x7fffffff < value) {
-        value = 100;
-      }
-      this.setAttribute("test", value);
+      value = this.#reflectInt.coerceValue(value);
+      this.#reflectInt.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = this.#parseClampedInt(newValue ?? "");
-    }
-    #parseClampedInt(value) {
-      let result = /^[ \t\n\f\r]*([+-]?[0-9]+)/.exec(value);
-      if (result) {
-        let resultInt = parseInt(result[1], 10);
-        if (resultInt >= 0) {
-          return Math.max(42, Math.min(resultInt, 1337));
-        }
-      }
-      return 100;
+      this.#test = this.#reflectInt.fromAttribute(newValue);
     }
   },
 );
 customElements.define(
   "test-double",
   class extends HTMLElement {
-    #test = 0.0;
+    #reflectDouble = reflectDouble();
+    #test = this.#reflectDouble.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToDouble(value);
-      this.setAttribute("test", value);
+      value = this.#reflectDouble.coerceValue(value);
+      this.#reflectDouble.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = stringToDouble(newValue ?? "", false, 0.0);
+      this.#test = this.#reflectDouble.fromAttribute(newValue);
     }
   },
 );
 customElements.define(
   "test-limited-double",
   class extends HTMLElement {
-    #test = 1.0;
+    #reflectDouble = reflectPositiveDouble();
+    #test = this.#reflectDouble.defaultValue;
     get test() {
       return this.#test;
     }
     set test(value) {
-      value = coerceToDouble(value);
-      if (value <= 0) {
-        return;
-      }
-      this.setAttribute("test", value);
+      value = this.#reflectDouble.coerceValue(value);
+      this.#reflectDouble.setAttribute(this, "test", value);
     }
     static observedAttributes = ["test"];
     attributeChangedCallback(name, oldValue, newValue) {
-      this.#test = stringToDouble(newValue ?? "", true, 1.0);
+      this.#test = this.#reflectDouble.fromAttribute(newValue);
     }
   },
 );

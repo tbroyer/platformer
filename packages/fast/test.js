@@ -1,15 +1,20 @@
 import { runTests } from "@platformer/harness";
 import {
-  coerceToBoolean,
-  coerceToDOMString,
-  coerceToDouble,
-  coerceToLong,
-  coerceToUnsignedLong,
-  coerceToUSVString,
-} from "@platformer/webidl";
-import { enumerated } from "@platformer/microsyntaxes";
-import { stringToInteger, stringToDouble } from "@platformer/helpers";
-import { DOM, FASTElement } from "@microsoft/fast-element";
+  reflectBoolean,
+  reflectClampedInt,
+  reflectDouble,
+  reflectEnum,
+  reflectInt,
+  reflectNonNegativeInt,
+  reflectNullableEnum,
+  reflectPositiveDouble,
+  reflectPositiveInt,
+  reflectPositiveIntWithFallback,
+  reflectString,
+  reflectURL,
+  reflectUnsignedInt,
+} from "@platformer/reflect";
+import { FASTElement } from "@microsoft/fast-element";
 
 FASTElement.define(
   class extends FASTElement {
@@ -18,11 +23,11 @@ FASTElement.define(
       attributes: [{ property: "_test", attribute: "test", mode: "fromView" }],
     };
     get test() {
-      return this._test ?? "";
+      return reflectString.fromAttribute(this._test);
     }
     set test(value) {
-      value = coerceToDOMString(value);
-      this.setAttribute("test", value);
+      value = reflectString.coerceValue(value);
+      reflectString.setAttribute(this, "test", value);
     }
   },
 );
@@ -34,24 +39,16 @@ FASTElement.define(
       attributes: [{ property: "_test", attribute: "test", mode: "fromView" }],
     };
     get test() {
-      let value = this._test;
-      if (value == null) {
-        return "";
-      }
-      try {
-        return new URL(value, this.ownerDocument.baseURI).toString();
-      } catch (e) {
-        return value;
-      }
+      return reflectURL.fromAttribute(this, this._test);
     }
     set test(value) {
-      value = coerceToUSVString(value);
-      this.setAttribute("test", value);
+      value = reflectURL.coerceValue(value);
+      reflectURL.setAttribute(this, "test", value);
     }
   },
 );
 
-const testEnum = enumerated({
+const testEnum = reflectEnum({
   keywords: ["", "one", "two", "three", "missing", "invalid"],
   aliases: { empty: "", un: "one", deux: "two", trois: "three" },
   missing: "missing",
@@ -67,21 +64,21 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView: (value) => testEnum(value) ?? "",
+            fromView: testEnum.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? "missing";
+      return this._test ?? testEnum.defaultValue;
     }
     set test(value) {
-      value = coerceToDOMString(value);
-      this.setAttribute("test", value);
+      value = testEnum.coerceValue(value);
+      testEnum.setAttribute(this, "test", value);
     }
   },
 );
-const testNullableEnum = enumerated({
+const testNullableEnum = reflectNullableEnum({
   keywords: ["use-credentials", "anonymous"],
   invalid: "anonymous",
 });
@@ -95,19 +92,17 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView: (value) => testNullableEnum(value) ?? null,
+            fromView: testNullableEnum.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? null;
+      return this._test ?? testNullableEnum.defaultValue;
     }
     set test(value) {
-      if (value != null) {
-        value = coerceToDOMString(value);
-      }
-      DOM.setAttribute(this, "test", value);
+      value = testNullableEnum.coerceValue(value);
+      testNullableEnum.setAttribute(this, "test", value);
     }
   },
 );
@@ -121,24 +116,21 @@ FASTElement.define(
           property: "_test",
           attribute: "test",
           mode: "fromView",
-          converter: {
-            fromView(value) {
-              return value != null;
-            },
-          },
+          converter: { fromView: reflectBoolean.fromAttribute },
         },
       ],
     };
     get test() {
-      return this._test ?? false;
+      return this._test ?? reflectBoolean.defaultValue;
     }
     set test(value) {
-      value = coerceToBoolean(value);
-      this.toggleAttribute("test", value);
+      value = reflectBoolean.coerceValue(value);
+      reflectBoolean.setAttribute(this, "test", value);
     }
   },
 );
 
+const testLong = reflectInt({ defaultValue: 42 });
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -149,20 +141,21 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView: (value) => stringToInteger(value ?? "", false, 42),
+            fromView: testLong.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? 42;
+      return this._test ?? testLong.defaultValue;
     }
     set test(value) {
-      value = coerceToLong(value);
-      this.setAttribute("test", value);
+      value = testLong.coerceValue(value);
+      testLong.setAttribute(this, "test", value);
     }
   },
 );
+const testLimitedLong = reflectNonNegativeInt();
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -173,23 +166,21 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView: (value) => stringToInteger(value ?? "", true, -1),
+            fromView: testLimitedLong.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? -1;
+      return this._test ?? testLimitedLong.defaultValue;
     }
     set test(value) {
-      value = coerceToLong(value);
-      if (value < 0) {
-        throw new DOMException("", "IndexSizeError");
-      }
-      this.setAttribute("test", value);
+      value = testLimitedLong.coerceValue(value);
+      testLimitedLong.setAttribute(this, "test", value);
     }
   },
 );
+const testUnsignedLong = reflectUnsignedInt({ defaultValue: 42 });
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -200,23 +191,21 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView: (value) => stringToInteger(value ?? "", true, 42),
+            fromView: testUnsignedLong.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? 42;
+      return this._test ?? testUnsignedLong.defaultValue;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 0 || 0x7fffffff < value) {
-        value = 42;
-      }
-      this.setAttribute("test", value);
+      value = testUnsignedLong.coerceValue(value);
+      testUnsignedLong.setAttribute(this, "test", value);
     }
   },
 );
+const testLimitedUnsignedLong = reflectPositiveInt();
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -227,29 +216,21 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView(value) {
-              value = stringToInteger(value ?? "", true, 1);
-              return value <= 0 ? 1 : value;
-            },
+            fromView: testLimitedUnsignedLong.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? 1;
+      return this._test ?? testLimitedUnsignedLong.defaultValue;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value === 0) {
-        throw new DOMException("", "IndexSizeError");
-      }
-      if (value < 1 || 0x7fffffff < value) {
-        value = 1;
-      }
-      this.setAttribute("test", value);
+      value = testLimitedUnsignedLong.coerceValue(value);
+      testLimitedUnsignedLong.setAttribute(this, "test", value);
     }
   },
 );
+const testLimitedUnsignedLongWithFallback = reflectPositiveIntWithFallback();
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -260,26 +241,25 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView(value) {
-              value = stringToInteger(value ?? "", true, 1);
-              return value <= 0 ? 1 : value;
-            },
+            fromView: testLimitedUnsignedLongWithFallback.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? 1;
+      return this._test ?? testLimitedUnsignedLongWithFallback.defaultValue;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 1 || 0x7fffffff < value) {
-        value = 1;
-      }
-      this.setAttribute("test", value);
+      value = testLimitedUnsignedLongWithFallback.coerceValue(value);
+      testLimitedUnsignedLongWithFallback.setAttribute(this, "test", value);
     }
   },
 );
+const testClampedUnsignedLong = reflectClampedInt({
+  min: 42,
+  defaultValue: 100,
+  max: 1337,
+});
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -290,32 +270,21 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView(value) {
-              let result = /^[ \t\n\f\r]*([+-]?[0-9]+)/.exec(value ?? "");
-              if (result) {
-                var resultInt = parseInt(result[1], 10);
-                if (resultInt >= 0) {
-                  return Math.max(42, Math.min(resultInt, 1337));
-                }
-              }
-              return 100;
-            },
+            fromView: testClampedUnsignedLong.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? 100;
+      return this._test ?? testClampedUnsignedLong.defaultValue;
     }
     set test(value) {
-      value = coerceToUnsignedLong(value);
-      if (value < 0 || 0x7fffffff < value) {
-        value = 100;
-      }
-      this.setAttribute("test", value);
+      value = testClampedUnsignedLong.coerceValue(value);
+      testClampedUnsignedLong.setAttribute(this, "test", value);
     }
   },
 );
+const testDouble = reflectDouble();
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -326,20 +295,21 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView: (value) => stringToDouble(value ?? "", false, 0.0),
+            fromView: testDouble.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? 0.0;
+      return this._test ?? testDouble.defaultValue;
     }
     set test(value) {
-      value = coerceToDouble(value);
-      this.setAttribute("test", value);
+      value = testDouble.coerceValue(value);
+      testDouble.setAttribute(this, "test", value);
     }
   },
 );
+const testLimitedDouble = reflectPositiveDouble();
 FASTElement.define(
   class extends FASTElement {
     static definition = {
@@ -350,20 +320,17 @@ FASTElement.define(
           attribute: "test",
           mode: "fromView",
           converter: {
-            fromView: (value) => stringToDouble(value ?? "", true, 1.0),
+            fromView: testLimitedDouble.fromAttribute,
           },
         },
       ],
     };
     get test() {
-      return this._test ?? 1.0;
+      return this._test ?? testLimitedDouble.defaultValue;
     }
     set test(value) {
-      value = coerceToDouble(value);
-      if (value <= 0) {
-        return;
-      }
-      this.setAttribute("test", value);
+      value = testLimitedDouble.coerceValue(value);
+      testLimitedDouble.setAttribute(this, "test", value);
     }
   },
 );

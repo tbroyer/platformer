@@ -6,6 +6,7 @@
     "test": "wtr test.js"
   },
   "dependencies": {
+    "@platformer/reflect": "*",
     "lit": "^3.1.2"
   }
 }

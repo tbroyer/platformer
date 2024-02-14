@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/helpers",
+  "name": "@platformer/reflect",
   "private": true,
   "type": "module",
   "main": "index.js",
@@ -8,5 +8,9 @@
   },
   "scripts": {
     "test": ""
+  },
+  "dependencies": {
+    "@platformer/microsyntaxes": "*",
+    "@platformer/webidl": "*"
   }
 }

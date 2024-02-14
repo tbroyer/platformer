@@ -4,5 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "wtr test.js cached.test.js"
+  },
+  "dependencies": {
+    "@platformer/reflect": "*"
   }
 }
