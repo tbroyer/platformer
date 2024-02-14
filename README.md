@@ -17,6 +17,7 @@ This repository forked from [Custom Elements Reflection Tests](https://github.co
 ## Libraries
 
 - [**@platformer/webidl**](packages/webidl/README.md) implements the [WebIDL type coercion rules](https://webidl.spec.whatwg.org/#js-type-mapping)
+- [**@platformer/microsyntaxes**](packages/microsyntaxes/README.md) implements the [HTML common microsyntaxes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html)
 
 - A [vanilla implementation](packages/vanilla/README.md) (i.e. without any library/framework)
 - A [Lit implementation](packages/lit/README.md)
