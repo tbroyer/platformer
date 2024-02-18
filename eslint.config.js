@@ -4,7 +4,7 @@ import babelParser from "@babel/eslint-parser";
 
 export default [
   {
-    files: ["packages/vanilla/**/*.js"],
+    files: ["packages/lit/**/*.js", "packages/vanilla/**/*.js"],
     languageOptions: {
       parser: babelParser,
       parserOptions: {
