@@ -19,3 +19,20 @@ IDL integer types come with variants prefixed with `Clamped` and `Enforced` corr
 ```js
 const coerced = coerceToLong("-12.3"); // ← -12 as a JavaScript number
 ```
+
+The package also exports as `@platformer/webidl/decorators.js` a set of [ECMAScript decorators](https://github.com/tc39/proposal-decorators) to coerce a setter's or auto-accessor property setter's value. The decorators follow the same naming rule as the coercion functions they wrap but without the `coerceTo` prefix.
+
+```js
+class Foo {
+  @long accessor bar;
+
+  #baz;
+  get baz() {
+    return this.#baz;
+  }
+  @long set baz(value) {
+    // `value` has been coerced to a `long`
+    this.#baz = value;
+  }
+}
+```

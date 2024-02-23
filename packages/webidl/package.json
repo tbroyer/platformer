@@ -4,7 +4,8 @@
   "type": "module",
   "main": "index.js",
   "exports": {
-    ".": "./index.js"
+    ".": "./index.js",
+    "./decorators.js": "./decorators.js"
   },
   "scripts": {
     "test": "node --test"
