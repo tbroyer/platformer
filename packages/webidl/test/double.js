@@ -8,7 +8,7 @@ import {
   coerceToUnrestrictedDouble,
   coerceToFloat,
   coerceToUnrestrictedFloat,
-} from "../index.js";
+} from "@platformer/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 function assertIs(actual, expected, message) {

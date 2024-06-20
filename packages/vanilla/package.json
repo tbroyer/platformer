@@ -2,6 +2,10 @@
   "name": "@platformer/vanilla",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./cached.js": "./cached.js"
+  },
   "scripts": {
     "test": "wtr test.js cached.test.js"
   },

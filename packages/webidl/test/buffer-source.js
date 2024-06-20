@@ -20,7 +20,7 @@ import {
   coerceToUint8ClampedArray,
   coerceToFloat32Array,
   coerceToFloat64Array,
-} from "../index.js";
+} from "@platformer/webidl";
 
 const conversions = {
   "ArrayBufferView": coerceToArrayBufferView,

@@ -14,7 +14,7 @@ import {
   reflectClampedInt,
   reflectDouble,
   reflectPositiveDouble,
-} from "./cached.js";
+} from "@platformer/vanilla/cached.js";
 
 customElements.define(
   "test-string",

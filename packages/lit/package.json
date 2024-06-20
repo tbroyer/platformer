@@ -2,6 +2,9 @@
   "name": "@platformer/lit",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
   "scripts": {
     "test": "wtr test.js"
   },

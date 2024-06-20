@@ -15,7 +15,7 @@ import {
   reflectString,
   reflectURL,
   reflectUnsignedInt,
-} from ".";
+} from "@platformer/lit";
 
 /* eslint-disable no-unused-vars */
 

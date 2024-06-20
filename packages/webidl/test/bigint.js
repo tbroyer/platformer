@@ -2,7 +2,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { coerceToBigInt as sut } from "../index.js";
+import { coerceToBigInt as sut } from "@platformer/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 describe("WebIDL bigint type", () => {

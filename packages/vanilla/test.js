@@ -13,7 +13,7 @@ import {
   reflectClampedInt,
   reflectDouble,
   reflectPositiveDouble,
-} from ".";
+} from "@platformer/vanilla";
 
 customElements.define(
   "test-string",

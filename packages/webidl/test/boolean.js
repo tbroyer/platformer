@@ -4,7 +4,7 @@ import { describe, it } from 'node:test';
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-import { coerceToBoolean as sut } from "../index.js";
+import { coerceToBoolean as sut } from "@platformer/webidl";
 
 describe("WebIDL boolean type", () => {
   it("should return `false` for `undefined`", () => {
