@@ -6,7 +6,7 @@
     "test": "wtr test.js"
   },
   "dependencies": {
-    "@microsoft/fast-element": "^1.12.0",
+    "@microsoft/fast-element": "^2.0.0",
     "@platformer/reflect": "*"
   }
 }

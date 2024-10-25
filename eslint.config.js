@@ -11,7 +11,7 @@ export default [
         requireConfigFile: false,
         babelOptions: {
           plugins: [
-            ["@babel/plugin-proposal-decorators", { version: "2023-05" }],
+            ["@babel/plugin-proposal-decorators", { version: "2023-11" }],
           ],
         },
       },

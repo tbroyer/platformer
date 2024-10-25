@@ -33,7 +33,7 @@ export const reflectURL = Object.freeze({
     }
     try {
       return new URL(value, elt.ownerDocument.baseURI).toString();
-    } catch (e) {
+    } catch {
       return value;
     }
   },

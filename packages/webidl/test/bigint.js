@@ -1,4 +1,3 @@
-/* eslint-disable no-new-wrappers */
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
