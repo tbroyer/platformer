@@ -1,0 +1,14 @@
+{
+  "name": "@platformer/event-handler",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "dependencies": {
+    "@platformer/webidl": "*"
+  }
+}
