@@ -253,7 +253,21 @@ export function coerceToSymbol(value) {
   return value;
 }
 
-// Interface types, callback interface types, dictionary types, enumeration types, callback function types, sequences, records, unions, frozen array
+// Interface types, callback interface types, dictionary types, enumeration types, sequences, records, unions, frozen array
+
+export function coerceToCallbackFunction(value) {
+  if (typeof value !== "function") {
+    throw new TypeError();
+  }
+  return value;
+}
+
+export function coerceToLegacyCallbackFunction(value) {
+  if (!isObject(value)) {
+    return null;
+  }
+  return value;
+}
 
 export function coerceToPromise(value) {
   return Promise.resolve(value);

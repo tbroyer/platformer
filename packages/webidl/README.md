@@ -8,8 +8,8 @@ This package implements the [WebIDL type coercion rules](https://webidl.spec.wha
 
 ## TODO
 
-Currently, only scalar values (boolean, integer and floating-point numbers, bigint, strings, and symbol) as well as `object` and `Promise` are implemented;
-no arrays (sequences, etc.), callbacks, interfaces, records, enumerations, unions, or buffer sources (typed arrays and array views).
+Currently, only scalar values (boolean, integer and floating-point numbers, bigint, strings, and symbol) as well as `object`, callback functions and `Promise` are implemented;
+no arrays (sequences, etc.), interfaces, records, enumerations, unions, or buffer sources (typed arrays and array views).
 
 ## API
 
