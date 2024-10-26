@@ -36,6 +36,8 @@ import {
   coerceToUnsignedLong,
   coerceToUnsignedLongLong,
   coerceToUnsignedShort,
+  coerceToCallbackFunction,
+  coerceToLegacyCallbackFunction,
 } from "./index.js";
 
 /**
@@ -116,3 +118,7 @@ export const unrestrictedFloat = coerceDecorator(coerceToUnrestrictedFloat);
 export const unsignedLong = coerceDecorator(coerceToUnsignedLong);
 export const unsignedLongLong = coerceDecorator(coerceToUnsignedLongLong);
 export const unsignedShort = coerceDecorator(coerceToUnsignedShort);
+export const callbackFunction = coerceDecorator(coerceToCallbackFunction);
+export const legacyCallbackFunction = coerceDecorator(
+  coerceToLegacyCallbackFunction,
+);

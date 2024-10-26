@@ -232,3 +232,18 @@ export const symbol: ClassAccessorOrSetterDecorator<symbol>;
  * @see {@link coerceToPromise}
  */
 export const promise: ClassAccessorOrSetterDecorator<Promise<unknown>>;
+/**
+ * Coerce a setter or an auto-accessor's setter value to IDL `callback` function
+ *
+ * @see {@link coerceToCallbackFunction}
+ */
+export type callbackFunction<F extends (...args: any[]) => any> =
+  ClassAccessorOrSetterDecorator<F>;
+export const callbackFunction: callbackFunction<(...args: any[]) => any>;
+/**
+ * Coerce a setter or an auto-accessor's setter value to IDL `[LegacyTreatNonObjectAsNull] callback` function
+ *
+ * @see {@link coerceToLegacyCallbackFunction}
+ */
+export type legacyCallbackFunction<F extends (...args: any[]) => any | null> =
+  ClassAccessorOrSetterDecorator<F>;

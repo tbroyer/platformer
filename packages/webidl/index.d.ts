@@ -221,12 +221,26 @@ export function coerceToObject(value: any): object;
  */
 export function coerceToSymbol(value: any): symbol;
 /**
+ * Implements coercion to IDL `callback` function
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#js-callback-function | The WebIDL specification}
+ */
+export function coerceToCallbackFunction(value: any): (...args: any[]) => any;
+/**
+ * Implements coercion to IDL `[LegacyTreatNonObjectAsNull] callback` function
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#js-callback-function | The WebIDL specification}
+ */
+export function coerceToLegacyCallbackFunction(
+  value: any,
+): ((...args: any[]) => any) | null;
+/**
  * Implements coercion to IDL `Promise`.
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-promise | The WebIDL specification}
  */
 export function coerceToPromise(value: any): Promise<unknown>;
 
-// Interface types, callback interface types, dictionary types, enumeration types, callback function types, sequences, records, unions, frozen array
+// Interface types, callback interface types, dictionary types, enumeration types, sequences, records, unions, frozen array
 
 // buffer sources
