@@ -5,10 +5,11 @@
   "exports": {
     ".": "./index.js",
     "./cached.js": "./cached.js",
-    "./observed-attributes.js": "./observed-attributes.js"
+    "./observed-attributes.js": "./observed-attributes.js",
+    "./event-handler.js": "./event-handler.js"
   },
   "scripts": {
-    "test": "wtr test.js cached.test.js"
+    "test": "wtr test.js cached.test.js event-handler.test.js"
   },
   "dependencies": {
     "@platformer/reflect": "*",
