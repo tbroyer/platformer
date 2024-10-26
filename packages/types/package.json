@@ -9,6 +9,9 @@
     },
     "./direct.js": {
       "types": "./direct.d.ts"
+    },
+    "./event-handler.js": {
+      "types": "./event-handler.d.ts"
     }
   },
   "scripts": {

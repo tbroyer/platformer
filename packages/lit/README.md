@@ -13,5 +13,18 @@ class MyElement extends LitElement {
 }
 ```
 
+The package also implements the event handler decorator (exposed at `@platformer/lit/event-handler.js`) that can be used independently of the reflection decorators.
+Setting an event handler won't trigger an update.
+
+```js
+class MyElement extends LitElement {
+  @eventHandler() accessor onfoo;
+
+  render() {
+    return html`This won't re-render when <code>onfoo</code> is changed.`;
+  }
+}
+```
+
 > [!IMPORTANT]
-> The decorators _entirely_ implement the annotated properties' accessors, such that other decorators applied _after_ them won't have any effect on the getter and setter (they could still add initializers though)
+> All decorators _entirely_ implement the annotated properties' accessors, such that other decorators applied _after_ them won't have any effect on the getter and setter (they could still add initializers though)

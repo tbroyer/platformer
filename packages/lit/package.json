@@ -3,10 +3,11 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./index.js"
+    ".": "./index.js",
+    "./event-handler.js": "./event-handler.js"
   },
   "scripts": {
-    "test": "wtr test.js"
+    "test": "wtr test.js event-handler.test.js"
   },
   "dependencies": {
     "@platformer/reflect": "*",

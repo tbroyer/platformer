@@ -1,8 +1,8 @@
 # @platformer/types
 
-This package exposes TypeScript types for [decorators](https://github.com/tc39/proposal-decorators) that could theoretically encapsulate the [_@platform/reflect_ package](../reflect/README.md) to cut verbosity by at least 50%.
+This package exposes TypeScript types for [decorators](https://github.com/tc39/proposal-decorators) that could theoretically encapsulate the [_@platform/reflect_](../reflect/README.md) or [_@platform/event-handler_](../event-handler/README.md) packages to cut verbosity by at least 50%.
 
-There are two sets of decorators: direct and cached.
+There are two sets of reflection decorators: direct and cached.
 
 ## _Direct_ decorators
 
@@ -38,6 +38,20 @@ get attr() {
     // The setter will also be called when the attribute changes in any way.
     this.#attr = value;
 }
+```
+
+## Event handler decorator
+
+The `eventHandler` decorator (exposed from `@platformer/types/event-handler.js`) implements an auto-accessor property, and integrates with some form of `attributeChangeCallback` to process the attribute value when it changes.
+
+The event type and the attribute name are passed as options, but can be omitted if the decorator is applied to a non-private property whose name starts with `on`.
+
+```js
+@eventHandler() accessor onfoo;
+
+@eventHandler({ type: "my:foo" }) accessor onmyfoo;
+
+@eventHandler({ type: "foo-bar", attribute: "onfoo-bar" }) accessor onfooBar;
 ```
 
 ## API
