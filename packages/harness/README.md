@@ -5,6 +5,8 @@ and defines a test suite based on them exercizing the various data types,
 to be used for testing custom elements implemented in various ways
 (e.g. with various libraries/frameworks).
 
+It also includes an event handler test suite inspired by WPT ([see below](#usage-event-handler))
+
 ## Usage
 
 1. Create a package in the workspaces to contain the tests.
@@ -89,3 +91,14 @@ The `test-double` element's `test` attribute is of type `double` with no other o
 ### test-limited-double
 
 The `test-limited-double` element's `test` attribute is of type `double` limited to only positive numbers and with a default value of 1.
+
+## Usage (event handler)
+
+1. Create a package in the workspaces to contain the tests.
+2. Implement a `test-handler` custom element with an `onfoo` event handler
+3. Import the `runTests` function from this package's `event-handler.js` and call it
+4. Run the tests (likely using Web Test Runner) by the `test` NPM script,
+   so it's possible to run all tests with `npm -ws run test` at the root.
+
+Note that the test suite will dynamically define an `x-foo` element that inherits the `test-handler` element's class to make it _form-associated_.
+For this, it will call `attachInternals()` so the base class must not call it itself (if this becomes a problem, that `x-foo` element will become a requirement).

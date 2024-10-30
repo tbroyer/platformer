@@ -4,7 +4,8 @@
   "type": "module",
   "main": "index.js",
   "exports": {
-    ".": "./index.js"
+    ".": "./index.js",
+    "./event-handler.js": "./event-handler.js"
   },
   "scripts": {
     "test": ""

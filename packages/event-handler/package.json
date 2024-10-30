@@ -6,7 +6,7 @@
     ".": "./index.js"
   },
   "scripts": {
-    "test": ""
+    "test": "wtr test.js"
   },
   "dependencies": {
     "@platformer/webidl": "*"
