@@ -13,6 +13,22 @@ import {
   reflectDouble as reflectDoubleReflectorFactory,
   reflectPositiveDouble as reflectPositiveDoubleReflectorFactory,
 } from "@platformer/reflect";
+import { addAttribute } from "./observed-attributes.js";
+
+export {
+  BaseElement,
+  getObservedAttributes,
+  reflectAttributeToProperty,
+} from "./observed-attributes.js";
+
+function addObservedAttribute(metadata, name, target, fromAttribute) {
+  addAttribute(metadata, name, function (oldValue, newValue) {
+    if (oldValue === newValue) {
+      return;
+    }
+    target.call(this, fromAttribute(newValue));
+  });
+}
 
 /**
  * @template T
@@ -41,36 +57,6 @@ function validateContext(context) {
   }
 }
 
-// polyfill Symbol.metadata
-Symbol.metadata ??= Symbol("metadata");
-
-const ATTRIBUTES = Symbol();
-
-/** @type {import("./cached.d.ts").getObservedAttributes} */
-export function getObservedAttributes(cls) {
-  return Object.keys(cls[Symbol.metadata]?.[ATTRIBUTES] ?? {});
-}
-
-/** @type {import("./cached.d.ts").reflectAttributeToProperty} */
-export function reflectAttributeToProperty(elt, name, oldValue, newValue) {
-  if (oldValue === newValue) {
-    return;
-  }
-  const mapper = elt.constructor[Symbol.metadata]?.[ATTRIBUTES]?.[name];
-  mapper?.call(elt, newValue);
-}
-
-/** @type {import("./cached.d.ts").BaseElement} */
-export class BaseElement extends HTMLElement {
-  static get observedAttributes() {
-    return getObservedAttributes(this);
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    reflectAttributeToProperty(this, name, oldValue, newValue);
-  }
-}
-
 /**
  * @template T
  * @param {string=} attribute
@@ -87,14 +73,7 @@ function reflectImpl(
     switch (context.kind) {
       case "accessor": {
         const { set } = target;
-        // Make a copy to make sure we're not modifying metadata
-        // inherited from a super class
-        context.metadata[ATTRIBUTES] = {
-          ...(context.metadata[ATTRIBUTES] ?? {}),
-          [attribute](value) {
-            set.call(this, fromAttribute(value));
-          },
-        };
+        addObservedAttribute(context.metadata, attribute, set, fromAttribute);
         return {
           set(value) {
             value = coerceValue(value);
@@ -109,14 +88,12 @@ function reflectImpl(
         };
       }
       case "setter":
-        // Make a copy to make sure we're not modifying metadata
-        // inherited from a super class
-        context.metadata[ATTRIBUTES] = {
-          ...(context.metadata[ATTRIBUTES] ?? {}),
-          [attribute](value) {
-            target.call(this, fromAttribute(value));
-          },
-        };
+        addObservedAttribute(
+          context.metadata,
+          attribute,
+          target,
+          fromAttribute,
+        );
         context.addInitializer(function () {
           target.call(this, defaultValue);
         });
@@ -164,14 +141,9 @@ export function reflectURL({ attribute } = {}) {
   return function ({ get, set }, context) {
     validateContext(context);
     attribute ??= context.name.toLowerCase();
-    // Make a copy to make sure we're not modifying metadata
-    // inherited from a super class
-    context.metadata[ATTRIBUTES] = {
-      ...(context.metadata[ATTRIBUTES] ?? {}),
-      [attribute](value) {
-        set.call(this, value);
-      },
-    };
+    addAttribute(context.metadata, attribute, function (_, newValue) {
+      set.call(this, newValue);
+    });
     return {
       get() {
         return fromAttribute(this, get.call(this));
