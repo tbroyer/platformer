@@ -12,7 +12,8 @@ _Direct_ decorators (exposed as `@platformer/types/direct.js`) implement auto-ac
 @reflectXxx({ ...options }) accessor attr;
 ```
 
-**Important**: the decorators, by definition, _entirely_ implement the annotated properties' accessors, such that other decorators applied _after_ them won't have any effect on the getter and setter (they could still add initializers though)
+> [!IMPORTANT]
+> The decorators, by definition, _entirely_ implement the annotated properties' accessors, such that other decorators applied _after_ them won't have any effect on the getter and setter (they could still add initializers though)
 
 ## _Cached_ decorators
 

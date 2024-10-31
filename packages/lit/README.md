@@ -13,4 +13,5 @@ class MyElement extends LitElement {
 }
 ```
 
-**Important**: the decorators _entirely_ implement the annotated properties' accessors, such that other decorators applied _after_ them won't have any effect on the getter and setter (they could still add initializers though)
+> [!IMPORTANT]
+> The decorators _entirely_ implement the annotated properties' accessors, such that other decorators applied _after_ them won't have any effect on the getter and setter (they could still add initializers though)
