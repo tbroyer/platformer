@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "format": "prettier -w .",
-    "lint": "prettier -l . && eslint ."
+    "lint": "prettier -l . && eslint . && tsc"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.9",
