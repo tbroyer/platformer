@@ -1,4 +1,3 @@
-// TODO: use NoInfer when available (https://devblogs.microsoft.com/typescript/announcing-typescript-5-4-beta/#the-noinfer-utility-type)
 export interface EnumeratedAttributeOptions<
   Keywords extends string,
   Aliases extends string,
@@ -6,11 +5,11 @@ export interface EnumeratedAttributeOptions<
   /** The list of canonical keywords (to be returned by the property getter). */
   keywords: Keywords[];
   /** Non-canonical keywords that can be used as aliases, mapping to the equivalent canonical keyword. */
-  aliases?: Record<Exclude<Aliases, Keywords>, Keywords>;
+  aliases?: Record<Exclude<Aliases, Keywords>, NoInfer<Keywords>>;
   /** The _missing value default_ for the enumerated attribute, that will be returned when the attribute is missing. */
-  missing?: Keywords;
+  missing?: NoInfer<Keywords>;
   /** The _invalid value default_ for the enumerated attribute, that will be returned when an invalid value is provided. */
-  invalid?: Keywords;
+  invalid?: NoInfer<Keywords>;
 }
 
 /**
