@@ -1,7 +1,12 @@
-import { eventHandler as genericEventHandler } from "@platformer/types/event-handler.js";
 import { LitElement } from "lit";
+import type { EventHandler } from "@platformer/event-handler";
+import { ClassAccessorDecorator } from "@platformer/types/event-handler.js";
 
-export type eventHandler<
+export function eventHandler<
   This extends LitElement,
   EventType extends keyof HTMLElementEventMap,
-> = typeof genericEventHandler<This, EventType, HTMLElementEventMap[EventType]>;
+  TEvent extends Event = HTMLElementEventMap[EventType],
+>(options?: {
+  type?: EventType;
+  attribute?: `on${string}`;
+}): ClassAccessorDecorator<This, EventHandler<This, TEvent>>;

@@ -15,11 +15,14 @@ interface ClassAccessorDecorator<This, Value> {
  */
 export function eventHandler<
   This extends EventTarget,
-  EventType extends string,
+  EventType extends This extends HTMLElement
+    ? keyof HTMLElementEventMap
+    : string,
   TEvent extends Event = EventType extends keyof HTMLElementEventMap
     ? HTMLElementEventMap[EventType]
     : Event,
->(options?: {
-  type?: EventType;
-  attribute?: `on${string}`;
-}): ClassAccessorDecorator<This, EventHandler<This, TEvent>>;
+>(
+  options?: { type?: EventType } & (This extends HTMLElement
+    ? { attribute?: `on${string}` }
+    : {}),
+): ClassAccessorDecorator<This, EventHandler<This, TEvent>>;

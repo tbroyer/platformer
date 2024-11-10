@@ -5,7 +5,11 @@ export interface EnumeratedAttributeOptions<
   /** The list of canonical keywords (to be returned by the property getter). */
   keywords: Keywords[];
   /** Non-canonical keywords that can be used as aliases, mapping to the equivalent canonical keyword. */
-  aliases?: Record<Exclude<Aliases, Keywords>, NoInfer<Keywords>>;
+  aliases?: {
+    [Alias in Aliases]: Alias extends Keywords
+      ? ["Error: alias is a known keyword"]
+      : NoInfer<Keywords>;
+  };
   /** The _missing value default_ for the enumerated attribute, that will be returned when the attribute is missing. */
   missing?: NoInfer<Keywords>;
   /** The _invalid value default_ for the enumerated attribute, that will be returned when an invalid value is provided. */
@@ -42,9 +46,10 @@ export interface ParseEnum<Keywords extends string> {
  * @param options - the options of the enumerated attribute, including keywords
  * @returns a function to determine the state of an enumerated attribute.
  */
-export function enumerated<Keywords extends string, Aliases extends string>(
-  options: EnumeratedAttributeOptions<Keywords, Aliases>,
-): ParseEnum<Keywords>;
+export function enumerated<
+  const Keywords extends string,
+  const Aliases extends string,
+>(options: EnumeratedAttributeOptions<Keywords, Aliases>): ParseEnum<Keywords>;
 
 /**
  * Implement the [rules for parsing integers](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-integers)

@@ -8,6 +8,6 @@
     "./decorators.js": "./decorators.js"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test && tstyche"
   }
 }

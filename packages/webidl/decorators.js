@@ -42,13 +42,8 @@ import {
 
 /**
  * @template T
- * @typedef {import("./decorators.d.ts").ClassAccessorOrSetterDecorator<T>} ClassAccessorOrSetterDecorator
- */
-
-/**
- * @template T
  * @param {(value: any) => T} coerceValue
- * @returns {ClassAccessorOrSetterDecorator<T>}
+ * @returns {import("./decorators.js").ClassAccessorOrSetterDecorator<T>}
  */
 function coerceDecorator(coerceValue) {
   return function (target, context) {

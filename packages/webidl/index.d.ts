@@ -21,225 +21,231 @@ export function coerceToBoolean(value: any): boolean;
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-byte | The WebIDL specification}
  */
-export function coerceToByte(value: any): number;
+export function coerceToByte<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[Clamp] byte`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-byte | The WebIDL specification}
  */
-export function coerceToClampedByte(value: any): number;
+export function coerceToClampedByte<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[EnforceRange] byte`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-byte | The WebIDL specification}
  */
-export function coerceToEnforcedByte(value: any): number;
+export function coerceToEnforcedByte<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `octet`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-octet | The WebIDL specification}
  */
-export function coerceToOctet(value: any): number;
+export function coerceToOctet<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[Clamp] octet`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-octet | The WebIDL specification}
  */
-export function coerceToClampedOctet(value: any): number;
+export function coerceToClampedOctet<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[EnforceRange] octet`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-octet | The WebIDL specification}
  */
-export function coerceToEnforcedOctet(value: any): number;
+export function coerceToEnforcedOctet<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `short`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-short | The WebIDL specification}
  */
-export function coerceToShort(value: any): number;
+export function coerceToShort<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[Clamp] short`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-short | The WebIDL specification}
  */
-export function coerceToClampedShort(value: any): number;
+export function coerceToClampedShort<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[EnforceRange] short`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-short | The WebIDL specification}
  */
-export function coerceToEnforcedShort(value: any): number;
+export function coerceToEnforcedShort<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `unsigned short`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-short | The WebIDL specification}
  */
-export function coerceToUnsignedShort(value: any): number;
+export function coerceToUnsignedShort<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[Clamp] unsigned short`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-short | The WebIDL specification}
  */
-export function coerceToClampedUnsignedShort(value: any): number;
+export function coerceToClampedUnsignedShort<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[EnforceRange] unsigned short`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-short | The WebIDL specification}
  */
-export function coerceToEnforcedUnsignedShort(value: any): number;
+export function coerceToEnforcedUnsignedShort<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-long | The WebIDL specification}
  */
-export function coerceToLong(value: any): number;
+export function coerceToLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[Clamp] long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-long | The WebIDL specification}
  */
-export function coerceToClampedLong(value: any): number;
+export function coerceToClampedLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[EnforceRange] long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-long | The WebIDL specification}
  */
-export function coerceToEnforcedLong(value: any): number;
+export function coerceToEnforcedLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `unsignedLong`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-long | The WebIDL specification}
  */
-export function coerceToUnsignedLong(value: any): number;
+export function coerceToUnsignedLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[Clamp] unsigned long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-long | The WebIDL specification}
  */
-export function coerceToClampedUnsignedLong(value: any): number;
+export function coerceToClampedUnsignedLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[enforceRange] unsigned long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-long | The WebIDL specification}
  */
-export function coerceToEnforcedUnsignedLong(value: any): number;
+export function coerceToEnforcedUnsignedLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `long long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-long-long | The WebIDL specification}
  */
-export function coerceToLongLong(value: any): number;
+export function coerceToLongLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[Clamp] long long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-long-long | The WebIDL specification}
  */
-export function coerceToClampedLongLong(value: any): number;
+export function coerceToClampedLongLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[EnforceRange] long long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-long-long | The WebIDL specification}
  */
-export function coerceToEnforcedLongLong(value: any): number;
+export function coerceToEnforcedLongLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `unsigned long long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-long-long | The WebIDL specification}
  */
-export function coerceToUnsignedLongLong(value: any): number;
+export function coerceToUnsignedLongLong<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `[Clamp] unsigned long long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-long-long | The WebIDL specification}
  */
-export function coerceToClampedUnsignedLongLong(value: any): number;
+export function coerceToClampedUnsignedLongLong<R extends number>(
+  value: any,
+): R;
 /**
  * Implements coercion to IDL `[EnforceRange] unsigned long long`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unsigned-long-long | The WebIDL specification}
  */
-export function coerceToEnforcedUnsignedLongLong(value: any): number;
+export function coerceToEnforcedUnsignedLongLong<R extends number>(
+  value: any,
+): R;
 /**
  * Implements coercion to IDL `float`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-float | The WebIDL specification}
  */
-export function coerceToFloat(value: any): number;
+export function coerceToFloat<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `unrestricted float`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unrestricted-float | The WebIDL specification}
  */
-export function coerceToUnrestrictedFloat(value: any): number;
+export function coerceToUnrestrictedFloat<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `double`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-double | The WebIDL specification}
  */
-export function coerceToDouble(value: any): number;
+export function coerceToDouble<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `unrestricted double`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-unrestricted-double | The WebIDL specification}
  */
-export function coerceToUnrestrictedDouble(value: any): number;
+export function coerceToUnrestrictedDouble<R extends number>(value: any): R;
 /**
  * Implements coercion to IDL `bigint`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-bigint | The WebIDL specification}
  */
-export function coerceToBigInt(value: any): bigint;
+export function coerceToBigInt<R extends bigint>(value: any): R;
 /**
  * Implements coercion to IDL `DOMString`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-DOMString | The WebIDL specification}
  */
-export function coerceToDOMString(value: any): string;
+export function coerceToDOMString<R extends string>(value: any): R;
 /**
  * Implements coercion to IDL `ByteString`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-ByteString | The WebIDL specification}
  */
-export function coerceToByteString(value: any): string;
+export function coerceToByteString<R extends string>(value: any): R;
 /**
- * Implements coercion to IDL `ByteString`
+ * Implements coercion to IDL `USVString`
  *
- * @see {@link https://webidl.spec.whatwg.org/#js-ByteString | The WebIDL specification}
+ * @see {@link https://webidl.spec.whatwg.org/#js-USVString | The WebIDL specification}
  */
-export function coerceToUSVString(value: any): string;
+export function coerceToUSVString<R extends string>(value: any): R;
 /**
  * Implements coercion to IDL `object`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-object | The WebIDL specification}
  */
-export function coerceToObject(value: any): object;
+export function coerceToObject<R extends object>(value: any): R;
 /**
  * Implements coercion to IDL `symbol`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-symbol | The WebIDL specification}
  */
-export function coerceToSymbol(value: any): symbol;
+export function coerceToSymbol<R extends symbol>(value: any): R;
 /**
  * Implements coercion to IDL `callback` function
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-callback-function | The WebIDL specification}
  */
-export function coerceToCallbackFunction(value: any): (...args: any[]) => any;
+export function coerceToCallbackFunction<R extends (...args: any[]) => any>(
+  value: any,
+): R;
 /**
  * Implements coercion to IDL `[LegacyTreatNonObjectAsNull] callback` function
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-callback-function | The WebIDL specification}
  */
-export function coerceToLegacyCallbackFunction(
-  value: any,
-): ((...args: any[]) => any) | null;
+export function coerceToLegacyCallbackFunction<
+  R extends (...args: any[]) => any,
+>(value: any): R | null;
 /**
  * Implements coercion to IDL `Promise`.
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-promise | The WebIDL specification}
  */
-export function coerceToPromise(value: any): Promise<unknown>;
+export function coerceToPromise<R>(value: any): Promise<Awaited<R>>;
 
 // Interface types, callback interface types, dictionary types, enumeration types, sequences, records, unions, frozen array
 

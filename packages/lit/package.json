@@ -7,7 +7,7 @@
     "./event-handler.js": "./event-handler.js"
   },
   "scripts": {
-    "test": "wtr test.js event-handler.test.js"
+    "test": "wtr test.js event-handler.test.js && tstyche"
   },
   "dependencies": {
     "@platformer/reflect": "*",
