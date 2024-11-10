@@ -71,7 +71,7 @@ export const reflectURL: {
   /** {@inheritDoc Reflector.coerceValue} */
   coerceValue(value: any): string;
   /** {@inheritDoc Reflector.setAttribute} */
-  setAttribute(elt: Element, value: string): void;
+  setAttribute(elt: Element, attribute: string, value: string): void;
 };
 
 /**
