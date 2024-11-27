@@ -1,5 +1,5 @@
 import { expect, test } from "tstyche";
-import { eventHandler } from "@platformer/types/event-handler.js";
+import { eventHandler } from "@platformer/vanilla/event-handler.js";
 
 class FooEvent extends Event {}
 

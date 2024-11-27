@@ -17,7 +17,7 @@ export interface EventHandlerNonNull<
  *
  * @remarks
  *
- * This a genericized (and restricted to `HTMLElement`) equivalent to [the HTML spec's `EventHandler`](https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler).
+ * This a genericized equivalent to [the HTML spec's `EventHandler`](https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler).
  *
  * This type is used in the definition of {@link EventHandlerHelper} but event handlers are generally typed using non-generic function type expression (see the example in {@link EventHandlerHelper}'s documentation).
  */
@@ -29,7 +29,9 @@ export type EventHandler<
 /**
  * Helper class to implement an [event handler](https://html.spec.whatwg.org/multipage/webappapis.html#event-handlers).
  *
- * This can be used for custom elements as well as non-element objects.
+ * This can be used for custom elements as well as non-element objects (provided they extend `EventTarget`).
+ *
+ * If you want to support event handler attributes on custom elements, use `@platformer/event-handler/with-attribute.js` instead.
  *
  * @example
  *
@@ -47,7 +49,7 @@ export type EventHandler<
  * }
  * ```
  *
- * Custom elements, in addition, need to augment the `HTMLElementEventMap` and observe the HTML attribute:
+ * Custom elements should augment the `HTMLElementEventMap` to get appropriate typing on `addEventListener` and `removeEventListener` for end users:
  * ```
  * declare global {
  *   interface HTMLElementEventMap {
@@ -63,11 +65,6 @@ export type EventHandler<
  *   set onfoo(value: OnfooEventHandler) {
  *     this.#onfoo.set(value);
  *   }
- *   static observedAttributes = ["onfoo"];
- *   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null) {
- *     // in this case, we know 'name' is necessarily 'onfoo' so we can skip any check
- *     this.#onfoo.fromAttribute(newValue);
- *   }
  * }
  * ```
  *
@@ -77,7 +74,9 @@ export type EventHandler<
  */
 export declare class EventHandlerHelper<
   Target extends EventTarget,
-  EventType extends string,
+  EventType extends Target extends HTMLElement
+    ? keyof HTMLElementEventMap
+    : string,
   TEvent extends Event = EventType extends keyof HTMLElementEventMap
     ? HTMLElementEventMap[EventType]
     : Event,
@@ -87,16 +86,6 @@ export declare class EventHandlerHelper<
    * @param type - The event type to listen for
    */
   constructor(target: Target, type: EventType);
-
-  /**
-   * Implements the [attribute change steps](https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-content-attributes) for the event handler.
-   *
-   * Call this method from an `attributeChangedCallback` of a custom element.
-   * You can safely ignore this method if you're implementing an event handler for a non-element.
-   *
-   * @param value - The new value of the attribute
-   */
-  fromAttribute(value: string | null): void;
 
   /**
    * Implements the [getter steps](https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-idl-attributes) of the event handler property.

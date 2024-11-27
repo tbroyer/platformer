@@ -1,4 +1,4 @@
-import { EventHandlerHelper } from "@platformer/event-handler";
+import { EventHandlerHelper } from "@platformer/event-handler/with-attribute.js";
 import { addAttribute } from "./observed-attributes.js";
 
 export {

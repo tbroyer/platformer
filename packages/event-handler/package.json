@@ -3,10 +3,11 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./index.js"
+    ".": "./index.js",
+    "./with-attribute.js": "./with-attribute.js"
   },
   "scripts": {
-    "test": "wtr test.js"
+    "test": "wtr test.js && tstyche"
   },
   "dependencies": {
     "@platformer/webidl": "*"

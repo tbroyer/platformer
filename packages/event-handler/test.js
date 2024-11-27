@@ -1,4 +1,4 @@
-import { EventHandlerHelper } from "@platformer/event-handler";
+import { EventHandlerHelper } from "@platformer/event-handler/with-attribute.js";
 import { runTests } from "@platformer/harness/event-handler.js";
 
 customElements.define(

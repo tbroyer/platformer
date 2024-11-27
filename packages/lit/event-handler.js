@@ -1,7 +1,7 @@
-import { EventHandlerHelper } from "@platformer/event-handler";
+import { EventHandlerHelper } from "@platformer/event-handler/with-attribute.js";
 
 /**
- * @param {NonNullable<Parameters<import("@platformer/types/event-handler.js").eventHandler>[0]>} options
+ * @param {NonNullable<Parameters<import("./index.js").eventHandler>[0]>} options
  * @param {ClassAccessorDecoratorContext} context
  */
 function validateContext({ type, attribute }, context) {
@@ -31,7 +31,7 @@ function validateContext({ type, attribute }, context) {
   return { type, attribute };
 }
 
-/** @type {import("@platformer/types/event-handler.js").eventHandler} */
+/** @type {import("./index.js").eventHandler} */
 export function eventHandler(options = {}) {
   return function (_, context) {
     const { type, attribute } = validateContext(options, context);
