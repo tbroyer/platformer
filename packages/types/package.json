@@ -15,5 +15,10 @@
   },
   "scripts": {
     "test": "tstyche"
+  },
+  "dependencies": {
+    "@platformer/event-handler": "*",
+    "@platformer/microsyntaxes": "*",
+    "@platformer/reflect": "*"
   }
 }

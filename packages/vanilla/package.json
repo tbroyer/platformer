@@ -12,6 +12,7 @@
     "test": "wtr test.js cached.test.js event-handler.test.js"
   },
   "dependencies": {
+    "@platformer/event-handler": "*",
     "@platformer/reflect": "*",
     "@platformer/types": "*"
   }

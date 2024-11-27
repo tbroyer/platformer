@@ -10,6 +10,7 @@
     "test": "wtr test.js event-handler.test.js && tstyche"
   },
   "dependencies": {
+    "@platformer/event-handler": "*",
     "@platformer/reflect": "*",
     "@platformer/types": "*",
     "lit": "^3.2.1"
