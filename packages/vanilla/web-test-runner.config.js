@@ -14,7 +14,7 @@ export default {
   plugins: [
     babel({
       babelHelpers: "bundled",
-      plugins: [["@babel/plugin-proposal-decorators", { version: "2023-05" }]],
+      plugins: [["@babel/plugin-proposal-decorators", { version: "2023-11" }]],
     }),
   ],
 };
