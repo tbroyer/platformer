@@ -1,16 +1,13 @@
 # @platformer/event-handler
 
-This package provides a helper class to implement an [HTML event handler](https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-attributes) on a custom element.
-HTML event handlers are those `onxxx` attributes and properties that allow listening to a `xxx` event, like `onload` or `onclick`.
-
-> [!IMPORTANT]
-> Because event handler attributes are evaluated dynamically by the custom element, they'll report to a `script-src` content security policy, not `script-src-attr` like native event handlers.
-> Also, because they need to be evaluated within specific contexts, the script that will actually be evaluated won't directly be the event handler attribute's value;
-> this means a content security policy won't be able to use `'unsafe-hashes'` with hash sources, unless hashes are computed for the actually evaluated script (which will be dependent on the version of this package);
-> in other words `'unsafe-inline'` will be the easiest to setup, but also the least secure.
-> This only applies to event handler attributes though, not event handler properties.
+This package provides helpers to implement an [event handler](https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-attributes) on a custom element.
+Event handlers are those `onxxx` attributes and properties that allow listening to a `xxx` event, like `onload` or `onclick`.
 
 ## API
+
+This package exports an `EventHandlerHelper` class, as well as an `@eventHandler()` decorator.
+
+### Helper class
 
 The exported `EventHandlerHelper` class has:
 
@@ -22,13 +19,20 @@ The exported `EventHandlerHelper` class has:
 
 - a `set` method that takes an event handler callback or `null` as its single argument, and implements the _setter_ steps
 
-### Usage
+> [!IMPORTANT]
+> Because event handler attributes are evaluated dynamically by the custom element, they'll report to a `script-src` content security policy, not `script-src-attr` like native event handlers.
+> Also, because they need to be evaluated within specific contexts, the script that will actually be evaluated won't directly be the event handler attribute's value;
+> this means a content security policy won't be able to use `'unsafe-hashes'` with hash sources, unless hashes are computed for the actually evaluated script (which will be dependent on the version of this package);
+> in other words `'unsafe-inline'` will be the easiest to setup, but also the least secure.
+> This only applies to event handler attributes though, not event handler properties.
+
+#### Usage
 
 Assuming an `onfoo` event handler for a `foo` event:
 
 ```js
 class MyElement extends HTMLElement {
-  #onfoo = new EventHandler("foo", this);
+  #onfoo = new EventHandlerHelper("foo", this);
 
   static observedAttributes = ["onfoo"];
 
@@ -41,6 +45,36 @@ class MyElement extends HTMLElement {
   }
   set onfoo(value) {
     this.#onfoo.set(value);
+  }
+}
+```
+
+### Decorator
+
+The exported `@eventHandler()` decorator can be applied to an auto-accessor property or to a setter (whose names must start with `on`) to turn it into an event handler property (_without_ support for an event handler attribute).
+
+The event name to be listened to is derived from the annotated property name (stripping the mandatory `on` prefix and turning it to lower-case). In case that rule doesn't fit your needs, the decorator factory can be called with an object with a `type` property to explicitly set the event name.
+
+#### Usage
+
+```js
+class MyObject extends EventTarget {
+  @eventHandler()
+  accessor onfoo;
+
+  // Listens to "bar-baz" events
+  @eventHandler({ type: "bar-baz" })
+  accessor onbarBaz;
+
+  #onqux;
+  get onqux() {
+    returh this.#onqux;
+  }
+  @eventHandler()
+  set onqux(value) {
+    // At this point, the value has been validated, and the event listener setup if needed.
+    // Now you can do other things whenever the event handler is set.
+    this.#onqux = value;
   }
 }
 ```

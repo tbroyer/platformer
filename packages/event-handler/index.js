@@ -136,3 +136,61 @@ function blockedByCSP(value) {
   }
   return false;
 }
+
+/**
+ * @param {ClassSetterDecoratorContext | ClassAccessorDecoratorContext} context
+ */
+function validateContext(context) {
+  if (
+    (context.kind !== "accessor" && context.kind !== "setter") ||
+    context.static ||
+    context.private
+  ) {
+    throw new Error(
+      "Decorator must be applied to a non-static, non-private auto-accessor property or setter",
+    );
+  }
+  if (typeof context.name !== "string" || !context.name.startsWith("on")) {
+    throw new Error(
+      "Decorator must be applied to a property whose name starts with 'on'",
+    );
+  }
+}
+
+/** @type {import("./decorator.js").eventHandler} */
+export function eventHandler({ type } = {}) {
+  return function (target, context) {
+    validateContext(context);
+    type ??= context.name.substring(2).toLowerCase();
+
+    let handler;
+    context.addInitializer(function () {
+      handler = new EventHandlerHelper(this, type);
+    });
+
+    switch (context.kind) {
+      case "accessor":
+        return {
+          get() {
+            return handler.get();
+          },
+          set(value) {
+            handler.set(value);
+          },
+          init(value) {
+            return value ?? null;
+          },
+        };
+      case "setter":
+        context.addInitializer(function () {
+          target.call(this, null);
+        });
+        return function (value) {
+          handler.set(value);
+          target.call(this, handler.get());
+        };
+      default:
+        throw new Error(`Unsupported decorator location: ${context.kind}`);
+    }
+  };
+}

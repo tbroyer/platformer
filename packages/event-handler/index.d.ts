@@ -116,3 +116,23 @@ export declare class EventHandlerHelper<
    */
   set(value: EventHandler<Target, TEvent>): void;
 }
+
+export type EventHandlerDecorator = {
+  // accessor decorator
+  <This extends EventTarget, Value extends EventHandler<This, Event>>(
+    target: ClassAccessorDecoratorTarget<This, Value>,
+    context: ClassAccessorDecoratorContext<This, Value>,
+  ): ClassAccessorDecoratorResult<This, Value>;
+
+  // setter decorator
+  <This extends EventTarget, Value extends EventHandler<This, Event>>(
+    target: (this: This, value: Value) => void,
+    context: ClassSetterDecoratorContext<This, Value>,
+  ): (this: This, value: Value) => void;
+};
+
+/**
+ * Decorator
+ * @param options
+ */
+export function eventHandler(options?: { type: string }): EventHandlerDecorator;
