@@ -1,0 +1,15 @@
+{
+  "name": "@platformer/event-handler-harness",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "dependencies": {
+    "chai": "^5.1.2"
+  }
+}

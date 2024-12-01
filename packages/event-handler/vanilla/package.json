@@ -1,0 +1,15 @@
+{
+  "name": "@platformer/event-handler-vanilla",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "scripts": {
+    "test": "wtr test.js && tstyche"
+  },
+  "dependencies": {
+    "@platformer/event-handler": "*",
+    "@platformer/vanilla-core": "*"
+  }
+}

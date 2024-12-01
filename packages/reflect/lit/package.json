@@ -1,0 +1,16 @@
+{
+  "name": "@platformer/reflect-lit",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "scripts": {
+    "test": "wtr test.js"
+  },
+  "dependencies": {
+    "@platformer/reflect": "*",
+    "@platformer/reflect-types": "*",
+    "lit": "^3.2.1"
+  }
+}

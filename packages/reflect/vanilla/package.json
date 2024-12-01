@@ -1,0 +1,17 @@
+{
+  "name": "@platformer/reflect-vanilla",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./cached.js": "./cached.js"
+  },
+  "scripts": {
+    "test": "wtr test.js cached.test.js"
+  },
+  "dependencies": {
+    "@platformer/reflect": "*",
+    "@platformer/reflect-types": "*",
+    "@platformer/vanilla-core": "*"
+  }
+}
