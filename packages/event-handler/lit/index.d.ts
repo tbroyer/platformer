@@ -1,20 +1,26 @@
 import { LitElement } from "lit";
 import type { EventHandler } from "@platformer/event-handler";
 
-interface ClassAccessorDecorator<This, Value> {
-  (
-    target: ClassAccessorDecoratorTarget<This, Value>,
-    context: ClassAccessorDecoratorContext<This, Value>,
-  ): ClassAccessorDecoratorResult<This, Value>;
-}
+export type { EventHandler };
+
+export type EventHandlerDecorator<EventType extends keyof HTMLElementEventMap> =
+  <This extends LitElement>(
+    target: ClassAccessorDecoratorTarget<
+      This,
+      EventHandler<This, HTMLElementEventMap[EventType]>
+    >,
+    context: ClassAccessorDecoratorContext<
+      This,
+      EventHandler<This, HTMLElementEventMap[EventType]>
+    >,
+  ) => ClassAccessorDecoratorResult<
+    This,
+    EventHandler<This, HTMLElementEventMap[EventType]>
+  >;
 
 export function eventHandler<
-  This extends LitElement,
   EventType extends keyof HTMLElementEventMap,
 >(options?: {
   type?: EventType;
   attribute?: `on${string}`;
-}): ClassAccessorDecorator<
-  This,
-  EventHandler<This, HTMLElementEventMap[EventType]>
->;
+}): EventHandlerDecorator<EventType>;

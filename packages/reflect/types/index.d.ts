@@ -4,24 +4,27 @@ import type {
 } from "@platformer/reflect";
 import type { EnumeratedAttributeOptions } from "@platformer/microsyntaxes";
 
-interface ReflectOptions {
+export interface ReflectOptions {
   /** Name of the DOM attribute that the annotated property reflects. Defaults to the lowercased property name. */
   attribute?: string;
 }
 
-interface ClassAccessorDecorator<Value> {
+export interface ReflectDecorator<Value> {
   <This extends HTMLElement>(
     target: ClassAccessorDecoratorTarget<This, Value>,
     context: ClassAccessorDecoratorContext<This, Value>,
   ): ClassAccessorDecoratorResult<This, Value>;
-}
-
-interface ClassAccessorOrSetterDecorator<Value>
-  extends ClassAccessorDecorator<Value> {
   <This extends HTMLElement>(
     target: (this: This, value: Value) => void,
     context: ClassSetterDecoratorContext<This, Value>,
   ): (this: This, value: Value) => void;
+}
+
+export interface ReflectURLDecorator<Value> {
+  <This extends HTMLElement>(
+    target: ClassAccessorDecoratorTarget<This, Value>,
+    context: ClassAccessorDecoratorContext<This, Value>,
+  ): ClassAccessorDecoratorResult<This, Value>;
 }
 
 /**
@@ -33,7 +36,7 @@ interface ClassAccessorOrSetterDecorator<Value>
  */
 export function reflectString(
   options?: ReflectOptions,
-): ClassAccessorOrSetterDecorator<string>;
+): ReflectDecorator<string>;
 
 /**
  * Implements the property to reflect a DOM attribute as a `USVString` representing a URL.
@@ -44,7 +47,7 @@ export function reflectString(
  */
 export function reflectURL(
   options?: ReflectOptions,
-): ClassAccessorDecorator<string>;
+): ReflectURLDecorator<string>;
 
 /**
  * Implements the property to reflect an enumerated DOM attribute as a `DOMString`.
@@ -55,7 +58,7 @@ export function reflectURL(
  */
 export function reflectEnum<Keywords extends string, Aliases extends string>(
   options: ReflectOptions & EnumeratedAttributeOptions<Keywords, Aliases>,
-): ClassAccessorOrSetterDecorator<Keywords>;
+): ReflectDecorator<Keywords>;
 
 /**
  * Implements the property to reflect an enumerated DOM attribute as a nullable `DOMString`.
@@ -69,7 +72,7 @@ export function reflectNullableEnum<
   Aliases extends string,
 >(
   options: ReflectOptions & EnumeratedAttributeOptions<Keywords, Aliases>,
-): ClassAccessorOrSetterDecorator<Keywords | null>;
+): ReflectDecorator<Keywords | null>;
 
 /**
  * Implements the property to reflect a DOM attribute as a `boolean`.
@@ -80,7 +83,7 @@ export function reflectNullableEnum<
  */
 export function reflectBoolean(
   options?: ReflectOptions,
-): ClassAccessorOrSetterDecorator<boolean>;
+): ReflectDecorator<boolean>;
 
 /**
  * Implements the property to reflect a DOM attribute as a `long`.
@@ -91,7 +94,7 @@ export function reflectBoolean(
  */
 export function reflectInt(
   options?: ReflectOptions & ReflectNumberOptions,
-): ClassAccessorOrSetterDecorator<number>;
+): ReflectDecorator<number>;
 
 /**
  * Implements the property to reflect a DOM attribute as a `long` limited to only non-negative numbers.
@@ -102,7 +105,7 @@ export function reflectInt(
  */
 export function reflectNonNegativeInt(
   options?: ReflectOptions & ReflectNumberOptions,
-): ClassAccessorOrSetterDecorator<number>;
+): ReflectDecorator<number>;
 
 /**
  * Implements the property to reflect a DOM attribute as an `unsigned long`.
@@ -113,7 +116,7 @@ export function reflectNonNegativeInt(
  */
 export function reflectUnsignedInt(
   options?: ReflectOptions & ReflectNumberOptions,
-): ClassAccessorOrSetterDecorator<number>;
+): ReflectDecorator<number>;
 
 /**
  * Implements the property to reflect a DOM attribute as an `unsigned long` limited to only positive numbers.
@@ -124,7 +127,7 @@ export function reflectUnsignedInt(
  */
 export function reflectPositiveInt(
   options?: ReflectOptions & ReflectNumberOptions,
-): ClassAccessorOrSetterDecorator<number>;
+): ReflectDecorator<number>;
 
 /**
  * Implements the property to reflect a DOM attribute as an `unsigned long` limited to only positive numbers with fallback.
@@ -135,7 +138,7 @@ export function reflectPositiveInt(
  */
 export function reflectPositiveIntWithFallback(
   options?: ReflectOptions & ReflectNumberOptions,
-): ClassAccessorOrSetterDecorator<number>;
+): ReflectDecorator<number>;
 
 /**
  * Implements the property to reflect a DOM attribute as an `unsigned long` clamped to a given range.
@@ -146,7 +149,7 @@ export function reflectPositiveIntWithFallback(
  */
 export function reflectClampedInt(
   options: ReflectOptions & ReflectClampedIntOptions,
-): ClassAccessorOrSetterDecorator<number>;
+): ReflectDecorator<number>;
 
 /**
  * Implements the property to reflect a DOM attribute as a `double`.
@@ -157,7 +160,7 @@ export function reflectClampedInt(
  */
 export function reflectDouble(
   options?: ReflectOptions & ReflectNumberOptions,
-): ClassAccessorOrSetterDecorator<number>;
+): ReflectDecorator<number>;
 
 /**
  * Implements the property to reflect a DOM attribute as a `double` limited to only positive numbers.
@@ -168,6 +171,6 @@ export function reflectDouble(
  */
 export function reflectPositiveDouble(
   options?: ReflectOptions & ReflectNumberOptions,
-): ClassAccessorOrSetterDecorator<number>;
+): ReflectDecorator<number>;
 
 // TBC: tokenlist, element, frozen array of elements

@@ -92,7 +92,7 @@ test("wrong accessor type", () => {
     class extends HTMLElement {
       @reflectString() accessor nullable: string | undefined;
     },
-  ).type.toRaiseError(1240, 1270);
+  ).type.toRaiseError(1240);
   expect(
     class {
       @reflectString() accessor nonHTMLElement: string = "";
@@ -130,7 +130,7 @@ test("wrong decorated location", () => {
     class extends HTMLElement {
       @reflectString() nonProperty(value: string) {}
     },
-  ).type.toRaiseError(1241);
+  ).type.toRaiseError(1241, 1270);
   expect(
     class extends HTMLElement {
       @reflectURL() set urlSetter(value: string) {}

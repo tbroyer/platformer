@@ -77,4 +77,4 @@ class MyElement extends BaseElement {
 }
 ```
 
-You can also use the `EventHandler` type from `@platformer/event-handler` as the property type; in this case `EventHandler<MyElement, FooEvent>`.
+You can also use the `EventHandler` type (directly re-exported from _@platformer/event-handler_) as the property type; in this case `EventHandler<MyElement, FooEvent>`.

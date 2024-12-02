@@ -43,7 +43,7 @@ import {
 /**
  * @template T
  * @param {(value: any) => T} coerceValue
- * @returns {import("./decorators.js").ClassAccessorOrSetterDecorator<T>}
+ * @returns {import("./decorators.js").TypeCoercionDecorator<T>}
  */
 function coerceDecorator(coerceValue) {
   return function (target, context) {

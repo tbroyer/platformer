@@ -23,7 +23,7 @@ import {
  */
 /**
  * @template T
- * @typedef {import("@platformer/reflect-types/direct.js").ClassAccessorDecorator<T>} ClassAccessorDecorator
+ * @typedef {import("@platformer/reflect-types/direct.js").ReflectDecorator<T>} ReflectDecorator
  */
 
 /**
@@ -48,7 +48,7 @@ Symbol.metadata ??= Symbol("metadata");
  * @template T
  * @param {string=} attribute
  * @param {Reflector<T>} reflector
- * @returns {ClassAccessorDecorator<T>}
+ * @returns {ReflectDecorator<T>}
  */
 function reflectImpl(
   attribute,
@@ -110,7 +110,7 @@ function reflectImpl(
 /**
  * @template T
  * @param {Reflector<T>} reflector
- * @returns {(options?: ReflectOptions) => ClassAccessorDecorator<T>}
+ * @returns {(options?: ReflectOptions) => ReflectDecorator<T>}
  */
 function reflect(reflector) {
   return function ({ attribute } = {}) {
@@ -122,7 +122,7 @@ function reflect(reflector) {
  * @template Options
  * @param {(options: Options) => Reflector<T>} reflectorFactory
  * @param {boolean=} requiredOptions
- * @returns {(options: ReflectOptions & Options) => ClassAccessorDecorator<T>}
+ * @returns {(options: ReflectOptions & Options) => ReflectDecorator<T>}
  */
 function reflectWithOptions(reflectorFactory, requiredOptions = false) {
   return function (

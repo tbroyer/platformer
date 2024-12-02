@@ -1,11 +1,6 @@
 import type { EventHandler } from "@platformer/event-handler";
 
-interface ClassAccessorDecorator<This, Value> {
-  (
-    target: ClassAccessorDecoratorTarget<This, Value>,
-    context: ClassAccessorDecoratorContext<This, Value>,
-  ): ClassAccessorDecoratorResult<This, Value>;
-}
+export type { EventHandler };
 
 /**
  * Implements the property as an [event handler](https://html.spec.whatwg.org/multipage/webappapis.html#event-handlers).
@@ -14,12 +9,20 @@ interface ClassAccessorDecorator<This, Value> {
  * @param options.attribute - The attribute name, inferred from the property name if unset
  */
 export function eventHandler<
-  This extends EventTarget,
   EventType extends keyof HTMLElementEventMap,
 >(options?: {
   type?: EventType;
   attribute?: `on${string}`;
-}): ClassAccessorDecorator<
+}): <This extends EventTarget>(
+  target: ClassAccessorDecoratorTarget<
+    This,
+    EventHandler<This, HTMLElementEventMap[EventType]>
+  >,
+  context: ClassAccessorDecoratorContext<
+    This,
+    EventHandler<This, HTMLElementEventMap[EventType]>
+  >,
+) => ClassAccessorDecoratorResult<
   This,
   EventHandler<This, HTMLElementEventMap[EventType]>
 >;

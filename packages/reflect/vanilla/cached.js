@@ -39,7 +39,7 @@ function addObservedAttribute(metadata, name, target, fromAttribute) {
  */
 /**
  * @template T
- * @typedef {import("@platformer/reflect-types").ClassAccessorOrSetterDecorator<T>} ClassAccessorOrSetterDecorator
+ * @typedef {import("@platformer/reflect-types").ReflectDecorator<T>} ReflectDecorator
  */
 
 /**
@@ -61,7 +61,7 @@ function validateContext(context) {
  * @template T
  * @param {string=} attribute
  * @param {Reflector<T>} reflector
- * @returns {ClassAccessorOrSetterDecorator<T>}
+ * @returns {ReflectDecorator<T>}
  */
 function reflectImpl(
   attribute,
@@ -110,7 +110,7 @@ function reflectImpl(
 /**
  * @template T
  * @param {Reflector<T>} reflector
- * @returns {(options?: ReflectOptions) => ClassAccessorOrSetterDecorator<T>}
+ * @returns {(options?: ReflectOptions) => ReflectDecorator<T>}
  */
 function reflect(reflector) {
   return function ({ attribute } = {}) {
@@ -122,7 +122,7 @@ function reflect(reflector) {
  * @template Options
  * @param {(options: Options) => Reflector<T>} reflectorFactory
  * @param {boolean=} requiredOptions
- * @returns {(options: ReflectOptions & Options) => ClassAccessorOrSetterDecorator<T>}
+ * @returns {(options: ReflectOptions & Options) => ReflectDecorator<T>}
  */
 function reflectWithOptions(reflectorFactory, requiredOptions = false) {
   return function (
