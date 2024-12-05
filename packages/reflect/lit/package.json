@@ -11,5 +11,8 @@
   "dependencies": {
     "@platformer/reflect": "*",
     "lit": "^3.2.1"
+  },
+  "devDependencies": {
+    "chai": "^5.1.2"
   }
 }

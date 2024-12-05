@@ -1,3 +1,4 @@
+import { assert } from "chai";
 import { runTests } from "@platformer/reflect-harness";
 import { LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
@@ -22,6 +23,11 @@ import {
 @customElement("test-string")
 class TestString extends LitElement {
   @reflectString() accessor test;
+
+  render() {
+    // Used below for testing the reactive lifecycle
+    return this.test;
+  }
 }
 
 @customElement("test-url")
@@ -92,3 +98,15 @@ class TestLimitedDouble extends LitElement {
 }
 
 runTests();
+
+test("reactive lifecycle", async () => {
+  /** @type {TestString} */
+  const element = document.createElement("test-string");
+  document.body.append(element);
+  teardown(() => element.remove());
+  assert(element.shadowRoot.textContent === "");
+  element.test = "should trigger the update lifecycle";
+  assert(element.isUpdatePending);
+  await element.updateComplete;
+  assert(element.shadowRoot.textContent === element.test);
+});
