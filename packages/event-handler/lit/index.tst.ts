@@ -1,6 +1,6 @@
 import { expect, test } from "tstyche";
 import { eventHandler } from "@platformer/event-handler-lit";
-import { LitElement } from "lit";
+import { LitElement, ReactiveElement } from "lit";
 
 class FooEvent extends Event {}
 
@@ -10,6 +10,12 @@ declare global {
   }
 }
 
+expect(
+  class MyElement extends ReactiveElement {
+    @eventHandler({ type: "foo", attribute: "onfoo" })
+    accessor onfoo: ((this: MyElement, event: FooEvent) => any) | null = null;
+  },
+).type.not.toRaiseError();
 expect(
   class MyElement extends LitElement {
     @eventHandler({ type: "foo", attribute: "onfoo" })
@@ -26,18 +32,18 @@ test("not an EventTarget", () => {
     },
   ).type.toRaiseError(1240, 1270);
 });
-test("not a LitElement", () => {
+test("not a ReactiveElement", () => {
   expect(
-    class NotALitElement extends HTMLElement {
+    class NotAReactiveElement extends HTMLElement {
       @eventHandler() accessor onfoo:
-        | ((this: NotALitElement, event: FooEvent) => any)
+        | ((this: NotAReactiveElement, event: FooEvent) => any)
         | null = null;
     },
   ).type.toRaiseError(1240, 1270);
 });
 test("event type not registered on HTMLElementEventMap", () => {
   expect(
-    class extends LitElement {
+    class extends ReactiveElement {
       @eventHandler({ type: "bar" })
       accessor onfoo: ((event: FooEvent) => any) | null = null;
     },
@@ -47,7 +53,7 @@ test("event type not registered on HTMLElementEventMap", () => {
 });
 test("attribute name does not start with 'on'", () => {
   expect(
-    class extends LitElement {
+    class extends ReactiveElement {
       @eventHandler({ attribute: "foo" })
       accessor onfoo: ((event: FooEvent) => any) | null = null;
     },

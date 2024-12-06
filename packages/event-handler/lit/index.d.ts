@@ -1,10 +1,10 @@
-import { LitElement } from "lit";
+import { ReactiveElement } from "lit";
 import type { EventHandler } from "@platformer/event-handler";
 
 export type { EventHandler };
 
 export type EventHandlerDecorator<EventType extends keyof HTMLElementEventMap> =
-  <This extends LitElement>(
+  <This extends ReactiveElement>(
     target: ClassAccessorDecoratorTarget<
       This,
       EventHandler<This, HTMLElementEventMap[EventType]>
