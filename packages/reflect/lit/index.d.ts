@@ -41,7 +41,7 @@ export interface ReflectURLDecorator {
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectString(
+export declare function reflectString(
   options?: ReflectOptions,
 ): ReflectDecorator<string>;
 
@@ -52,7 +52,9 @@ export function reflectString(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectURL(options?: ReflectOptions): ReflectURLDecorator;
+export declare function reflectURL(
+  options?: ReflectOptions,
+): ReflectURLDecorator;
 
 /**
  * Implements the property to reflect an enumerated DOM attribute as a `DOMString`.
@@ -61,7 +63,10 @@ export function reflectURL(options?: ReflectOptions): ReflectURLDecorator;
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectEnum<Keywords extends string, Aliases extends string>(
+export declare function reflectEnum<
+  Keywords extends string,
+  Aliases extends string,
+>(
   options: ReflectOptions & EnumeratedAttributeOptions<Keywords, Aliases>,
 ): ReflectDecorator<Keywords>;
 
@@ -72,7 +77,7 @@ export function reflectEnum<Keywords extends string, Aliases extends string>(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectNullableEnum<
+export declare function reflectNullableEnum<
   Keywords extends string,
   Aliases extends string,
 >(
@@ -86,7 +91,7 @@ export function reflectNullableEnum<
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectBoolean(
+export declare function reflectBoolean(
   options?: ReflectOptions,
 ): ReflectDecorator<boolean>;
 
@@ -97,7 +102,7 @@ export function reflectBoolean(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectInt(
+export declare function reflectInt(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
@@ -108,7 +113,7 @@ export function reflectInt(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectNonNegativeInt(
+export declare function reflectNonNegativeInt(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
@@ -119,7 +124,7 @@ export function reflectNonNegativeInt(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectUnsignedInt(
+export declare function reflectUnsignedInt(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
@@ -130,7 +135,7 @@ export function reflectUnsignedInt(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectPositiveInt(
+export declare function reflectPositiveInt(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
@@ -141,7 +146,7 @@ export function reflectPositiveInt(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectPositiveIntWithFallback(
+export declare function reflectPositiveIntWithFallback(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
@@ -152,7 +157,7 @@ export function reflectPositiveIntWithFallback(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectClampedInt(
+export declare function reflectClampedInt(
   options: ReflectOptions & ReflectClampedIntOptions,
 ): ReflectDecorator<number>;
 
@@ -163,7 +168,7 @@ export function reflectClampedInt(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectDouble(
+export declare function reflectDouble(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
@@ -174,7 +179,7 @@ export function reflectDouble(
  *
  * @param options Options of the reflected property, including the DOM attribute name.
  */
-export function reflectPositiveDouble(
+export declare function reflectPositiveDouble(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 

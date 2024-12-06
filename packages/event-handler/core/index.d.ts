@@ -124,4 +124,6 @@ export type EventHandlerDecorator = {
  * Decorator
  * @param options
  */
-export function eventHandler(options?: { type: string }): EventHandlerDecorator;
+export declare function eventHandler(options?: {
+  type: string;
+}): EventHandlerDecorator;

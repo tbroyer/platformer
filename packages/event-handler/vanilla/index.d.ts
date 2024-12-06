@@ -8,7 +8,7 @@ export type { EventHandler };
  * @param options.type - The event type to listen to, inferred from the property name if unset
  * @param options.attribute - The attribute name, inferred from the property name if unset
  */
-export function eventHandler<
+export declare function eventHandler<
   EventType extends keyof HTMLElementEventMap,
 >(options?: {
   type?: EventType;

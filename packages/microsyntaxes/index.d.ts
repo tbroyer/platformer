@@ -46,7 +46,7 @@ export interface ParseEnum<Keywords extends string> {
  * @param options - the options of the enumerated attribute, including keywords
  * @returns a function to determine the state of an enumerated attribute.
  */
-export function enumerated<
+export declare function enumerated<
   const Keywords extends string,
   const Aliases extends string,
 >(options: EnumeratedAttributeOptions<Keywords, Aliases>): ParseEnum<Keywords>;
@@ -57,7 +57,7 @@ export function enumerated<
  * @param value - the attribute value (non null)
  * @returns 'value' parsed as an integer and normalized, or `null` in case of error
  */
-export function parseInteger(value: string): number | null;
+export declare function parseInteger(value: string): number | null;
 
 /**
  * Implement the [rules for parsing non-negative integers](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers)
@@ -65,7 +65,7 @@ export function parseInteger(value: string): number | null;
  * @param value - the attribute value (non null)
  * @returns 'value' parsed as an integer and normalized, or `null` in case of error
  */
-export function parseNonNegativeInteger(value: string): number | null;
+export declare function parseNonNegativeInteger(value: string): number | null;
 
 /**
  * Implement the [rules for parsing floating-point number values](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-floating-point-number-values)
@@ -73,4 +73,4 @@ export function parseNonNegativeInteger(value: string): number | null;
  * @param value - the attribute value (non null)
  * @returns 'value' parsed as an integer and normalized, or `null` in case of error
  */
-export function parseDouble(value: string): number | null;
+export declare function parseDouble(value: string): number | null;

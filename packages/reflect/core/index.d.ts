@@ -50,14 +50,14 @@ export interface ReflectClampedIntOptions extends ReflectNumberOptions {
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-domstring | the HTML specification}
  */
-export const reflectString: Reflector<string>;
+export declare const reflectString: Reflector<string>;
 
 /**
  * A reflector for an attribute of type `USVString` representing a URL.
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-domstring-5 | the HTML specification}
  */
-export const reflectURL: {
+export declare const reflectURL: {
   /**
    * Convert from the attribute value to the IDL value.
    *
@@ -81,15 +81,16 @@ export const reflectURL: {
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-domstring | the HTML specification}
  */
-export function reflectEnum<Keywords extends string, Aliases extends string>(
-  options: EnumeratedAttributeOptions<Keywords, Aliases>,
-): Reflector<Keywords>;
+export declare function reflectEnum<
+  Keywords extends string,
+  Aliases extends string,
+>(options: EnumeratedAttributeOptions<Keywords, Aliases>): Reflector<Keywords>;
 /**
  * Returns a reflector for an enumerated attribute of type nullable `DOMString`.
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-domstring | the HTML specification}
  */
-export function reflectNullableEnum<
+export declare function reflectNullableEnum<
   Keywords extends string,
   Aliases extends string,
 >(
@@ -101,20 +102,22 @@ export function reflectNullableEnum<
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-boolean | the HTML specification}
  */
-export const reflectBoolean: Reflector<boolean>;
+export declare const reflectBoolean: Reflector<boolean>;
 
 /**
  * Returns a reflector for an attribute of type `long`.
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-long | the HTML specification}
  */
-export function reflectInt(options: ReflectNumberOptions): Reflector<number>;
+export declare function reflectInt(
+  options: ReflectNumberOptions,
+): Reflector<number>;
 /**
  * Returns a reflector for an attribute of type `long` limited to only non-negative numbers.
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-long | the HTML specification}
  */
-export function reflectNonNegativeInt(
+export declare function reflectNonNegativeInt(
   options?: ReflectNumberOptions,
 ): Reflector<number>;
 
@@ -123,7 +126,7 @@ export function reflectNonNegativeInt(
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-unsigned-long | the HTML specification}
  */
-export function reflectUnsignedInt(
+export declare function reflectUnsignedInt(
   options?: ReflectNumberOptions,
 ): Reflector<number>;
 /**
@@ -131,7 +134,7 @@ export function reflectUnsignedInt(
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-unsigned-long | the HTML specification}
  */
-export function reflectPositiveInt(
+export declare function reflectPositiveInt(
   options?: ReflectNumberOptions,
 ): Reflector<number>;
 /**
@@ -139,7 +142,7 @@ export function reflectPositiveInt(
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-unsigned-long | the HTML specification}
  */
-export function reflectPositiveIntWithFallback(
+export declare function reflectPositiveIntWithFallback(
   options?: ReflectNumberOptions,
 ): Reflector<number>;
 /**
@@ -147,7 +150,7 @@ export function reflectPositiveIntWithFallback(
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-unsigned-long | the HTML specification}
  */
-export function reflectClampedInt(
+export declare function reflectClampedInt(
   options: ReflectClampedIntOptions,
 ): Reflector<number>;
 
@@ -156,13 +159,15 @@ export function reflectClampedInt(
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-double | the HTML specification}
  */
-export function reflectDouble(options: ReflectNumberOptions): Reflector<number>;
+export declare function reflectDouble(
+  options: ReflectNumberOptions,
+): Reflector<number>;
 /**
  * Returns a reflector for an attribute of type `double` limited to only positive values.
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:idl-double | the HTML specification}
  */
-export function reflectPositiveDouble(
+export declare function reflectPositiveDouble(
   options?: ReflectNumberOptions,
 ): Reflector<number>;
 

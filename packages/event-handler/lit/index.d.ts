@@ -18,7 +18,7 @@ export type EventHandlerDecorator<EventType extends keyof HTMLElementEventMap> =
     EventHandler<This, HTMLElementEventMap[EventType]>
   >;
 
-export function eventHandler<
+export declare function eventHandler<
   EventType extends keyof HTMLElementEventMap,
 >(options?: {
   type?: EventType;

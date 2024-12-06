@@ -1,15 +1,15 @@
-export function getObservedAttributes(
+export declare function getObservedAttributes(
   cls: CustomElementConstructor,
 ): readonly string[];
 
-export function reflectAttributeToProperty(
+export declare function reflectAttributeToProperty(
   elt: HTMLElement,
   name: string,
   oldValue: string | null,
   newValue: string | null,
 ): void;
 
-export class BaseElement extends HTMLElement {
+export declare class BaseElement extends HTMLElement {
   static readonly observedAttributes: readonly string[];
 
   attributeChangedCallback(
@@ -25,7 +25,7 @@ export type AttributeChangedCallback = (
   newValue: string | null,
 ) => void;
 
-export function addAttribute(
+export declare function addAttribute(
   metadata: DecoratorMetadata,
   name: string,
   changed: AttributeChangedCallback,
