@@ -7,11 +7,10 @@
     "./cached.js": "./cached.js"
   },
   "scripts": {
-    "test": "wtr test.js cached.test.js"
+    "test": "wtr test.js cached.test.js && tstyche"
   },
   "dependencies": {
     "@platformer/reflect": "*",
-    "@platformer/reflect-types": "*",
     "@platformer/vanilla-core": "*"
   }
 }

@@ -13,7 +13,7 @@ import {
   reflectString,
   reflectUnsignedInt,
   reflectURL,
-} from "@platformer/reflect-types/direct.js";
+} from "@platformer/reflect-vanilla";
 
 type EnumKeyword = "" | "one" | "two" | "three" | "missing" | "invalid";
 type NullableEnumKeyword = "use-credentials" | "anonymous";

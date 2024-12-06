@@ -35,11 +35,11 @@ function addObservedAttribute(metadata, name, target, fromAttribute) {
  * @typedef {import("@platformer/reflect").Reflector<T>} Reflector
  */
 /**
- * @typedef {import("@platformer/reflect-types").ReflectOptions} ReflectOptions
+ * @typedef {import("@platformer/reflect-vanilla/cached.js").ReflectOptions} ReflectOptions
  */
 /**
  * @template T
- * @typedef {import("@platformer/reflect-types").ReflectDecorator<T>} ReflectDecorator
+ * @typedef {import("@platformer/reflect-vanilla/cached.js").ReflectDecorator<T>} ReflectDecorator
  */
 
 /**
@@ -132,10 +132,10 @@ function reflectWithOptions(reflectorFactory, requiredOptions = false) {
   };
 }
 
-/** @type {import("@platformer/reflect-types").reflectString} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectString} */
 export const reflectString = reflect(reflectStringReflector);
 
-/** @type {import("@platformer/reflect-types").reflectURL} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectURL} */
 export function reflectURL({ attribute } = {}) {
   const { fromAttribute, coerceValue, setAttribute } = reflectURLReflector;
   return function ({ get, set }, context) {
@@ -162,48 +162,48 @@ export function reflectURL({ attribute } = {}) {
   };
 }
 
-/** @type {import("@platformer/reflect-types").reflectEnum} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectEnum} */
 export const reflectEnum = reflectWithOptions(
   reflectEnumReflectorFactory,
   true,
 );
-/** @type {import("@platformer/reflect-types").reflectNullableEnum} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectNullableEnum} */
 export const reflectNullableEnum = reflectWithOptions(
   reflectNullableEnumReflectorFactory,
   true,
 );
 
-/** @type {import("@platformer/reflect-types").reflectBoolean} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectBoolean} */
 export const reflectBoolean = reflect(reflectBooleanReflector);
 
-/** @type {import("@platformer/reflect-types").reflectInt} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectInt} */
 export const reflectInt = reflectWithOptions(reflectIntReflectorFactory);
-/** @type {import("@platformer/reflect-types").reflectNonNegativeInt} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectNonNegativeInt} */
 export const reflectNonNegativeInt = reflectWithOptions(
   reflectNonNegativeIntReflectorFactory,
 );
 
-/** @type {import("@platformer/reflect-types").reflectUnsignedInt} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectUnsignedInt} */
 export const reflectUnsignedInt = reflectWithOptions(
   reflectUnsignedIntReflectorFactory,
 );
-/** @type {import("@platformer/reflect-types").reflectPositiveInt} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectPositiveInt} */
 export const reflectPositiveInt = reflectWithOptions(
   reflectPositiveIntReflectorFactory,
 );
-/** @type {import("@platformer/reflect-types").reflectPositiveIntWithFallback} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectPositiveIntWithFallback} */
 export const reflectPositiveIntWithFallback = reflectWithOptions(
   reflectPositiveIntWithFallbackReflectorFactory,
 );
-/** @type {import("@platformer/reflect-types").reflectClampedInt} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectClampedInt} */
 export const reflectClampedInt = reflectWithOptions(
   reflectClampedIntReflectorFactory,
   true,
 );
 
-/** @type {import("@platformer/reflect-types").reflectDouble} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectDouble} */
 export const reflectDouble = reflectWithOptions(reflectDoubleReflectorFactory);
-/** @type {import("@platformer/reflect-types").reflectPositiveDouble} */
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectPositiveDouble} */
 export const reflectPositiveDouble = reflectWithOptions(
   reflectPositiveDoubleReflectorFactory,
 );

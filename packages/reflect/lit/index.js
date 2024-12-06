@@ -19,11 +19,11 @@ import {
  * @typedef {import("@platformer/reflect").Reflector<T>} Reflector
  */
 /**
- * @typedef {import("@platformer/reflect-types/direct.js").ReflectOptions} ReflectOptions
+ * @typedef {import("@platformer/reflect-lit").ReflectOptions} ReflectOptions
  */
 /**
  * @template T
- * @typedef {import("@platformer/reflect-types/direct.js").ReflectDecorator<T>} ReflectDecorator
+ * @typedef {import("@platformer/reflect-lit").ReflectDecorator<T>} ReflectDecorator
  */
 
 /**
@@ -132,10 +132,10 @@ function reflectWithOptions(reflectorFactory, requiredOptions = false) {
   };
 }
 
-/** @type {import("@platformer/reflect-types").reflectString} */
+/** @type {import("@platformer/reflect-lit").reflectString} */
 export const reflectString = reflect(reflectStringReflector);
 
-/** @type {import("@platformer/reflect-types").reflectURL} */
+/** @type {import("@platformer/reflect-lit").reflectURL} */
 export function reflectURL({ attribute } = {}) {
   const { fromAttribute, coerceValue, setAttribute } = reflectURLReflector;
   return function (_, context) {
@@ -173,48 +173,48 @@ export function reflectURL({ attribute } = {}) {
   };
 }
 
-/** @type {import("@platformer/reflect-types").reflectEnum} */
+/** @type {import("@platformer/reflect-lit").reflectEnum} */
 export const reflectEnum = reflectWithOptions(
   reflectEnumReflectorFactory,
   true,
 );
-/** @type {import("@platformer/reflect-types").reflectNullableEnum} */
+/** @type {import("@platformer/reflect-lit").reflectNullableEnum} */
 export const reflectNullableEnum = reflectWithOptions(
   reflectNullableEnumReflectorFactory,
   true,
 );
 
-/** @type {import("@platformer/reflect-types").reflectBoolean} */
+/** @type {import("@platformer/reflect-lit").reflectBoolean} */
 export const reflectBoolean = reflect(reflectBooleanReflector);
 
-/** @type {import("@platformer/reflect-types").reflectInt} */
+/** @type {import("@platformer/reflect-lit").reflectInt} */
 export const reflectInt = reflectWithOptions(reflectIntReflectorFactory);
-/** @type {import("@platformer/reflect-types").reflectNonNegativeInt} */
+/** @type {import("@platformer/reflect-lit").reflectNonNegativeInt} */
 export const reflectNonNegativeInt = reflectWithOptions(
   reflectNonNegativeIntReflectorFactory,
 );
 
-/** @type {import("@platformer/reflect-types").reflectUnsignedInt} */
+/** @type {import("@platformer/reflect-lit").reflectUnsignedInt} */
 export const reflectUnsignedInt = reflectWithOptions(
   reflectUnsignedIntReflectorFactory,
 );
-/** @type {import("@platformer/reflect-types").reflectPositiveInt} */
+/** @type {import("@platformer/reflect-lit").reflectPositiveInt} */
 export const reflectPositiveInt = reflectWithOptions(
   reflectPositiveIntReflectorFactory,
 );
-/** @type {import("@platformer/reflect-types").reflectPositiveIntWithFallback} */
+/** @type {import("@platformer/reflect-lit").reflectPositiveIntWithFallback} */
 export const reflectPositiveIntWithFallback = reflectWithOptions(
   reflectPositiveIntWithFallbackReflectorFactory,
 );
-/** @type {import("@platformer/reflect-types").reflectClampedInt} */
+/** @type {import("@platformer/reflect-lit").reflectClampedInt} */
 export const reflectClampedInt = reflectWithOptions(
   reflectClampedIntReflectorFactory,
   true,
 );
 
-/** @type {import("@platformer/reflect-types").reflectDouble} */
+/** @type {import("@platformer/reflect-lit").reflectDouble} */
 export const reflectDouble = reflectWithOptions(reflectDoubleReflectorFactory);
-/** @type {import("@platformer/reflect-types").reflectPositiveDouble} */
+/** @type {import("@platformer/reflect-lit").reflectPositiveDouble} */
 export const reflectPositiveDouble = reflectWithOptions(
   reflectPositiveDoubleReflectorFactory,
 );

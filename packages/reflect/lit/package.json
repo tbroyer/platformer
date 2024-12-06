@@ -6,11 +6,10 @@
     ".": "./index.js"
   },
   "scripts": {
-    "test": "wtr test.js"
+    "test": "wtr test.js && tstyche"
   },
   "dependencies": {
     "@platformer/reflect": "*",
-    "@platformer/reflect-types": "*",
     "lit": "^3.2.1"
   }
 }

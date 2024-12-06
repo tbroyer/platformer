@@ -1,10 +1,12 @@
 import type { EnumeratedAttributeOptions } from "@platformer/microsyntaxes";
 
+export type { EnumeratedAttributeOptions };
+
 /**
  * Implements the steps for [reflecting content attributes in IDL attributes](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes)
  * from the HTML specification.
  */
-interface Reflector<T> {
+export interface Reflector<T> {
   readonly defaultValue: T;
   /**
    * Convert from the attribute value to the IDL value.
@@ -35,10 +37,10 @@ interface Reflector<T> {
   setAttribute(elt: Element, attribute: string, value: T): void;
 }
 
-interface ReflectNumberOptions {
+export interface ReflectNumberOptions {
   defaultValue?: number;
 }
-interface ReflectClampedIntOptions extends ReflectNumberOptions {
+export interface ReflectClampedIntOptions extends ReflectNumberOptions {
   min: number;
   max: number;
 }
