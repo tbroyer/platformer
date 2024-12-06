@@ -9,10 +9,13 @@
     "test": "wtr test.js && tstyche"
   },
   "dependencies": {
-    "@platformer/reflect": "*",
-    "lit": "^3.2.1"
+    "@platformer/reflect": "*"
+  },
+  "peerDependencies": {
+    "@lit/reactive-element": "^2.0.0"
   },
   "devDependencies": {
-    "chai": "^5.1.2"
+    "chai": "^5.1.2",
+    "lit": "^3.2.1"
   }
 }

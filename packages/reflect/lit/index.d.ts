@@ -3,7 +3,7 @@ import type {
   ReflectNumberOptions,
   ReflectClampedIntOptions,
 } from "@platformer/reflect";
-import { ReactiveElement } from "lit";
+import { ReactiveElement } from "@lit/reactive-element";
 
 export type {
   EnumeratedAttributeOptions,

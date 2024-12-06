@@ -1,4 +1,4 @@
-import { ReactiveElement } from "lit";
+import { ReactiveElement } from "@lit/reactive-element";
 import type { EventHandler } from "@platformer/event-handler";
 
 export type { EventHandler };

@@ -9,7 +9,12 @@
     "test": "wtr test.js && tstyche"
   },
   "dependencies": {
-    "@platformer/event-handler": "*",
+    "@platformer/event-handler": "*"
+  },
+  "peerDependencies": {
+    "@lit/reactive-element": "^2.0.0"
+  },
+  "devDependencies": {
     "lit": "^3.2.1"
   }
 }
