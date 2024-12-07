@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "@microsoft/fast-element": "^2.0.0",
-    "@platformer/reflect": "*"
+    "@platformer/reflect": "^0.0.0"
   }
 }

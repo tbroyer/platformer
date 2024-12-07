@@ -1,12 +1,27 @@
 {
   "name": "@platformer/webidl",
-  "private": true,
+  "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Functions and decorators implementing the WebIDL type coercion rules",
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/tbroyer/platformer/tree/main/packages/webidl#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbroyer/platformer.git",
+    "directory": "packages/webidl"
+  },
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
     "./decorators.js": "./decorators.js"
   },
+  "files": [
+    "index.{js,d.ts}",
+    "decorators.{js,d.ts}"
+  ],
   "scripts": {
     "test": "node --test && tstyche"
   }

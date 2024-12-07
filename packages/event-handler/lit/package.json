@@ -1,15 +1,29 @@
 {
   "name": "@platformer/event-handler-lit",
-  "private": true,
+  "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Decorator to implement event handlers in Lit elements",
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/tbroyer/platformer/tree/main/packages/event-handler/lit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbroyer/platformer.git",
+    "directory": "packages/event-handler/lit"
+  },
   "type": "module",
   "exports": {
     ".": "./index.js"
   },
+  "files": [
+    "index.{js,d.ts}"
+  ],
   "scripts": {
     "test": "wtr test.js && tstyche"
   },
   "dependencies": {
-    "@platformer/event-handler": "*"
+    "@platformer/event-handler": "^0.0.0"
   },
   "peerDependencies": {
     "@lit/reactive-element": "^2.0.0"
