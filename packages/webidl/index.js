@@ -183,7 +183,9 @@ export function coerceToUnrestrictedDouble(value) {
 }
 
 function isObject(value) {
-  return typeof value === "object" || typeof value === "function";
+  return (
+    value != null && (typeof value === "object" || typeof value === "function")
+  );
 }
 
 function toPrimitive(value) {
