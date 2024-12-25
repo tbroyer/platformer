@@ -253,7 +253,14 @@ export function coerceToSymbol(value) {
   return value;
 }
 
-// Interface types, callback interface types, dictionary types, enumeration types, sequences, records, unions, frozen array
+export function coerceToInterface(iface, value) {
+  if (value instanceof iface) {
+    return value;
+  }
+  throw new TypeError();
+}
+
+// Callback interface types, dictionary types, enumeration types, records, unions
 
 export function coerceToCallbackFunction(value) {
   if (typeof value !== "function") {
@@ -269,8 +276,23 @@ export function coerceToLegacyCallbackFunction(value) {
   return value;
 }
 
+export function coerceToSequence(coerceValue = coerceToAny, value) {
+  if (!isObject(value)) {
+    throw new TypeError();
+  }
+  const method = value[Symbol.iterator];
+  if (method == undefined || typeof method !== "function") {
+    throw new TypeError();
+  }
+  return Array.from(value, (v) => coerceValue(v));
+}
+
 export function coerceToPromise(value) {
   return Promise.resolve(value);
+}
+
+export function coerceToFrozenArray(coerceValue = coerceToAny, value) {
+  return Object.freeze(coerceToSequence(coerceValue, value));
 }
 
 // eslint-disable-next-line no-unused-vars

@@ -10,10 +10,13 @@ import {
   coerceToDOMString,
   coerceToDouble,
   coerceToEnforcedByte,
+  coerceToFrozenArray,
+  coerceToInterface,
   coerceToLegacyCallbackFunction,
   coerceToLong,
   coerceToObject,
   coerceToPromise,
+  coerceToSequence,
   coerceToSymbol,
   coerceToUndefined,
   coerceToUnrestrictedDouble,
@@ -158,6 +161,15 @@ expect(function functionSubtypes(
   nullableGeneric = coerceToCallbackFunction(nullableGeneric);
 });
 
+expect(function interfaceTypes(iface: HTMLElement) {
+  iface = coerceToInterface(HTMLElement, iface);
+}).type.not.toRaiseError();
+
+expect(function typedSequence(numbers: number[], strings: string[]) {
+  numbers = coerceToSequence(coerceToDouble, numbers);
+  strings = coerceToSequence(coerceToDOMString, strings);
+}).type.not.toRaiseError();
+
 expect(function typedPromises(
   number: Promise<number>,
   string: Promise<string>,
@@ -174,4 +186,12 @@ expect(function symbolSubtypes(
   union: typeof Symbol.toPrimitive | typeof Symbol.toStringTag,
 ) {
   union = coerceToSymbol(union);
+}).type.not.toRaiseError();
+
+expect(function typedFrozenArrays(
+  numbers: readonly number[],
+  strings: readonly string[],
+) {
+  numbers = coerceToFrozenArray(coerceToDouble, numbers);
+  strings = coerceToFrozenArray(coerceToDOMString, strings);
 }).type.not.toRaiseError();

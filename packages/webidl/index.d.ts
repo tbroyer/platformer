@@ -243,6 +243,15 @@ export declare function coerceToObject<R extends object>(value: any): R;
  */
 export declare function coerceToSymbol<R extends symbol>(value: any): R;
 /**
+ * Implements coercion to IDL interface type
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#js-interface | The WebIDL specification}
+ */
+export declare function coerceToInterface<R extends object>(
+  iface: { new (): R; prototype: R },
+  value: any,
+): R;
+/**
  * Implements coercion to IDL `callback` function
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-callback-function | The WebIDL specification}
@@ -259,12 +268,28 @@ export declare function coerceToLegacyCallbackFunction<
   R extends (...args: any[]) => any,
 >(value: any): R | null;
 /**
+ * Implements coercion to IDL `sequence<T>`
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#js-sequence | The WebIDL specification}
+ */
+export declare function coerceToSequence<R = any>(
+  coerceValue: ((value: any) => R) | undefined,
+  value: any,
+): R[];
+/**
  * Implements coercion to IDL `Promise`.
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-promise | The WebIDL specification}
  */
 export declare function coerceToPromise<R>(value: any): Promise<Awaited<R>>;
+/**
+ * Implement coercion to IDL `FrozenArray<T>`
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#js-frozen-array | The WebIDL specification}
+ */
+export declare function coerceToFrozenArray<R = any>(
+  coerceValue: ((value: any) => R) | undefined,
+  value: any,
+): readonly R[];
 
-// Interface types, callback interface types, dictionary types, enumeration types, sequences, records, unions, frozen array
-
-// buffer sources
+// Callback interface types, dictionary types, enumeration types, records, unions, buffer sources

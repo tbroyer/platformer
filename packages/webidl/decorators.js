@@ -38,6 +38,9 @@ import {
   coerceToUnsignedShort,
   coerceToCallbackFunction,
   coerceToLegacyCallbackFunction,
+  coerceToInterface,
+  coerceToSequence,
+  coerceToFrozenArray,
 } from "./index.js";
 
 /**
@@ -117,3 +120,13 @@ export const callbackFunction = coerceDecorator(coerceToCallbackFunction);
 export const legacyCallbackFunction = coerceDecorator(
   coerceToLegacyCallbackFunction,
 );
+
+export function interfaceType(iface) {
+  return coerceDecorator((value) => coerceToInterface(iface, value));
+}
+export function sequence(coerceValue) {
+  return coerceDecorator((value) => coerceToSequence(coerceValue, value));
+}
+export function frozenArray(coerceValue) {
+  return coerceDecorator((value) => coerceToFrozenArray(coerceValue, value));
+}

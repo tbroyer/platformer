@@ -8,8 +8,8 @@ This package implements the [WebIDL type coercion rules](https://webidl.spec.wha
 
 ## TODO
 
-Currently, only scalar values (boolean, integer and floating-point numbers, bigint, strings, and symbol) as well as `object`, callback functions and `Promise` are implemented;
-no arrays (sequences, etc.), interfaces, records, enumerations, unions, or buffer sources (typed arrays and array views).
+Currently, only scalar values (boolean, integer and floating-point numbers, bigint, strings, and symbol) as well as `object`, callback functions, arrays (`sequence` and `FrozenArray`), interface types, and `Promise` are implemented;
+no records, enumerations, unions, or buffer sources (typed arrays and array views).
 
 ## API
 
@@ -19,6 +19,12 @@ The callback function type has a `Legacy` variant corresponding to the `[LegacyT
 
 ```js
 const coerced = coerceToLong("-12.3"); // ← -12 as a JavaScript number
+```
+
+A few exported functions, for _complex_ types, take additional arguments. Those always come first, and the value to coerce as the last argument, to make it easier to [_curry_](https://en.wikipedia.org/wiki/Currying) them. Those functions are listed in a separate table below.
+
+```js
+const coerced = coerceToSequence(coerceToLong, ["-12.3"]);
 ```
 
 The package also exports as `@platformer/webidl/decorators.js` a set of [ECMAScript decorators](https://github.com/tc39/proposal-decorators) to coerce a setter's or auto-accessor property setter's value. The decorators follow the same naming rule as the coercion functions they wrap but without the `coerceTo` prefix.
@@ -35,6 +41,14 @@ class Foo {
     // `value` has been coerced to a `long`
     this.#baz = value;
   }
+}
+```
+
+The coercion functions that take additional arguments have corresponding decorator factories taking those same arguments and returning a decorator.
+
+```js
+class Foo {
+  @sequence(coerceToLong) accessor bar;
 }
 ```
 
@@ -92,3 +106,9 @@ class Foo {
 [`long long`]: https://webidl.spec.whatwg.org/#idl-long-long
 [`unsigned long long`]: https://webidl.spec.whatwg.org/#idl-unsigned-long-long
 [`callback` function]: https://webidl.spec.whatwg.org/#idl-callback-function
+
+| IDL Type                                                             | Function              | Decorator       | Additional arguments                                                                       |
+| :------------------------------------------------------------------- | :-------------------- | :-------------- | :----------------------------------------------------------------------------------------- |
+| [interface type](https://webidl.spec.whatwg.org/#idl-interface)      | `coerceToInterface`   | `interfaceType` | An interface type, such as `HTMLElement`                                                   |
+| [`sequence<T>`](https://webidl.spec.whatwg.org/#idl-sequence)        | `coerceToSequence`    | `sequence`      | Another coercion function to be applied to each sequence member, defaults to `coerceToAny` |
+| [`FrozenArray<T>`](https://webidl.spec.whatwg.org/#idl-frozen-array) | `coerceToFrozenArray` | `frozenArray`   | Another coercion function to be applied to each sequence member, defaults to `coerceToAny` |

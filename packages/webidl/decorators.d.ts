@@ -248,3 +248,28 @@ export declare const callbackFunction: TypeCoercionDecorator<
 export declare const legacyCallbackFunction: TypeCoercionDecorator<
   ((...args: any[]) => any) | null
 >;
+/**
+ * Coerce a setter or an auto-accessor's setter value to IDL interface type
+ *
+ * @see {@link coerceToInterface}
+ */
+export declare function interfaceType<R extends object>(iface: {
+  new (): R;
+  prototype: R;
+}): TypeCoercionDecorator<R>;
+/**
+ * Coerce a setter or an auto-accessor's setter value to IDL `sequence<T>`
+ *
+ * @see {@link coerceToSequence}
+ */
+export declare function sequence<R>(
+  coerceValue?: ((value: any) => R) | undefined,
+): TypeCoercionDecorator<R[]>;
+/**
+ * Coerce a setter or an auto-accessor's setter value to IDL `FrozenArray<T>`
+ *
+ * @see {@link coerceToFrozenArray}
+ */
+export declare function frozenArray<R>(
+  coerceValue?: ((value: any) => R) | undefined,
+): TypeCoercionDecorator<readonly R[]>;

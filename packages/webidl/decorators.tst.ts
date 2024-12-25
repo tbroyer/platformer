@@ -1,4 +1,5 @@
 import { expect, test } from "tstyche";
+import { coerceToDOMString, coerceToDouble } from "@platformer/webidl";
 import {
   any,
   bigInt,
@@ -25,12 +26,15 @@ import {
   enforcedUnsignedLongLong,
   enforcedUnsignedShort,
   float,
+  frozenArray,
+  interfaceType,
   legacyCallbackFunction,
   long,
   longLong,
   object,
   octet,
   promise,
+  sequence,
   short,
   symbol,
   unrestrictedDouble,
@@ -67,6 +71,9 @@ expect(
     @symbol accessor symbol: symbol;
     @symbol set symbolSetter(value: symbol) {}
 
+    @interfaceType(HTMLElement) accessor element: HTMLElement;
+    @interfaceType(HTMLElement) set elementSetter(value: HTMLElement) {}
+
     @promise accessor promise: Promise<boolean>;
     @promise set promiseSetter(value: Promise<boolean>) {}
 
@@ -84,6 +91,14 @@ expect(
     @legacyCallbackFunction set legacyCallbackFunctionSetter(
       value: ((a: number, b: string) => boolean) | null,
     ) {}
+
+    @sequence(coerceToDOMString) accessor strings: string[];
+    @sequence(coerceToDOMString) set stringsSetter(value: string[]) {}
+    @sequence() accessor anys: any[];
+
+    @frozenArray(coerceToDouble) accessor numbers: readonly number[];
+    @frozenArray(coerceToDouble) set numbersSetter(value: readonly number[]) {}
+    @frozenArray() accessor frozenAnys: readonly any[];
 
     // byte
 
@@ -250,6 +265,16 @@ test("subtypes", () => {
         a: number,
       ) => boolean;
 
+      @sequence(coerceToDOMString) accessor strings: StringEnum[];
+      @sequence(coerceToDOMString) set stringsSetter(
+        value: ConstStringEnum[],
+      ) {}
+
+      @frozenArray(coerceToDouble) accessor numbers: readonly NumericEnum[];
+      @frozenArray(coerceToDouble) set numbersSetter(
+        value: readonly ConstNumericEnum[],
+      ) {}
+
       // byte
 
       @byte accessor byte: NumericEnum;
@@ -371,6 +396,42 @@ test("errors", () => {
   expect(
     class {
       @boolean accessor notBoolean: number;
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @interfaceType accessor element: Element;
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @interfaceType() accessor element: Element;
+    },
+  ).type.toRaiseError(2554);
+
+  expect(
+    class {
+      @sequence(coerceToDOMString) accessor strings: number[];
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @sequence accessor strings: string[];
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @frozenArray(coerceToDouble) accessor numbers: readonly string[];
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @frozenArray accessor numbers: readonly number[];
     },
   ).type.toRaiseError(1240, 1270);
 });
