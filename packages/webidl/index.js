@@ -219,10 +219,20 @@ function toPrimitive(value) {
 }
 export function coerceToBigInt(value) {
   value = toPrimitive(value);
-  if (typeof value === "number") {
-    throw new TypeError();
+  switch (typeof value) {
+    case "boolean":
+      return value ? 1n : 0n;
+    case "bigint":
+      return value;
+    case "string":
+      return BigInt(value);
+    case "undefined":
+    case "object": // null value
+    case "number":
+    case "symbol":
+    default:
+      throw new TypeError();
   }
-  return BigInt(value);
 }
 
 export function coerceToDOMString(value) {
