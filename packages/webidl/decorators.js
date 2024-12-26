@@ -41,6 +41,8 @@ import {
   coerceToInterface,
   coerceToSequence,
   coerceToFrozenArray,
+  coerceToEnumeration,
+  coerceToRecord,
 } from "./index.js";
 
 /**
@@ -124,8 +126,21 @@ export const legacyCallbackFunction = coerceDecorator(
 export function interfaceType(iface) {
   return coerceDecorator((value) => coerceToInterface(iface, value));
 }
+export function enumeration(...allowedValues) {
+  allowedValues = allowedValues.flat();
+  return coerceDecorator((value) => coerceToEnumeration(allowedValues, value));
+}
 export function sequence(coerceValue) {
   return coerceDecorator((value) => coerceToSequence(coerceValue, value));
+}
+export function record(coerceKey, coerceValue) {
+  if (!coerceValue) {
+    coerceValue = coerceKey;
+    coerceKey = undefined;
+  }
+  return coerceDecorator((value) =>
+    coerceToRecord(coerceKey, coerceValue, value),
+  );
 }
 export function frozenArray(coerceValue) {
   return coerceDecorator((value) => coerceToFrozenArray(coerceValue, value));

@@ -252,6 +252,15 @@ export declare function coerceToInterface<R extends object>(
   value: any,
 ): R;
 /**
+ * Implements coercion to IDL enumeration type
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#js-enumeration | The WebIDL specification}
+ */
+export declare function coerceToEnumeration<E extends string>(
+  allowedValues: E[],
+  value: any,
+): E;
+/**
  * Implements coercion to IDL `callback` function
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-callback-function | The WebIDL specification}
@@ -277,6 +286,16 @@ export declare function coerceToSequence<R = any>(
   value: any,
 ): R[];
 /**
+ * Implements coercion to IDL `record<K, V>`
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#js-record | The WebIDL specification}
+ */
+export declare function coerceToRecord<K extends string = string, V = any>(
+  coerceKey: ((key: any) => K) | undefined,
+  coerceValue: ((value: any) => V) | undefined,
+  value: any,
+): Record<K, V>;
+/**
  * Implements coercion to IDL `Promise`.
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-promise | The WebIDL specification}
@@ -292,4 +311,4 @@ export declare function coerceToFrozenArray<R = any>(
   value: any,
 ): readonly R[];
 
-// Callback interface types, dictionary types, enumeration types, records, unions, buffer sources
+// Callback interface types, dictionary types, unions, buffer sources

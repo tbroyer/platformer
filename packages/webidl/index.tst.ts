@@ -10,12 +10,14 @@ import {
   coerceToDOMString,
   coerceToDouble,
   coerceToEnforcedByte,
+  coerceToEnumeration,
   coerceToFrozenArray,
   coerceToInterface,
   coerceToLegacyCallbackFunction,
   coerceToLong,
   coerceToObject,
   coerceToPromise,
+  coerceToRecord,
   coerceToSequence,
   coerceToSymbol,
   coerceToUndefined,
@@ -165,9 +167,45 @@ expect(function interfaceTypes(iface: HTMLElement) {
   iface = coerceToInterface(HTMLElement, iface);
 }).type.not.toRaiseError();
 
+expect(function enumeration(
+  enum_: StringEnum,
+  constEnum: ConstStringEnum,
+  union: "up" | "down" | "left" | "right",
+) {
+  enum_ = coerceToEnumeration(Object.values(StringEnum), enum_);
+  constEnum = coerceToEnumeration(
+    [
+      ConstStringEnum.Up,
+      ConstStringEnum.Down,
+      ConstStringEnum.Left,
+      ConstStringEnum.Right,
+    ],
+    constEnum,
+  );
+  union = coerceToEnumeration(["up", "down", "left", "right"], union);
+}).type.not.toRaiseError();
+
 expect(function typedSequence(numbers: number[], strings: string[]) {
   numbers = coerceToSequence(coerceToDouble, numbers);
   strings = coerceToSequence(coerceToDOMString, strings);
+}).type.not.toRaiseError();
+
+expect(function records(
+  enums: Record<StringEnum, NumericEnum>,
+  constEnums: Record<ConstStringEnum, ConstNumericEnum>,
+  union: Record<string, number | number[]>,
+) {
+  enums = coerceToRecord(
+    (value) => coerceToEnumeration(Object.values(StringEnum), value),
+    coerceToDouble,
+    enums,
+  );
+  constEnums = coerceToRecord<ConstStringEnum, ConstNumericEnum>(
+    coerceToDOMString,
+    coerceToDouble,
+    constEnums,
+  );
+  union = coerceToRecord(undefined, undefined, union);
 }).type.not.toRaiseError();
 
 expect(function typedPromises(

@@ -8,8 +8,8 @@ This package implements the [WebIDL type coercion rules](https://webidl.spec.wha
 
 ## TODO
 
-Currently, only scalar values (boolean, integer and floating-point numbers, bigint, strings, and symbol) as well as `object`, callback functions, arrays (`sequence` and `FrozenArray`), interface types, and `Promise` are implemented;
-no records, enumerations, unions, or buffer sources (typed arrays and array views).
+Currently, scalar values (boolean, integer and floating-point numbers, bigint, strings, and symbol) as well as `object`, callback functions, arrays (`sequence` and `FrozenArray`), interface types, enumeration types, records, and `Promise` are implemented;
+This means that only unions and buffer sources (typed arrays and array views) are missing.
 
 ## API
 
@@ -107,8 +107,10 @@ class Foo {
 [`unsigned long long`]: https://webidl.spec.whatwg.org/#idl-unsigned-long-long
 [`callback` function]: https://webidl.spec.whatwg.org/#idl-callback-function
 
-| IDL Type                                                             | Function              | Decorator       | Additional arguments                                                                       |
-| :------------------------------------------------------------------- | :-------------------- | :-------------- | :----------------------------------------------------------------------------------------- |
-| [interface type](https://webidl.spec.whatwg.org/#idl-interface)      | `coerceToInterface`   | `interfaceType` | An interface type, such as `HTMLElement`                                                   |
-| [`sequence<T>`](https://webidl.spec.whatwg.org/#idl-sequence)        | `coerceToSequence`    | `sequence`      | Another coercion function to be applied to each sequence member, defaults to `coerceToAny` |
-| [`FrozenArray<T>`](https://webidl.spec.whatwg.org/#idl-frozen-array) | `coerceToFrozenArray` | `frozenArray`   | Another coercion function to be applied to each sequence member, defaults to `coerceToAny` |
+| IDL Type                                                             | Function              | Decorator       | Additional arguments                                                                                                                                                    |
+| :------------------------------------------------------------------- | :-------------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [interface type](https://webidl.spec.whatwg.org/#idl-interface)      | `coerceToInterface`   | `interfaceType` | An interface type, such as `HTMLElement`                                                                                                                                |
+| [enumeration type](https://webidl.spec.whatwg.org/#idl-enumeration)  | `coerceToEnumeration` | `enumeration`   | An array (or rest arguments for the decorator) of allowed string values                                                                                                 |
+| [`sequence<T>`](https://webidl.spec.whatwg.org/#idl-sequence)        | `coerceToSequence`    | `sequence`      | Another coercion function to be applied to each sequence member, defaults to `coerceToAny`                                                                              |
+| [`record<K,V>`](https://webidl.spec.whatwg.org/#idl-record)          | `coerceToRecord`      | `record`        | Two coercion functions to be applied to each record key and value respectively, where the key has to be a string type, default to `coerceToDOMString` and `coerceToAny` |
+| [`FrozenArray<T>`](https://webidl.spec.whatwg.org/#idl-frozen-array) | `coerceToFrozenArray` | `frozenArray`   | Another coercion function to be applied to each sequence member, defaults to `coerceToAny`                                                                              |

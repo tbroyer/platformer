@@ -258,6 +258,17 @@ export declare function interfaceType<R extends object>(iface: {
   prototype: R;
 }): TypeCoercionDecorator<R>;
 /**
+ * Coerce a setter or an auto-accessor's setter value to IDL enumeration type
+ *
+ * @see {@link coerceToEnumeration}
+ */
+export declare function enumeration<R extends string>(
+  allowedValues: R[],
+): TypeCoercionDecorator<R>;
+export declare function enumeration<R extends string>(
+  ...allowedValues: R[]
+): TypeCoercionDecorator<R>;
+/**
  * Coerce a setter or an auto-accessor's setter value to IDL `sequence<T>`
  *
  * @see {@link coerceToSequence}
@@ -265,6 +276,18 @@ export declare function interfaceType<R extends object>(iface: {
 export declare function sequence<R>(
   coerceValue?: ((value: any) => R) | undefined,
 ): TypeCoercionDecorator<R[]>;
+/**
+ * Coerce a setter or an auto-accessor's setter value to IDL `record<K, V>`
+ *
+ * @see {@link coerceToRecord}
+ */
+export declare function record<K extends string = string, V = any>(
+  coerceKey: ((value: any) => K) | undefined,
+  coerceValue: ((value: any) => V) | undefined,
+): TypeCoercionDecorator<Record<K, V>>;
+export declare function record<V = any>(
+  coerceValue?: ((value: any) => V) | undefined,
+): TypeCoercionDecorator<Record<string, V>>;
 /**
  * Coerce a setter or an auto-accessor's setter value to IDL `FrozenArray<T>`
  *

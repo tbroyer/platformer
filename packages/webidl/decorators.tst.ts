@@ -1,5 +1,11 @@
 import { expect, test } from "tstyche";
-import { coerceToDOMString, coerceToDouble } from "@platformer/webidl";
+import {
+  coerceToBoolean,
+  coerceToByteString,
+  coerceToDOMString,
+  coerceToDouble,
+  coerceToObject,
+} from "@platformer/webidl";
 import {
   any,
   bigInt,
@@ -25,6 +31,7 @@ import {
   enforcedUnsignedLong,
   enforcedUnsignedLongLong,
   enforcedUnsignedShort,
+  enumeration,
   float,
   frozenArray,
   interfaceType,
@@ -34,6 +41,7 @@ import {
   object,
   octet,
   promise,
+  record,
   sequence,
   short,
   symbol,
@@ -74,6 +82,11 @@ expect(
     @interfaceType(HTMLElement) accessor element: HTMLElement;
     @interfaceType(HTMLElement) set elementSetter(value: HTMLElement) {}
 
+    @enumeration<string>(["up", "down", "left", "right"])
+    accessor enumeration: string;
+    @enumeration<string>("up", "down", "left", "right")
+    set enumerationSetter(value: string) {}
+
     @promise accessor promise: Promise<boolean>;
     @promise set promiseSetter(value: Promise<boolean>) {}
 
@@ -95,6 +108,12 @@ expect(
     @sequence(coerceToDOMString) accessor strings: string[];
     @sequence(coerceToDOMString) set stringsSetter(value: string[]) {}
     @sequence() accessor anys: any[];
+
+    @record(coerceToDouble) accessor record: Record<string, number>;
+    @record(coerceToByteString, coerceToBoolean) set recordSetter(
+      value: Record<string, boolean>,
+    ) {}
+    @record() accessor record2: Record<string, boolean>;
 
     @frozenArray(coerceToDouble) accessor numbers: readonly number[];
     @frozenArray(coerceToDouble) set numbersSetter(value: readonly number[]) {}
@@ -260,6 +279,14 @@ test("subtypes", () => {
         value: typeof Symbol.iterator | typeof Symbol.asyncIterator,
       ) {}
 
+      @enumeration("up", "down", "left", "right") accessor enumeration:
+        | "up"
+        | "down"
+        | "left"
+        | "right";
+      @enumeration(Object.values(StringEnum))
+      set enumerationSetter(value: StringEnum) {}
+
       // note: non-null
       @legacyCallbackFunction accessor legacyCallbackFunction: (
         a: number,
@@ -268,6 +295,11 @@ test("subtypes", () => {
       @sequence(coerceToDOMString) accessor strings: StringEnum[];
       @sequence(coerceToDOMString) set stringsSetter(
         value: ConstStringEnum[],
+      ) {}
+
+      @record(coerceToDouble) accessor record: Record<string, ConstNumericEnum>;
+      @record(coerceToByteString, coerceToObject) set recordSetter(
+        value: Record<StringEnum, { a: number; b: boolean }>,
       ) {}
 
       @frozenArray(coerceToDouble) accessor numbers: readonly NumericEnum[];
@@ -420,6 +452,27 @@ test("errors", () => {
   expect(
     class {
       @sequence accessor strings: string[];
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @record(coerceToDouble, coerceToDOMString) accessor record: Record<
+        string,
+        number
+      >;
+    },
+  ).type.toRaiseError(2345);
+
+  expect(
+    class {
+      @record(coerceToDOMString) accessor record: Record<string, number>;
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @record accessor record: Record<string, string>;
     },
   ).type.toRaiseError(1240, 1270);
 

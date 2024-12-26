@@ -272,7 +272,15 @@ export function coerceToInterface(iface, value) {
   throw new TypeError();
 }
 
-// Callback interface types, dictionary types, enumeration types, records, unions
+// Callback interface types, dictionary types, unions
+
+export function coerceToEnumeration(allowedValues, value) {
+  value = coerceToDOMString(value);
+  if (!allowedValues.includes(value)) {
+    throw new TypeError();
+  }
+  return value;
+}
 
 export function coerceToCallbackFunction(value) {
   if (typeof value !== "function") {
@@ -297,6 +305,23 @@ export function coerceToSequence(coerceValue = coerceToAny, value) {
     throw new TypeError();
   }
   return Array.from(value, (v) => coerceValue(v));
+}
+
+export function coerceToRecord(
+  coerceKey = coerceToDOMString,
+  coerceValue = coerceToAny,
+  value,
+) {
+  if (!isObject(value)) {
+    throw new TypeError();
+  }
+  const result = {};
+  for (const k of Object.getOwnPropertyNames(value)) {
+    if (Object.getOwnPropertyDescriptor(value, k)?.enumerable) {
+      result[coerceKey(k)] = coerceValue(value[k]);
+    }
+  }
+  return result;
 }
 
 export function coerceToPromise(value) {
