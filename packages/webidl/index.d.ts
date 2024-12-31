@@ -300,7 +300,10 @@ export declare function coerceToRecord<K extends string = string, V = any>(
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-promise | The WebIDL specification}
  */
-export declare function coerceToPromise<R>(value: any): Promise<Awaited<R>>;
+export declare function coerceToPromise<R = any>(
+  coerceValue: ((value: any) => Awaited<R>) | undefined,
+  value: any,
+): Promise<Awaited<R>>;
 /**
  * Implement coercion to IDL `FrozenArray<T>`
  *

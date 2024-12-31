@@ -93,7 +93,6 @@ class Foo {
 | [`symbol`](https://webidl.spec.whatwg.org/#idl-symbol)                                                             | `coerceToSymbol`                   | `symbol`                   |
 | [`callback` function]                                                                                              | `coerceToCallbackFunction`         | `callbackFunction`         |
 | [`[LegacyTreatNonObjectAsNull]`](https://webidl.spec.whatwg.org/#LegacyTreatNonObjectAsNull) [`callback` function] | `coerceToLegacyCallbackFunction`   | `legacyCallbackFunction`   |
-| [`Promise<T>`](https://webidl.spec.whatwg.org/#idl-promise)                                                        | `coerceToPromise`                  | `promise`                  |
 
 [Clamp]: https://webidl.spec.whatwg.org/#Clamp
 [EnforceRange]: https://webidl.spec.whatwg.org/#EnforceRange
@@ -113,4 +112,5 @@ class Foo {
 | [enumeration type](https://webidl.spec.whatwg.org/#idl-enumeration)  | `coerceToEnumeration` | `enumeration`   | An array (or rest arguments for the decorator) of allowed string values                                                                                                 |
 | [`sequence<T>`](https://webidl.spec.whatwg.org/#idl-sequence)        | `coerceToSequence`    | `sequence`      | Another coercion function to be applied to each sequence member, defaults to `coerceToAny`                                                                              |
 | [`record<K,V>`](https://webidl.spec.whatwg.org/#idl-record)          | `coerceToRecord`      | `record`        | Two coercion functions to be applied to each record key and value respectively, where the key has to be a string type, default to `coerceToDOMString` and `coerceToAny` |
+| [`Promise<T>`](https://webidl.spec.whatwg.org/#idl-promise)          | `coerceToPromise`     | `promise`       | Another coercion function to be applied to the resolved value                                                                                                           |
 | [`FrozenArray<T>`](https://webidl.spec.whatwg.org/#idl-frozen-array) | `coerceToFrozenArray` | `frozenArray`   | Another coercion function to be applied to each sequence member, defaults to `coerceToAny`                                                                              |

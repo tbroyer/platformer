@@ -109,7 +109,6 @@ export const long = coerceDecorator(coerceToLong);
 export const longLong = coerceDecorator(coerceToLongLong);
 export const object = coerceDecorator(coerceToObject);
 export const octet = coerceDecorator(coerceToOctet);
-export const promise = coerceDecorator(coerceToPromise);
 export const short = coerceDecorator(coerceToShort);
 export const symbol = coerceDecorator(coerceToSymbol);
 export const usvString = coerceDecorator(coerceToUSVString);
@@ -141,6 +140,9 @@ export function record(coerceKey, coerceValue) {
   return coerceDecorator((value) =>
     coerceToRecord(coerceKey, coerceValue, value),
   );
+}
+export function promise(coerceValue) {
+  return coerceDecorator((value) => coerceToPromise(coerceValue, value));
 }
 export function frozenArray(coerceValue) {
   return coerceDecorator((value) => coerceToFrozenArray(coerceValue, value));

@@ -324,8 +324,8 @@ export function coerceToRecord(
   return result;
 }
 
-export function coerceToPromise(value) {
-  return Promise.resolve(value);
+export function coerceToPromise(coerceValue = coerceToAny, value) {
+  return Promise.resolve(value).then(coerceValue);
 }
 
 export function coerceToFrozenArray(coerceValue = coerceToAny, value) {

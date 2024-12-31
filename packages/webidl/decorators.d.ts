@@ -227,12 +227,6 @@ export declare const object: TypeCoercionDecorator<object>;
  */
 export declare const symbol: TypeCoercionDecorator<symbol>;
 /**
- * Coerce a setter or an auto-accessor's setter value to IDL `Promise`
- *
- * @see {@link coerceToPromise}
- */
-export declare const promise: TypeCoercionDecorator<Promise<unknown>>;
-/**
  * Coerce a setter or an auto-accessor's setter value to IDL `callback` function
  *
  * @see {@link coerceToCallbackFunction}
@@ -288,6 +282,14 @@ export declare function record<K extends string = string, V = any>(
 export declare function record<V = any>(
   coerceValue?: ((value: any) => V) | undefined,
 ): TypeCoercionDecorator<Record<string, V>>;
+/**
+ * Coerce a setter or an auto-accessor's setter value to IDL `Promise`
+ *
+ * @see {@link coerceToPromise}
+ */
+export declare function promise<R = any>(
+  coerceValue?: ((value: any) => R) | undefined,
+): TypeCoercionDecorator<Promise<R>>;
 /**
  * Coerce a setter or an auto-accessor's setter value to IDL `FrozenArray<T>`
  *

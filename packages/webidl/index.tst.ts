@@ -213,9 +213,9 @@ expect(function typedPromises(
   string: Promise<string>,
   union: boolean | Promise<boolean>,
 ) {
-  number = coerceToPromise(number);
-  string = coerceToPromise(string);
-  union = coerceToPromise(union);
+  number = coerceToPromise(coerceToDouble, number);
+  string = coerceToPromise(coerceToDOMString, string);
+  union = coerceToPromise(undefined, union);
   // 'union' is inferred as a Promise<boolean>
   expect(union).type.toBe<Promise<boolean>>();
 }).type.not.toRaiseError();

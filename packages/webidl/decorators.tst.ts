@@ -87,8 +87,8 @@ expect(
     @enumeration<string>("up", "down", "left", "right")
     set enumerationSetter(value: string) {}
 
-    @promise accessor promise: Promise<boolean>;
-    @promise set promiseSetter(value: Promise<boolean>) {}
+    @promise() accessor promise: Promise<boolean>;
+    @promise(coerceToBoolean) set promiseSetter(value: Promise<boolean>) {}
 
     @callbackFunction accessor callbackFunction: (
       a: number,
@@ -302,6 +302,11 @@ test("subtypes", () => {
         value: Record<StringEnum, { a: number; b: boolean }>,
       ) {}
 
+      @promise(coerceToDOMString) accessor promise: Promise<StringEnum>;
+      @promise(coerceToDOMString) set promiseSetter(
+        value: Promise<ConstStringEnum>,
+      ) {}
+
       @frozenArray(coerceToDouble) accessor numbers: readonly NumericEnum[];
       @frozenArray(coerceToDouble) set numbersSetter(
         value: readonly ConstNumericEnum[],
@@ -473,6 +478,18 @@ test("errors", () => {
   expect(
     class {
       @record accessor record: Record<string, string>;
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @promise(coerceToDouble) accessor string: Promise<string>;
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @promise accessor number: Promise<number>;
     },
   ).type.toRaiseError(1240, 1270);
 
