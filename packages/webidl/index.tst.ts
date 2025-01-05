@@ -2,6 +2,7 @@ import { expect } from "tstyche";
 import {
   coerceToAny,
   coerceToBigInt,
+  coerceToBigIntOrNumericType,
   coerceToBoolean,
   coerceToByte,
   coerceToByteString,
@@ -91,20 +92,24 @@ expect(function uncommonNumbers(
   byte: number,
   clampedByte: number,
   enforcedByte: number,
+  bigIntOrDouble: bigint | number,
 ) {
   byte = coerceToByte(byte);
   clampedByte = coerceToClampedByte(clampedByte);
   enforcedByte = coerceToEnforcedByte(enforcedByte);
+  bigIntOrDouble = coerceToBigIntOrNumericType(undefined, bigIntOrDouble);
 }).type.not.toRaiseError();
 
 expect(function numberSubtypes(
   union: 1 | 2 | 3,
   numericEnum: NumericEnum,
   constEnum: ConstNumericEnum,
+  bigIntOrDouble: 1n | 42,
 ) {
   union = coerceToDouble(union);
   numericEnum = coerceToDouble(numericEnum);
   constEnum = coerceToDouble(constEnum);
+  bigIntOrDouble = coerceToBigIntOrNumericType(coerceToDouble, bigIntOrDouble);
 }).type.not.toRaiseError();
 
 expect(function stringSubtypes(

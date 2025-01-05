@@ -9,6 +9,7 @@ import {
 import {
   any,
   bigInt,
+  bigIntOrNumericType,
   boolean,
   byte,
   byteString,
@@ -63,6 +64,9 @@ expect(
 
     @bigInt accessor bigInt: bigint;
     @bigInt set bigIntSetter(value: bigint) {}
+
+    @bigIntOrNumericType() accessor bigIntOrDouble: bigint | number;
+    @bigIntOrNumericType() set bigIntOrDoubleSetter(value: bigint | number) {}
 
     @domString accessor domString: string;
     @domString set domStringSetter(value: string) {}
@@ -258,6 +262,9 @@ test("subtypes", () => {
       @bigInt accessor bigInt: 1n | 42n;
       @bigInt set bigIntSetter(value: 1n | 42n) {}
 
+      @bigIntOrNumericType() accessor bigIntOrDouble: 1n | 42;
+      @bigIntOrNumericType() set bigIntOrDoubleSetter(value: 1n | 42) {}
+
       @domString accessor domString: StringEnum;
       @domString set domStringSetter(value: StringEnum) {}
 
@@ -433,6 +440,26 @@ test("errors", () => {
   expect(
     class {
       @boolean accessor notBoolean: number;
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @bigIntOrNumericType() accessor notNumeric: string;
+    },
+  ).type.toRaiseError(1240, 1270);
+
+  expect(
+    class {
+      @bigIntOrNumericType(coerceToDOMString) accessor bigIntOrNumericType:
+        | bigint
+        | number;
+    },
+  ).type.toRaiseError(2345);
+
+  expect(
+    class {
+      @bigIntOrNumericType accessor bigIntOrNumericType: bigint | number;
     },
   ).type.toRaiseError(1240, 1270);
 

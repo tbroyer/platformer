@@ -238,6 +238,17 @@ export function coerceToBigInt(value) {
       throw new TypeError();
   }
 }
+export function coerceToBigIntOrNumericType(
+  coerceToNumericType = coerceToUnrestrictedDouble,
+  value,
+) {
+  // Unary minus applies ToNumeric; apply it twice to keep the same numeric value
+  value = -(-value);
+  if (typeof value === "bigint") {
+    return value;
+  }
+  return coerceToNumericType(value);
+}
 
 export function coerceToDOMString(value) {
   // Use string template rather than String() to throw for symbols

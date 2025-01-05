@@ -243,6 +243,17 @@ export declare const legacyCallbackFunction: TypeCoercionDecorator<
   ((...args: any[]) => any) | null
 >;
 /**
+ * Coerce a setter or an auto-accessor's setter value to IDL numeric type or `bigint`
+ *
+ * @see {@link coerceToBigIntOrNumericType}
+ */
+export declare function bigIntOrNumericType<
+  N extends number,
+  R extends bigint | N,
+>(
+  coerceToNumericType?: ((value: any) => N) | undefined,
+): TypeCoercionDecorator<R>;
+/**
  * Coerce a setter or an auto-accessor's setter value to IDL interface type
  *
  * @see {@link coerceToInterface}

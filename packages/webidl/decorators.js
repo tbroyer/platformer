@@ -43,6 +43,7 @@ import {
   coerceToFrozenArray,
   coerceToEnumeration,
   coerceToRecord,
+  coerceToBigIntOrNumericType,
 } from "./index.js";
 
 /**
@@ -121,6 +122,12 @@ export const callbackFunction = coerceDecorator(coerceToCallbackFunction);
 export const legacyCallbackFunction = coerceDecorator(
   coerceToLegacyCallbackFunction,
 );
+
+export function bigIntOrNumericType(coerceToNumericType) {
+  return coerceDecorator((value) =>
+    coerceToBigIntOrNumericType(coerceToNumericType, value),
+  );
+}
 
 export function interfaceType(iface) {
   return coerceDecorator((value) => coerceToInterface(iface, value));

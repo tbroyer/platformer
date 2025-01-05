@@ -213,6 +213,15 @@ export declare function coerceToUnrestrictedDouble<R extends number>(
  */
 export declare function coerceToBigInt<R extends bigint>(value: any): R;
 /**
+ * Implement coercion to an IDL numeric type or `bigint`
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#es-to-bigint-or-numeric | The WebIDL specification}
+ */
+export declare function coerceToBigIntOrNumericType<
+  N extends number,
+  R extends bigint | N,
+>(coerceToNumericType: ((value: any) => N) | undefined, value: any): R;
+/**
  * Implements coercion to IDL `DOMString`
  *
  * @see {@link https://webidl.spec.whatwg.org/#js-DOMString | The WebIDL specification}
