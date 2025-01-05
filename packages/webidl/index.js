@@ -192,7 +192,7 @@ function toPrimitive(value) {
   if (isObject(value)) {
     const prim = value[Symbol.toPrimitive];
     if (prim != null) {
-      value = prim.call(value, "number");
+      value = Function.prototype.call.call(prim, value, "number");
       if (isObject(value)) {
         throw new TypeError();
       }
@@ -218,6 +218,10 @@ function toPrimitive(value) {
   return value;
 }
 export function coerceToBigInt(value) {
+  // Spec says to use ECMA-262's ToBigInt.
+  // The BigInt() constructor calls it, but after some special handling of numbers.
+  // We can thus "call" ToBigInt by special-casing numbers and then using BigInt().
+  // For that, we need to implement ToPrimitive(…, NUMBER) though.
   value = toPrimitive(value);
   switch (typeof value) {
     case "boolean":

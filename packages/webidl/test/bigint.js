@@ -97,6 +97,22 @@ describe("WebIDL bigint type", () => {
       }),
       0n,
     );
+    assert.strictEqual(
+      sut({
+        valueOf() {
+          return 0n;
+        },
+      }),
+      0n,
+    );
+    assert.strictEqual(
+      sut({
+        toString() {
+          return "0";
+        },
+      }),
+      0n,
+    );
   });
 
   it("should throw a TypeError for objects that convert to a number primitive", () => {
@@ -139,5 +155,49 @@ describe("WebIDL bigint type", () => {
       },
     };
     assert.strictEqual(sut(o), 5n);
+  });
+
+  it("should ignore a non-callable valueOf", () => {
+    // No need to test for toString because if toString were to be tested and ignored,
+    // conversion would then fail as toString is the last resort before failing.
+    const o = {
+      valueOf: {
+        // Make it quack like a Function
+        call() {
+          return 1n;
+        },
+        apply() {
+          return 2n;
+        },
+        bind() {
+          return () => 3n;
+        },
+      },
+      toString() {
+        return "5";
+      },
+    };
+    assert.strictEqual(sut(o), 5n);
+  });
+
+  it("should throw a TypeError if toPrimitive is not callable", () => {
+    const o = {
+      [Symbol.toPrimitive]: {
+        // Make it quack like a Function
+        call() {
+          return 1n;
+        },
+        apply() {
+          return 2n;
+        },
+        bind() {
+          return () => 3n;
+        },
+      },
+      valueOf() {
+        return 5n;
+      },
+    };
+    assertThrows(sut, [o], TypeError);
   });
 });
