@@ -12,17 +12,17 @@
     "lint": "prettier -l . && eslint . && tsc"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.25.9",
+    "@babel/eslint-parser": "^7.26.8",
     "@babel/plugin-proposal-decorators": "^7.25.9",
-    "@changesets/cli": "^2.27.10",
-    "@eslint/js": "^9.16.0",
+    "@changesets/cli": "^2.28.1",
+    "@eslint/js": "^9.21.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@web/dev-server-rollup": "^0.6.4",
-    "@web/test-runner": "^0.19.0",
-    "eslint": "^9.16.0",
-    "globals": "^15.13.0",
-    "prettier": "^3.4.1",
-    "tstyche": "^3.0.0",
-    "typescript": "^5.7.2"
+    "@web/test-runner": "^0.20.0",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.2",
+    "tstyche": "^3.5.0",
+    "typescript": "^5.8.2"
   }
 }

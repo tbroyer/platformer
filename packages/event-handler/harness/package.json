@@ -10,6 +10,6 @@
     "test": ""
   },
   "dependencies": {
-    "chai": "^5.1.2"
+    "chai": "^5.2.0"
   }
 }
