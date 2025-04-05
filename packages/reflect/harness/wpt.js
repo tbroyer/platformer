@@ -34,7 +34,7 @@ const ReflectionHarness = {
   }
 };
 
-// Copied from https://github.com/web-platform-tests/wpt/blob/adc1ac02e6d8e080508325ab4525bab8d09177a6/html/dom/reflection.js
+// Copied from https://github.com/web-platform-tests/wpt/blame/6b105fe9035c980be1d4f8564d539d50d7441cfd/html/dom/reflection.js
 
 /**
  * Resolve the given URL to an absolute URL, relative to the current document's
@@ -196,7 +196,9 @@ function parseFloatNumber(input) {
         }
     }
     // Conversion:
-    // TODO: round to the closest even value, and return an error if it rounds to infinity
+    if (!Number.isFinite(value)) {
+        return false;
+    }
     if (value === 0) {
         return 0;
     }
@@ -626,6 +628,7 @@ const typeMap = {
             " " + binaryString + " foo ", undefined, 1.5, "5%", "+100", ".5", true, false,
             "1.", "1e2", "1e+2", "1e-2", "1E2", "1E+2", "1E-2", "1.e2", "1.0e2",
             "1. 1", "1 .1", "1. e2", "1 .e2", "1 e2", "1e 2", "1e -2", "1e- 2",
+            "1.8e308", "-1.8e308",
             {"test": 6}, NaN, +Infinity, -Infinity, "\0",
             {toString:function() {return 2;}, valueOf: null},
             {valueOf:function() {return 3;}, toString: null}],
@@ -667,6 +670,7 @@ const typeMap = {
             " " + binaryString + " foo ", undefined, 1.5, "5%", "+100", ".5", true, false,
             "1.", "1e2", "1e+2", "1e-2", "1E2", "1E+2", "1E-2", "1.e2", "1.0e2",
             "1. 1", "1 .1", "1. e2", "1 .e2", "1 e2", "1e 2", "1e -2", "1e- 2",
+            "1.8e308", "-1.8e308",
             {"test": 6}, NaN, +Infinity, -Infinity, "\0",
             {toString:function() {return 2;}, valueOf: null},
             {valueOf:function() {return 3;}, toString: null}],
