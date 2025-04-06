@@ -60,6 +60,8 @@ export class EventHandlerHelper {
   }
 }
 
+const HANDLERS = Symbol();
+
 /**
  * @param {ClassSetterDecoratorContext | ClassAccessorDecoratorContext} context
  */
@@ -84,21 +86,21 @@ function validateContext(context) {
 export function eventHandler({ type } = {}) {
   return function (target, context) {
     validateContext(context);
-    type ??= context.name.substring(2).toLowerCase();
+    const { name } = context;
+    type ??= name.substring(2).toLowerCase();
 
-    let handler;
     context.addInitializer(function () {
-      handler = new EventHandlerHelper(this, type);
+      (this[HANDLERS] ??= {})[name] = new EventHandlerHelper(this, type);
     });
 
     switch (context.kind) {
       case "accessor":
         return {
           get() {
-            return handler.get();
+            return this[HANDLERS][name].get();
           },
           set(value) {
-            handler.set(value);
+            this[HANDLERS][name].set(value);
           },
           init(value) {
             return value ?? null;
@@ -109,6 +111,7 @@ export function eventHandler({ type } = {}) {
           target.call(this, null);
         });
         return function (value) {
+          const handler = this[HANDLERS][name];
           handler.set(value);
           target.call(this, handler.get());
         };

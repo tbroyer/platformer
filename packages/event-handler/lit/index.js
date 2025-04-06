@@ -31,15 +31,18 @@ function validateContext({ type, attribute }, context) {
   return { type, attribute };
 }
 
+const HANDLERS = Symbol();
+
 /** @type {import("./index.js").eventHandler} */
 export function eventHandler(options = {}) {
   return function (_, context) {
     const { type, attribute } = validateContext(options, context);
+    const { name } = context;
 
-    let handler;
     const privateProperty = Symbol();
     context.addInitializer(function () {
-      handler = new EventHandlerHelper(this, type);
+      const handler = new EventHandlerHelper(this, type);
+      (this[HANDLERS] ??= {})[name] = handler;
       Object.defineProperty(this, privateProperty, {
         set(value) {
           handler.fromAttribute(value);
@@ -60,10 +63,10 @@ export function eventHandler(options = {}) {
 
     return {
       get() {
-        return handler.get();
+        return this[HANDLERS][name].get();
       },
       set(value) {
-        handler.set(value);
+        this[HANDLERS][name].set(value);
       },
     };
   };

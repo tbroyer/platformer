@@ -23,28 +23,30 @@ function validateContext(context) {
   }
 }
 
+const HANDLERS = Symbol();
+
 /** @type {import("./index.js").eventHandler} */
 export function eventHandler({ type, attribute } = {}) {
   return function (_, context) {
     validateContext(context);
-    type ??= context.name.substring(2).toLowerCase();
-    attribute ??= context.name.toLowerCase();
+    const { name } = context;
+    type ??= name.substring(2).toLowerCase();
+    attribute ??= name.toLowerCase();
     if (!attribute.startsWith("on")) {
       throw new Error("eventHandler attribute name must start with 'on'");
     }
-    let handler;
     context.addInitializer(function () {
-      handler = new EventHandlerHelper(this, type);
+      (this[HANDLERS] ??= {})[name] = new EventHandlerHelper(this, type);
     });
     addAttribute(context.metadata, attribute, function (_, newValue) {
-      handler.fromAttribute(newValue);
+      this[HANDLERS][name].fromAttribute(newValue);
     });
     return {
       get() {
-        return handler.get();
+        return this[HANDLERS][name].get();
       },
       set(value) {
-        handler.set(value);
+        this[HANDLERS][name].set(value);
       },
     };
   };

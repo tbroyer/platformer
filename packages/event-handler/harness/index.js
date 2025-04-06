@@ -642,5 +642,80 @@ export function runTests() {
     // TODO: CSP
     // https://github.com/web-platform-tests/wpt/tree/master/content-security-policy/script-src-attr-elem
     // https://github.com/web-platform-tests/wpt/tree/master/content-security-policy/script-src
+    test("Implementation mustn't leak between elements", () => {
+      let called = 0;
+      const onfoo = () => {
+        called++;
+      };
+
+      const elt1 = document.createElement("test-handler");
+      elt1.onfoo = onfoo;
+
+      const elt2 = document.createElement("test-handler");
+
+      // elt2 modifying elt1
+      assert.strictEqual(
+        elt1.onfoo,
+        onfoo,
+        "creating a second element shouldn't affect the first one",
+      );
+
+      elt2.onfoo = () => true;
+      assert.strictEqual(
+        elt1.onfoo,
+        onfoo,
+        "assigning elt2.onfoo shouldn't update elt1.onfoo",
+      );
+
+      elt1.dispatchEvent(new Event("foo"));
+      assert.strictEqual(called, 1);
+
+      elt2.dispatchEvent(new Event("foo"));
+      assert.strictEqual(called, 1);
+
+      elt2.setAttribute("onfoo", "return true");
+      assert.strictEqual(
+        elt1.onfoo,
+        onfoo,
+        "setting elt2's onfoo attribute shouldn't update elt1.onfoo",
+      );
+
+      elt2.onfoo = null;
+      assert.strictEqual(
+        elt1.onfoo,
+        onfoo,
+        "assigning elt2.onfoo shouldn't update elt1.onfoo",
+      );
+
+      // elt1 modifying elt2
+      elt2.onfoo = onfoo;
+
+      elt1.onfoo = () => true;
+      assert.strictEqual(
+        elt2.onfoo,
+        onfoo,
+        "assigning elt1.onfoo shouldn't update elt2.onfoo",
+      );
+
+      elt2.dispatchEvent(new Event("foo"));
+      assert.strictEqual(called, 2);
+
+      elt1.dispatchEvent(new Event("foo"));
+      assert.strictEqual(called, 2);
+
+      elt1.setAttribute("onfoo", "return true");
+      assert.strictEqual(
+        elt2.onfoo,
+        onfoo,
+        "setting elt1's onfoo attribute shouldn't update elt2.onfoo",
+      );
+
+      elt1.onfoo = null;
+      assert.strictEqual(
+        elt2.onfoo,
+        onfoo,
+        "assigning elt1.onfoo shouldn't update elt2.onfoo",
+      );
+    });
   });
 }
