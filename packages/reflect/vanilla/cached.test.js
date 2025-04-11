@@ -1,4 +1,7 @@
-import { runTests } from "@platformer/reflect-harness";
+import {
+  TestReferenceTargetElement,
+  runTests,
+} from "@platformer/reflect-harness";
 import {
   BaseElement,
   reflectString,
@@ -14,6 +17,8 @@ import {
   reflectClampedInt,
   reflectDouble,
   reflectPositiveDouble,
+  reflectElementReference,
+  reflectElementReferences,
 } from "@platformer/reflect-vanilla/cached.js";
 
 customElements.define(
@@ -106,6 +111,33 @@ customElements.define(
   "test-limited-double",
   class extends BaseElement {
     @reflectPositiveDouble({ defaultValue: 1.0 }) accessor test;
+  },
+);
+
+customElements.define(
+  "test-element-reference",
+  class extends BaseElement {
+    @reflectElementReference() accessor testElement;
+  },
+);
+customElements.define(
+  "test-typed-element-reference",
+  class extends BaseElement {
+    @reflectElementReference({ type: TestReferenceTargetElement })
+    accessor testElement;
+  },
+);
+customElements.define(
+  "test-element-references",
+  class extends BaseElement {
+    @reflectElementReferences() accessor testElements;
+  },
+);
+customElements.define(
+  "test-typed-element-references",
+  class extends BaseElement {
+    @reflectElementReferences({ type: TestReferenceTargetElement })
+    accessor testElements;
   },
 );
 

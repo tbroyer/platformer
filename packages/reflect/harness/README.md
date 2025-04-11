@@ -89,3 +89,23 @@ The `test-double` element's `test` attribute is of type `double` with no other o
 ### test-limited-double
 
 The `test-limited-double` element's `test` attribute is of type `double` limited to only positive numbers and with a default value of 1.
+
+### test-element-reference
+
+The `test-element-reference` element's `testElement` property is of type `Element?` and reflects the `test` attribute.
+If element references aren't implemented, pass `{ disableElementReferences: true }` to `runTests()`.
+
+### test-typed-element-reference
+
+The `test-typed-element-reference` element's `testElement` property is of type `TestReferenceTargetElement?` (type exported by the package) and reflects the `test` attribute.
+If element references aren't implemented, pass `{ disableElementReferences: true }` to `runTests()`.
+
+### test-element-references
+
+The `test-element-references` element's `testElements` property is of type `FrozenArray<Element>?` and reflects the `test` attribute.
+If element references aren't implemented, pass `{ disableElementReferences: true }` to `runTests()`.
+
+### test-typed-element-references
+
+The `test-typed-element-references` element's `testElements` property is of type `FrozenArray<TestReferenceTargetElement>?` (element type exported by the package) and reflects the `test` attribute.
+If element references aren't implemented, pass `{ disableElementReferences: true }` to `runTests()`.

@@ -3,6 +3,8 @@ import {
   reflectBoolean,
   reflectClampedInt,
   reflectDouble,
+  reflectElementReference,
+  reflectElementReferences,
   reflectEnum,
   reflectInt,
   reflectNonNegativeInt,
@@ -84,6 +86,15 @@ expect(
     accessor positiveDouble: number = 1.0;
     @reflectPositiveDouble({ defaultValue: 1.0 })
     set positiveDoubleSetter(value: number) {}
+
+    @reflectElementReference() accessor refElement: Element | null = null;
+    @reflectElementReference({ type: HTMLButtonElement })
+    accessor buttonElement: HTMLButtonElement | null = null;
+
+    @reflectElementReferences()
+    accessor refElements: ReadonlyArray<Element> | null = null;
+    @reflectElementReferences({ type: HTMLButtonElement })
+    accessor buttonElements: ReadonlyArray<HTMLButtonElement> | null = null;
   },
 ).type.not.toRaiseError();
 

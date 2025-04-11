@@ -4,8 +4,8 @@ Implements the [HTML attribute reflection rules](https://html.spec.whatwg.org/mu
 
 ## TODO
 
-Currently, only reflection for IDL attributes of type `DOMString`, `DOMString?`, `USVString` representing an URL, `boolean`, `long`, `unsigned long`, and `double` are implemented,
-no `DOMTokenList` (technically impossible, but could be approximated), `Element` or `Element?`, or frozen array of elements.
+Currently, reflection is implemented for IDL attributes of type `DOMString`, `DOMString?`, `USVString` representing an URL, `boolean`, `long`, `unsigned long`, `double`, element, and frozen array of elements are implemented,
+no `DOMTokenList` (technically impossible, but could be approximated).
 
 ## API
 
@@ -31,11 +31,23 @@ _Numbers_ take options as properties of an object passed to the exported functio
 
 _Clamped integers_ also take two mandatory options in addition to the optional `defaultValue`: `min` and `max` represent the bounds of the range the value is clamped to.
 
-Finally, `reflectURL` is slightly different from all the others, as it doesn't have a `defaultValue` and its `fromAttribute` takes two arguments: the HTML element, and then a string or `null` as the value coming from the HTML attribute. This is because the value of a `USVString` attribute representing a URL relies on the document's _base URL_, which can change at any time.
+The `reflectURL` constant is slightly different from all the others, as it doesn't have a `defaultValue` and its `fromAttribute` takes two arguments: the HTML element, and then a string or `null` as the value coming from the HTML attribute. This is because the value of a `USVString` attribute representing a URL relies on the document's _base URL_, which can change at any time.
 
-### Usage
+Finally, `reflectElementReference` and `reflectElementReferences` are factories of _stateful_ reflectors, whose API is a bit different from the other _stateless_ reflectors.
+The factory function itself takes the element as the first argument, and optionally an element type (e.g. `HTMLDivElement`) to filter the elements referenced by ID from the attribute. If not given, the second argument defaults to `Element`.
+The returned stateful reflector is an object with internal state and 4 functions:
 
-The reflectors are meant to be used in two possible ways (except for `reflectURL`):
+- `get` takes no argument, and implements the _getter_ steps of the reflection rules, computing and returning the referenced element(s). For `reflectElementReference`, the returned value is either an element of the type passed to the constructor, or `null`. For the `reflectElementReferences`, the value is a frozen array of elements of the type passed to the constructor, or `null`.
+- `fromAttribute` takes a string or `null` as its single argument, coming directly from an HTML attribute, and updates the reflector's internal state, not returning anything.
+- `coerceValue` takes any value as its single argument, and coerces it to the appropriate type (same as `get`).
+- `setAttribute` takes two arguments: the attribute name, and the attribute's value (of the same type as returned by `coerceValue`), and implements the _setter_ steps of the reflection rules.
+
+A property backed by `reflectElementReference` should have its name suffixed with `Element` (relative to the HTML attribute name).
+A property backed by `reflectElementReferences` should have its name suffixed with `Elements`.
+
+## Usage
+
+The (stateless) reflectors are meant to be used in two possible ways (except for `reflectURL`):
 
 - either applying the _getter_ steps in the property getter, as specificied in HTML
 
@@ -74,3 +86,25 @@ The reflectors are meant to be used in two possible ways (except for `reflectURL
   ```
 
 The reason the `coerceValue` and `setAttribute` are separated is to allow for custom steps to be added in between. `coerceValue` should always be the first thing called in the setter to coerce the input value, and `setAttribute` will most likely always be the last.
+
+The stateful reflectors however require the use of `attributeChangedCallback`:
+
+```js
+class MyElement extends HTMLElement {
+  #prop = reflectElementReference(this);
+
+  static observedAttributes = ["prop"];
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    // in this case, we know 'name' is necessarily 'prop' so we can skip any check
+    this.#prop.fromAttribute(newValue);
+  }
+  get propElement() {
+    return this.#prop.get();
+  }
+  set propElement(value) {
+    value = this.#prop.coerceValue(value);
+    this.#prop.setAttribute("prop", value);
+  }
+}
+```

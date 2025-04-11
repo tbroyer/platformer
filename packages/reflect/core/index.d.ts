@@ -171,4 +171,52 @@ export declare function reflectPositiveDouble(
   options?: ReflectNumberOptions,
 ): Reflector<number>;
 
-// TBC: tokenlist, element, frozen array of elements
+/**
+ * Implements the steps for [reflecting content attributes in IDL attributes](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes)
+ * from the HTML specification, for element references (`T?` or `FrozenArray<T>?`, where `T extends Element`).
+ */
+export interface StatefulReflector<T extends Element | readonly Element[]> {
+  /**
+   * Computes and returns the referenced element(s).
+   *
+   * This implements the _getter_ steps from the algorithm, except that the value has already been read from attribute.
+   */
+  get(): T | null;
+  /**
+   * Updates the internal state with the attribute value.
+   *
+   * @param value - The attribute value, or `null` if the attribute is absent.
+   */
+  fromAttribute(value: string | null): void;
+  /** {@inheritDoc Reflector.coerceValue} */
+  coerceValue(value: any): T | null;
+  /**
+   * Sets the attribute for the given value.
+   *
+   * @param attribute - The name of the attribute to set
+   * @param value - The value to be set (must have been coerced to the appropriate type already)
+   */
+  setAttribute(attribute: string, value: T | null): void;
+}
+
+export declare const reflectElementReference: {
+  (element: HTMLElement): StatefulReflector<Element>;
+  <T extends Element>(
+    element: HTMLElement,
+    type: { new (): T; prototype: T },
+  ): StatefulReflector<T>;
+};
+
+export declare const reflectElementReferences: {
+  (element: HTMLElement): StatefulReflector<readonly Element[]>;
+  <T extends Element>(
+    element: HTMLElement,
+    type: { new (): T; prototype: T },
+  ): StatefulReflector<readonly T[]>;
+};
+
+export interface ReflectElementReferenceOptions<T extends Element> {
+  type?: { new (): T; prototype: T };
+}
+
+// TBC: tokenlist

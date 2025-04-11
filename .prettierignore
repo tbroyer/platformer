@@ -1,5 +1,6 @@
 packages/reflect/harness/gecko.js
 packages/reflect/harness/wpt.js
+packages/reflect/harness/element-references.js
 packages/webidl/test/boolean.js
 packages/webidl/test/undefined.js
 packages/webidl/test/object.js

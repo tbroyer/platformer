@@ -2,6 +2,7 @@ import type {
   EnumeratedAttributeOptions,
   ReflectNumberOptions,
   ReflectClampedIntOptions,
+  ReflectElementReferenceOptions,
 } from "@platformer/reflect";
 import { ReactiveElement } from "@lit/reactive-element";
 
@@ -9,6 +10,7 @@ export type {
   EnumeratedAttributeOptions,
   ReflectNumberOptions,
   ReflectClampedIntOptions,
+  ReflectElementReferenceOptions,
 };
 
 export interface ReflectOptions {
@@ -183,4 +185,19 @@ export declare function reflectPositiveDouble(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
-// TBC: tokenlist, element, frozen array of elements
+export interface ReflectStatefulDecorator<Value> {
+  <This extends ReactiveElement>(
+    target: ClassAccessorDecoratorTarget<This, Value | null>,
+    context: ClassAccessorDecoratorContext<This, Value | null>,
+  ): ClassAccessorDecoratorResult<This, Value | null>;
+}
+
+export declare function reflectElementReference<Value extends Element>(
+  options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
+): ReflectStatefulDecorator<Value>;
+
+export declare function reflectElementReferences<Value extends Element>(
+  options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
+): ReflectStatefulDecorator<readonly Value[]>;
+
+// TBC: tokenlist

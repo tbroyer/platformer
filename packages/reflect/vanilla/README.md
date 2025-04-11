@@ -82,3 +82,6 @@ All decorator factories have an optional `attribute` option giving the name of t
 Decorator factories also have the same options as the _@platformer/reflect_ function they wrap.
 
 The `reflectURL` decorator, due to the specificities of reflecting a `USVString` attribute representing a URL, can only be applied to auto-accessor properties, whichever the flavor (direct or cached).
+
+The `reflectElementReference` and `reflectElementReferences` only exist as cached decorators, and can only be applied to auto-accessor properties.
+They have an optional `type` option corresponding to the second argument of the same-named _@platformer/reflect_ function they wrap.

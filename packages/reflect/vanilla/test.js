@@ -108,4 +108,4 @@ customElements.define(
   },
 );
 
-runTests();
+runTests({ disableElementReferences: true });

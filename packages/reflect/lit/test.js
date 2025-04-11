@@ -1,11 +1,16 @@
 import { assert } from "chai";
-import { runTests } from "@platformer/reflect-harness";
+import {
+  runTests,
+  TestReferenceTargetElement,
+} from "@platformer/reflect-harness";
 import { LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 import {
   reflectBoolean,
   reflectClampedInt,
   reflectDouble,
+  reflectElementReference,
+  reflectElementReferences,
   reflectEnum,
   reflectInt,
   reflectNonNegativeInt,
@@ -95,6 +100,24 @@ class TestDouble extends LitElement {
 @customElement("test-limited-double")
 class TestLimitedDouble extends LitElement {
   @reflectPositiveDouble() accessor test;
+}
+@customElement("test-element-reference")
+class TestElementReference extends LitElement {
+  @reflectElementReference() accessor testElement;
+}
+@customElement("test-typed-element-reference")
+class TestTypedElementReference extends LitElement {
+  @reflectElementReference({ type: TestReferenceTargetElement })
+  accessor testElement;
+}
+@customElement("test-element-references")
+class TestElementReferences extends LitElement {
+  @reflectElementReferences() accessor testElements;
+}
+@customElement("test-typed-element-references")
+class TestTypedElementReferences extends LitElement {
+  @reflectElementReferences({ type: TestReferenceTargetElement })
+  accessor testElements;
 }
 
 runTests();

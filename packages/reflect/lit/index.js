@@ -12,6 +12,8 @@ import {
   reflectClampedInt as reflectClampedIntReflectorFactory,
   reflectDouble as reflectDoubleReflectorFactory,
   reflectPositiveDouble as reflectPositiveDoubleReflectorFactory,
+  reflectElementReference as reflectElementReferenceReflectorFactory,
+  reflectElementReferences as reflectElementReferencesReflectorFactory,
 } from "@platformer/reflect";
 
 /**
@@ -217,4 +219,94 @@ export const reflectDouble = reflectWithOptions(reflectDoubleReflectorFactory);
 /** @type {import("@platformer/reflect-lit").reflectPositiveDouble} */
 export const reflectPositiveDouble = reflectWithOptions(
   reflectPositiveDoubleReflectorFactory,
+);
+/**
+ * @template T
+ * @typedef {import("@platformer/reflect").StatefulReflector<T>} StatefulReflector
+ */
+/**
+ * @template T
+ * @typedef {import("@platformer/reflect-lit").ReflectStatefulDecorator<T>} ReflectStatefulDecorator
+ */
+
+const STATEFUL_REFLECTORS = Symbol();
+
+// XXX: typing is not accurate, but just enough to get some useful help in editor
+/**
+ * @template T
+ * @param {(element: HTMLElement, type?: { new(): T, prototype: T }) => StatefulReflector<T>} reflectorFactory
+ * @param {string} suffix
+ * @returns {(options: ReflectOptions & { type?: { new(): T, prototype: T }}) => ReflectStatefulDecorator<T>}
+ */
+function reflectStateful(reflectorFactory, suffix) {
+  return function ({ attribute, type } = {}) {
+    return function (_, context) {
+      validateContext(context);
+      const { name } = context;
+      attribute ??= stripSuffix(name, suffix).toLowerCase();
+
+      const privateProperty = Symbol(name);
+      context.addInitializer(function () {
+        const reflector = reflectorFactory(this, type);
+        (this[STATEFUL_REFLECTORS] ??= {})[name] = reflector;
+        Object.defineProperty(this, privateProperty, {
+          set(value) {
+            reflector.fromAttribute(value);
+          },
+        });
+      });
+
+      let properties = globalThis.litPropertyMetadata.get(context.metadata);
+      if (properties === undefined) {
+        globalThis.litPropertyMetadata.set(
+          context.metadata,
+          (properties = new Map()),
+        );
+      }
+      properties.set(privateProperty, {
+        attribute,
+      });
+
+      return {
+        get() {
+          return this[STATEFUL_REFLECTORS][name].get();
+        },
+        set(value) {
+          const reflector = this[STATEFUL_REFLECTORS][name];
+          value = reflector.coerceValue(value);
+          reflector.setAttribute(attribute, value);
+        },
+        init(value) {
+          if (value != null) {
+            throw new Error(`Default value must be null`);
+          }
+          return null;
+        },
+      };
+    };
+  };
+}
+
+/**
+ * @param {string} name
+ * @param {string} suffix
+ */
+function stripSuffix(name, suffix) {
+  if (name.endsWith(suffix)) {
+    return name.slice(0, -suffix.length);
+  } else {
+    return name;
+  }
+}
+
+/** @type {import("@platformer/reflect-lit").reflectElementReference} */
+export const reflectElementReference = reflectStateful(
+  reflectElementReferenceReflectorFactory,
+  "Element",
+);
+
+/** @type {import("@platformer/reflect-lit").reflectElementReferences} */
+export const reflectElementReferences = reflectStateful(
+  reflectElementReferencesReflectorFactory,
+  "Elements",
 );

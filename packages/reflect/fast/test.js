@@ -335,4 +335,4 @@ FASTElement.define(
   },
 );
 
-runTests();
+runTests({ disableElementReferences: true });

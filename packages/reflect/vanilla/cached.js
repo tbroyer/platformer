@@ -12,6 +12,8 @@ import {
   reflectClampedInt as reflectClampedIntReflectorFactory,
   reflectDouble as reflectDoubleReflectorFactory,
   reflectPositiveDouble as reflectPositiveDoubleReflectorFactory,
+  reflectElementReference as reflectElementReferenceReflectorFactory,
+  reflectElementReferences as reflectElementReferencesReflectorFactory,
 } from "@platformer/reflect";
 import { addAttribute } from "@platformer/vanilla-core";
 
@@ -206,4 +208,78 @@ export const reflectDouble = reflectWithOptions(reflectDoubleReflectorFactory);
 /** @type {import("@platformer/reflect-vanilla/cached.js").reflectPositiveDouble} */
 export const reflectPositiveDouble = reflectWithOptions(
   reflectPositiveDoubleReflectorFactory,
+);
+
+/**
+ * @template T
+ * @typedef {import("@platformer/reflect").StatefulReflector<T>} StatefulReflector
+ */
+/**
+ * @template T
+ * @typedef {import("@platformer/reflect-vanilla/cached.js").ReflectStatefulDecorator<T>} ReflectStatefulDecorator
+ */
+
+const STATEFUL_REFLECTORS = Symbol();
+
+// XXX: typing is not accurate, but just enough to get some useful help in editor
+/**
+ * @template T
+ * @param {(element: HTMLElement, type?: { new(): T, prototype: T }) => StatefulReflector<T>} reflectorFactory
+ * @param {string} suffix
+ * @returns {(options: ReflectOptions & { type?: { new(): T, prototype: T }}) => ReflectStatefulDecorator<T>}
+ */
+function reflectStateful(reflectorFactory, suffix) {
+  return function ({ attribute, type } = {}) {
+    return function (_, context) {
+      validateContext(context);
+      const { name } = context;
+      attribute ??= stripSuffix(name, suffix).toLowerCase();
+      context.addInitializer(function () {
+        (this[STATEFUL_REFLECTORS] ??= {})[name] = reflectorFactory(this, type);
+      });
+      addAttribute(context.metadata, attribute, function (_, newValue) {
+        this[STATEFUL_REFLECTORS][name].fromAttribute(newValue);
+      });
+      return {
+        get() {
+          return this[STATEFUL_REFLECTORS][name].get();
+        },
+        set(value) {
+          const reflector = this[STATEFUL_REFLECTORS][name];
+          value = reflector.coerceValue(value);
+          reflector.setAttribute(attribute, value);
+        },
+        init(value) {
+          if (value != null) {
+            throw new Error(`Default value must be null`);
+          }
+          return null;
+        },
+      };
+    };
+  };
+}
+
+/**
+ * @param {string} name
+ * @param {string} suffix
+ */
+function stripSuffix(name, suffix) {
+  if (name.endsWith(suffix)) {
+    return name.slice(0, -suffix.length);
+  } else {
+    return name;
+  }
+}
+
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectElementReference} */
+export const reflectElementReference = reflectStateful(
+  reflectElementReferenceReflectorFactory,
+  "Element",
+);
+
+/** @type {import("@platformer/reflect-vanilla/cached.js").reflectElementReferences} */
+export const reflectElementReferences = reflectStateful(
+  reflectElementReferencesReflectorFactory,
+  "Elements",
 );

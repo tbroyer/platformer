@@ -2,12 +2,14 @@ import type {
   EnumeratedAttributeOptions,
   ReflectNumberOptions,
   ReflectClampedIntOptions,
+  ReflectElementReferenceOptions,
 } from "@platformer/reflect";
 
 export type {
   EnumeratedAttributeOptions,
   ReflectNumberOptions,
   ReflectClampedIntOptions,
+  ReflectElementReferenceOptions,
 };
 
 export type {
@@ -188,4 +190,19 @@ export declare function reflectPositiveDouble(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
-// TBC: tokenlist, element, frozen array of elements
+export interface ReflectStatefulDecorator<Value> {
+  <This extends HTMLElement>(
+    target: ClassAccessorDecoratorTarget<This, Value | null>,
+    context: ClassAccessorDecoratorContext<This, Value | null>,
+  ): ClassAccessorDecoratorResult<This, Value | null>;
+}
+
+export declare function reflectElementReference<Value extends Element>(
+  options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
+): ReflectStatefulDecorator<Value>;
+
+export declare function reflectElementReferences<Value extends Element>(
+  options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
+): ReflectStatefulDecorator<readonly Value[]>;
+
+// TBC: tokenlist

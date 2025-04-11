@@ -7,8 +7,14 @@ import {
   reflectUnsignedInt,
 } from "./gecko.js";
 import { reflects } from "./wpt.js";
+import {
+  reflectElementReference,
+  reflectElementReferences,
+} from "./element-references.js";
 
-export function runTests() {
+export { TestReferenceTargetElement } from "./element-references.js";
+
+export function runTests({ disableElementReferences = false } = {}) {
   suite("string", () => {
     test("with Gecko harness", () => {
       reflectString({
@@ -191,4 +197,23 @@ export function runTests() {
       );
     });
   });
+
+  if (!disableElementReferences) {
+    suite("element reference", () => {
+      test("element", () => {
+        reflectElementReference("test-element-reference");
+      });
+      test("typed element", () => {
+        reflectElementReference("test-typed-element-reference", true);
+      });
+    });
+    suite("typed element reference", () => {
+      test("element", () => {
+        reflectElementReferences("test-element-references");
+      });
+      test("typed element", () => {
+        reflectElementReferences("test-typed-element-references", true);
+      });
+    });
+  }
 }
