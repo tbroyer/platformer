@@ -1,5 +1,5 @@
-import { runTests } from "@platformer/event-handler-harness";
-import { eventHandler, BaseElement } from "@platformer/event-handler-vanilla";
+import { runTests } from "@webfeet/event-handler-harness";
+import { eventHandler, BaseElement } from "@webfeet/event-handler-vanilla";
 
 customElements.define(
   "test-handler",

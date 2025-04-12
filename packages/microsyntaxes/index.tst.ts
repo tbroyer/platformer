@@ -1,8 +1,5 @@
 import { expect } from "tstyche";
-import {
-  enumerated,
-  EnumeratedAttributeOptions,
-} from "@platformer/microsyntaxes";
+import { enumerated, EnumeratedAttributeOptions } from "@webfeet/microsyntaxes";
 
 expect({
   keywords: ["", "one", "two", "three"],

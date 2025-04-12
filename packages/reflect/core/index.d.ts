@@ -1,4 +1,4 @@
-import type { EnumeratedAttributeOptions } from "@platformer/microsyntaxes";
+import type { EnumeratedAttributeOptions } from "@webfeet/microsyntaxes";
 
 export type { EnumeratedAttributeOptions };
 

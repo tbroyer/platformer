@@ -14,18 +14,18 @@ import {
   reflectPositiveDouble as reflectPositiveDoubleReflectorFactory,
   reflectElementReference as reflectElementReferenceReflectorFactory,
   reflectElementReferences as reflectElementReferencesReflectorFactory,
-} from "@platformer/reflect";
+} from "@webfeet/reflect";
 
 /**
  * @template T
- * @typedef {import("@platformer/reflect").Reflector<T>} Reflector
+ * @typedef {import("@webfeet/reflect").Reflector<T>} Reflector
  */
 /**
- * @typedef {import("@platformer/reflect-lit").ReflectOptions} ReflectOptions
+ * @typedef {import("@webfeet/reflect-lit").ReflectOptions} ReflectOptions
  */
 /**
  * @template T
- * @typedef {import("@platformer/reflect-lit").ReflectDecorator<T>} ReflectDecorator
+ * @typedef {import("@webfeet/reflect-lit").ReflectDecorator<T>} ReflectDecorator
  */
 
 /**
@@ -134,10 +134,10 @@ function reflectWithOptions(reflectorFactory, requiredOptions = false) {
   };
 }
 
-/** @type {import("@platformer/reflect-lit").reflectString} */
+/** @type {import("@webfeet/reflect-lit").reflectString} */
 export const reflectString = reflect(reflectStringReflector);
 
-/** @type {import("@platformer/reflect-lit").reflectURL} */
+/** @type {import("@webfeet/reflect-lit").reflectURL} */
 export function reflectURL({ attribute } = {}) {
   const { fromAttribute, coerceValue, setAttribute } = reflectURLReflector;
   return function (_, context) {
@@ -175,58 +175,58 @@ export function reflectURL({ attribute } = {}) {
   };
 }
 
-/** @type {import("@platformer/reflect-lit").reflectEnum} */
+/** @type {import("@webfeet/reflect-lit").reflectEnum} */
 export const reflectEnum = reflectWithOptions(
   reflectEnumReflectorFactory,
   true,
 );
-/** @type {import("@platformer/reflect-lit").reflectNullableEnum} */
+/** @type {import("@webfeet/reflect-lit").reflectNullableEnum} */
 export const reflectNullableEnum = reflectWithOptions(
   reflectNullableEnumReflectorFactory,
   true,
 );
 
-/** @type {import("@platformer/reflect-lit").reflectBoolean} */
+/** @type {import("@webfeet/reflect-lit").reflectBoolean} */
 export const reflectBoolean = reflect(reflectBooleanReflector);
 
-/** @type {import("@platformer/reflect-lit").reflectInt} */
+/** @type {import("@webfeet/reflect-lit").reflectInt} */
 export const reflectInt = reflectWithOptions(reflectIntReflectorFactory);
-/** @type {import("@platformer/reflect-lit").reflectNonNegativeInt} */
+/** @type {import("@webfeet/reflect-lit").reflectNonNegativeInt} */
 export const reflectNonNegativeInt = reflectWithOptions(
   reflectNonNegativeIntReflectorFactory,
 );
 
-/** @type {import("@platformer/reflect-lit").reflectUnsignedInt} */
+/** @type {import("@webfeet/reflect-lit").reflectUnsignedInt} */
 export const reflectUnsignedInt = reflectWithOptions(
   reflectUnsignedIntReflectorFactory,
 );
-/** @type {import("@platformer/reflect-lit").reflectPositiveInt} */
+/** @type {import("@webfeet/reflect-lit").reflectPositiveInt} */
 export const reflectPositiveInt = reflectWithOptions(
   reflectPositiveIntReflectorFactory,
 );
-/** @type {import("@platformer/reflect-lit").reflectPositiveIntWithFallback} */
+/** @type {import("@webfeet/reflect-lit").reflectPositiveIntWithFallback} */
 export const reflectPositiveIntWithFallback = reflectWithOptions(
   reflectPositiveIntWithFallbackReflectorFactory,
 );
-/** @type {import("@platformer/reflect-lit").reflectClampedInt} */
+/** @type {import("@webfeet/reflect-lit").reflectClampedInt} */
 export const reflectClampedInt = reflectWithOptions(
   reflectClampedIntReflectorFactory,
   true,
 );
 
-/** @type {import("@platformer/reflect-lit").reflectDouble} */
+/** @type {import("@webfeet/reflect-lit").reflectDouble} */
 export const reflectDouble = reflectWithOptions(reflectDoubleReflectorFactory);
-/** @type {import("@platformer/reflect-lit").reflectPositiveDouble} */
+/** @type {import("@webfeet/reflect-lit").reflectPositiveDouble} */
 export const reflectPositiveDouble = reflectWithOptions(
   reflectPositiveDoubleReflectorFactory,
 );
 /**
  * @template T
- * @typedef {import("@platformer/reflect").StatefulReflector<T>} StatefulReflector
+ * @typedef {import("@webfeet/reflect").StatefulReflector<T>} StatefulReflector
  */
 /**
  * @template T
- * @typedef {import("@platformer/reflect-lit").ReflectStatefulDecorator<T>} ReflectStatefulDecorator
+ * @typedef {import("@webfeet/reflect-lit").ReflectStatefulDecorator<T>} ReflectStatefulDecorator
  */
 
 const STATEFUL_REFLECTORS = Symbol();
@@ -299,13 +299,13 @@ function stripSuffix(name, suffix) {
   }
 }
 
-/** @type {import("@platformer/reflect-lit").reflectElementReference} */
+/** @type {import("@webfeet/reflect-lit").reflectElementReference} */
 export const reflectElementReference = reflectStateful(
   reflectElementReferenceReflectorFactory,
   "Element",
 );
 
-/** @type {import("@platformer/reflect-lit").reflectElementReferences} */
+/** @type {import("@webfeet/reflect-lit").reflectElementReferences} */
 export const reflectElementReferences = reflectStateful(
   reflectElementReferencesReflectorFactory,
   "Elements",

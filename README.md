@@ -1,4 +1,4 @@
-# Platformer
+# Webfeet
 
 This repository contains libraries to help create objects (including custom elements) that behave closer to the _web platform_ as currently spec'd; namely:
 
@@ -8,5 +8,5 @@ This repository contains libraries to help create objects (including custom elem
 
 Internal/subsidiary packages:
 
-- [@platformer/microsyntaxes](packages/microsyntaxes/README.md) implements the [HTML common microsyntaxes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html)
-- [@platformer/vanilla-core](packages/vanilla-core/README.md) exposes helpers for implementing (and then using) decorators for vanilla custom elements, that need to observe attributes.
+- [@webfeet/microsyntaxes](packages/microsyntaxes/README.md) implements the [HTML common microsyntaxes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html)
+- [@webfeet/vanilla-core](packages/vanilla-core/README.md) exposes helpers for implementing (and then using) decorators for vanilla custom elements, that need to observe attributes.

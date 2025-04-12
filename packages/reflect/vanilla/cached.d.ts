@@ -3,7 +3,7 @@ import type {
   ReflectNumberOptions,
   ReflectClampedIntOptions,
   ReflectElementReferenceOptions,
-} from "@platformer/reflect";
+} from "@webfeet/reflect";
 
 export type {
   EnumeratedAttributeOptions,
@@ -16,7 +16,7 @@ export type {
   BaseElement,
   getObservedAttributes,
   reflectAttributeToProperty,
-} from "@platformer/vanilla-core";
+} from "@webfeet/vanilla-core";
 
 export interface ReflectOptions {
   /** Name of the DOM attribute that the annotated property reflects. Defaults to the lowercased property name. */

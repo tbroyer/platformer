@@ -1,11 +1,11 @@
-import { EventHandlerHelper } from "@platformer/event-handler/with-attribute.js";
-import { addAttribute } from "@platformer/vanilla-core";
+import { EventHandlerHelper } from "@webfeet/event-handler/with-attribute.js";
+import { addAttribute } from "@webfeet/vanilla-core";
 
 export {
   BaseElement,
   getObservedAttributes,
   reflectAttributeToProperty,
-} from "@platformer/vanilla-core";
+} from "@webfeet/vanilla-core";
 
 /**
  * @param {ClassAccessorDecoratorContext} context

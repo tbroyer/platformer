@@ -1,4 +1,4 @@
-# @platformer/webidl
+# @webfeet/webidl
 
 This package implements the [WebIDL type coercion rules](https://webidl.spec.whatwg.org/#js-type-mapping), with exceptions for some edge cases to keep the library lightweight.
 
@@ -27,7 +27,7 @@ A few exported functions, for _complex_ types, take additional arguments. Those 
 const coerced = coerceToSequence(coerceToLong, ["-12.3"]);
 ```
 
-The package also exports as `@platformer/webidl/decorators.js` a set of [ECMAScript decorators](https://github.com/tc39/proposal-decorators) to coerce a setter's or auto-accessor property setter's value. The decorators follow the same naming rule as the coercion functions they wrap but without the `coerceTo` prefix.
+The package also exports as `@webfeet/webidl/decorators.js` a set of [ECMAScript decorators](https://github.com/tc39/proposal-decorators) to coerce a setter's or auto-accessor property setter's value. The decorators follow the same naming rule as the coercion functions they wrap but without the `coerceTo` prefix.
 
 ```js
 class Foo {

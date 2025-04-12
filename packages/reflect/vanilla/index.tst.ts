@@ -13,7 +13,7 @@ import {
   reflectString,
   reflectUnsignedInt,
   reflectURL,
-} from "@platformer/reflect-vanilla";
+} from "@webfeet/reflect-vanilla";
 
 type EnumKeyword = "" | "one" | "two" | "three" | "missing" | "invalid";
 type NullableEnumKeyword = "use-credentials" | "anonymous";

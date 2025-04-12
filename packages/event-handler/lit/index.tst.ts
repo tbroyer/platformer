@@ -1,5 +1,5 @@
 import { expect, test } from "tstyche";
-import { eventHandler } from "@platformer/event-handler-lit";
+import { eventHandler } from "@webfeet/event-handler-lit";
 import { LitElement, ReactiveElement } from "lit";
 
 class FooEvent extends Event {}

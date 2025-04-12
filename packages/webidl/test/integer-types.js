@@ -28,7 +28,7 @@ import {
   coerceToUnsignedLongLong,
   coerceToEnforcedUnsignedLongLong,
   coerceToClampedUnsignedLongLong,
-} from "@platformer/webidl";
+} from "@webfeet/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 function conversionAdapter(sut, enforcedSut, clampedSut) {

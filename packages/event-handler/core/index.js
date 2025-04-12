@@ -1,4 +1,4 @@
-import { coerceToLegacyCallbackFunction } from "@platformer/webidl";
+import { coerceToLegacyCallbackFunction } from "@webfeet/webidl";
 import { TARGET, TYPE, VALUE } from "./internal.js";
 
 export class EventHandlerHelper {

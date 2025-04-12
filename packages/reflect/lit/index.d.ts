@@ -3,7 +3,7 @@ import type {
   ReflectNumberOptions,
   ReflectClampedIntOptions,
   ReflectElementReferenceOptions,
-} from "@platformer/reflect";
+} from "@webfeet/reflect";
 import { ReactiveElement } from "@lit/reactive-element";
 
 export type {

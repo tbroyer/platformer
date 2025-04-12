@@ -2,7 +2,7 @@ import type {
   EnumeratedAttributeOptions,
   ReflectNumberOptions,
   ReflectClampedIntOptions,
-} from "@platformer/reflect";
+} from "@webfeet/reflect";
 
 export type {
   EnumeratedAttributeOptions,

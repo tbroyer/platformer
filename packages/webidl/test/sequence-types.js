@@ -5,7 +5,7 @@ import {
   coerceToSequence,
   coerceToFrozenArray,
   coerceToDouble,
-} from "@platformer/webidl";
+} from "@webfeet/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 function commonTest(sut) {

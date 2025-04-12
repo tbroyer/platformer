@@ -1,4 +1,4 @@
-# @platformer/microsyntaxes
+# @webfeet/microsyntaxes
 
 Implements the [HTML common microsyntaxes](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html).
 

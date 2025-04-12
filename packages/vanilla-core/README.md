@@ -1,4 +1,4 @@
-# @platformer/vanilla-core
+# @webfeet/vanilla-core
 
 This package exports a few helpers to observe custom element attributes from decorators.
 
@@ -25,7 +25,7 @@ Decorators built using `addAttribute()` above impose a couple constraints to the
 import {
   getObservedAttributes,
   reflectAttributeToProperty,
-} from "@platformer/vanilla-core";
+} from "@webfeet/vanilla-core";
 
 class MyElement extends HTMLElement {
   static get observedAttributes() {

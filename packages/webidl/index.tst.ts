@@ -25,7 +25,7 @@ import {
   coerceToUnrestrictedDouble,
   coerceToUnsignedLong,
   coerceToUSVString,
-} from "@platformer/webidl";
+} from "@webfeet/webidl";
 
 enum NumericEnum {
   Up,

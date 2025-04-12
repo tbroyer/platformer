@@ -1,4 +1,4 @@
-# @platformer/event-handler-lit
+# @webfeet/event-handler-lit
 
 Exports a decorator to turn an auto-accessor property (whose names must start with `on`) into an event handler, with support for an event handler attribute.
 
@@ -23,7 +23,7 @@ The decorator accepts an optional argument as an object with optional properties
 
 ```js
 import { LitElement, customElement, html } from "lit";
-import { eventHandler } from "@platformer/event-handler";
+import { eventHandler } from "@webfeet/event-handler";
 
 @customElement("my-element")
 class MyElement extends LitElement {
@@ -59,4 +59,4 @@ class MyElement extends LitElement {
 }
 ```
 
-You can also use the `EventHandler` type (directly re-exported from _@platformer/event-handler_) as the property type; in this case `EventHandler<MyElement, FooEvent>`.
+You can also use the `EventHandler` type (directly re-exported from _@webfeet/event-handler_) as the property type; in this case `EventHandler<MyElement, FooEvent>`.

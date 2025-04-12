@@ -5,7 +5,7 @@ import {
   coerceToDOMString,
   coerceToDouble,
   coerceToObject,
-} from "@platformer/webidl";
+} from "@webfeet/webidl";
 import {
   any,
   bigInt,
@@ -52,7 +52,7 @@ import {
   unsignedLongLong,
   unsignedShort,
   usvString,
-} from "@platformer/webidl/decorators.js";
+} from "@webfeet/webidl/decorators.js";
 
 expect(
   class {

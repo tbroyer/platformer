@@ -1,5 +1,5 @@
 import { ReactiveElement } from "@lit/reactive-element";
-import type { EventHandler } from "@platformer/event-handler";
+import type { EventHandler } from "@webfeet/event-handler";
 
 export type { EventHandler };
 

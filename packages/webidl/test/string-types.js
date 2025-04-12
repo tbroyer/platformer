@@ -7,7 +7,7 @@ import {
   coerceToByteString,
   coerceToDOMString,
   coerceToUSVString,
-} from "@platformer/webidl";
+} from "@webfeet/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 const conversions = {
   ByteString: coerceToByteString,

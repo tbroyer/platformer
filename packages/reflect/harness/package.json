@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/reflect-harness",
+  "name": "@webfeet/reflect-harness",
   "private": true,
   "type": "module",
   "main": "index.js",

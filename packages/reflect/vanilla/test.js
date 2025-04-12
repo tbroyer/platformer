@@ -1,4 +1,4 @@
-import { runTests } from "@platformer/reflect-harness";
+import { runTests } from "@webfeet/reflect-harness";
 import {
   reflectString,
   reflectURL,
@@ -13,7 +13,7 @@ import {
   reflectClampedInt,
   reflectDouble,
   reflectPositiveDouble,
-} from "@platformer/reflect-vanilla";
+} from "@webfeet/reflect-vanilla";
 
 customElements.define(
   "test-string",

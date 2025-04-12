@@ -31,7 +31,7 @@ export type EventHandler<
  *
  * This can be used for custom elements as well as non-element objects (provided they extend `EventTarget`).
  *
- * If you want to support event handler attributes on custom elements, use `@platformer/event-handler/with-attribute.js` instead.
+ * If you want to support event handler attributes on custom elements, use `@webfeet/event-handler/with-attribute.js` instead.
  *
  * @example
  *

@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/event-handler-harness",
+  "name": "@webfeet/event-handler-harness",
   "private": true,
   "type": "module",
   "main": "index.js",

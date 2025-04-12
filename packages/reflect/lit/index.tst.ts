@@ -15,7 +15,7 @@ import {
   reflectString,
   reflectUnsignedInt,
   reflectURL,
-} from "@platformer/reflect-lit";
+} from "@webfeet/reflect-lit";
 import { LitElement, ReactiveElement } from "lit";
 
 type EnumKeyword = "" | "one" | "two" | "three" | "missing" | "invalid";

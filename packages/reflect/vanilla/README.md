@@ -1,6 +1,6 @@
-# @platformer/reflect-vanilla
+# @webfeet/reflect-vanilla
 
-This package exports decorators encapsulating the [_@platformer/reflect_ package](../core/README.md) to cut verbosity by at least 50%.
+This package exports decorators encapsulating the [_@webfeet/reflect_ package](../core/README.md) to cut verbosity by at least 50%.
 
 There are two sets of reflection decorators: direct and cached.
 
@@ -8,7 +8,7 @@ It actually comes with 2 distinct implementations:
 
 ## _Direct_ decorators
 
-_Direct_ decorators (exposed at `@platformer/reflect-vanilla`) implement auto-accessor properties to directly read and write to HTML attributes, the way reflection is specified in HTML.
+_Direct_ decorators (exposed at `@webfeet/reflect-vanilla`) implement auto-accessor properties to directly read and write to HTML attributes, the way reflection is specified in HTML.
 
 ```js
 class MyElement extends HTMLElement {
@@ -21,7 +21,7 @@ class MyElement extends HTMLElement {
 
 ## _Cached_ decorators
 
-_Cached_ decorators (exposed at `@platformer/reflect-vanilla/cached.js`) make either auto-accessor properties or property setters to write to HTML attributes, and integrate with `attributeChangeCallback` to process the attribute value only once when it changes, and cache the value in a private field.
+_Cached_ decorators (exposed at `@webfeet/reflect-vanilla/cached.js`) make either auto-accessor properties or property setters to write to HTML attributes, and integrate with `attributeChangeCallback` to process the attribute value only once when it changes, and cache the value in a private field.
 
 ```js
 @reflectXxx({ ...options }) accessor attr;
@@ -71,17 +71,17 @@ class MyElement extends BaseElement {
 }
 ```
 
-Those `getObservedAttributes`, `reflectAttributeToProperty`, and `BaseElement` are directly re-exported from _@platformer/vanilla-core_ for convenience.
+Those `getObservedAttributes`, `reflectAttributeToProperty`, and `BaseElement` are directly re-exported from _@webfeet/vanilla-core_ for convenience.
 
 ## API
 
-This package exports decorator factories with the same name as the _reflectors_ exported by _@platformer/reflect_. All decorator factories take options as properties of an object passed to the factory.
+This package exports decorator factories with the same name as the _reflectors_ exported by _@webfeet/reflect_. All decorator factories take options as properties of an object passed to the factory.
 
 All decorator factories have an optional `attribute` option giving the name of the HTML attribute that the property reflects. When not given, the lowercased name of the property is used.
 
-Decorator factories also have the same options as the _@platformer/reflect_ function they wrap.
+Decorator factories also have the same options as the _@webfeet/reflect_ function they wrap.
 
 The `reflectURL` decorator, due to the specificities of reflecting a `USVString` attribute representing a URL, can only be applied to auto-accessor properties, whichever the flavor (direct or cached).
 
 The `reflectElementReference` and `reflectElementReferences` only exist as cached decorators, and can only be applied to auto-accessor properties.
-They have an optional `type` option corresponding to the second argument of the same-named _@platformer/reflect_ function they wrap.
+They have an optional `type` option corresponding to the second argument of the same-named _@webfeet/reflect_ function they wrap.

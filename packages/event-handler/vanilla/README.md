@@ -1,4 +1,4 @@
-# @platformer/event-handler-vanilla
+# @webfeet/event-handler-vanilla
 
 Exports a decorator to turn an auto-accessor property (whose names must start with `on`) into an event handler, with support for an event handler attribute.
 
@@ -18,7 +18,7 @@ The decorator accepts an optional argument as an object with optional properties
 
 ## Usage
 
-To integrate with `attributeChangedCallback`, the decorator store metadata on the element's class using [_@platformer/vanilla-core_](../../vanilla-core/README.md).
+To integrate with `attributeChangedCallback`, the decorator store metadata on the element's class using [_@webfeet/vanilla-core_](../../vanilla-core/README.md).
 
 The functions `getObservedAttributes(elementClass)` and `reflectAttributeToProperty(element, attributeName, oldValue, newValue)`
 can be used to implement the `static observedAttributes` property and `attributeChangedCallback` respectively.
@@ -28,7 +28,7 @@ import {
   eventHandler,
   getObservedAttributes,
   reflectAttributeToProperty,
-} from "@platformer/event-handler-vanilla";
+} from "@webfeet/event-handler-vanilla";
 
 class MyElement extends HTMLElement {
   static get observedAttributes() {
@@ -46,14 +46,14 @@ class MyElement extends HTMLElement {
 The `BaseElement` class can be used as base class in place of `HTMLElement` to inherit default implementations of these.
 
 ```js
-import { BaseElement, eventHandler } from "@platformer/event-handler-vanilla";
+import { BaseElement, eventHandler } from "@webfeet/event-handler-vanilla";
 
 class MyElement extends BaseElement {
   @eventHandler() accessor onfoo;
 }
 ```
 
-Those `getObservedAttributes`, `reflectAttributeToProperty`, and `BaseElement` are directly re-exported from _@platformer/vanilla-core_ for convenience.
+Those `getObservedAttributes`, `reflectAttributeToProperty`, and `BaseElement` are directly re-exported from _@webfeet/vanilla-core_ for convenience.
 
 ## TypeScript
 
@@ -77,4 +77,4 @@ class MyElement extends BaseElement {
 }
 ```
 
-You can also use the `EventHandler` type (directly re-exported from _@platformer/event-handler_) as the property type; in this case `EventHandler<MyElement, FooEvent>`.
+You can also use the `EventHandler` type (directly re-exported from _@webfeet/event-handler_) as the property type; in this case `EventHandler<MyElement, FooEvent>`.

@@ -1,7 +1,4 @@
-import {
-  TestReferenceTargetElement,
-  runTests,
-} from "@platformer/reflect-harness";
+import { TestReferenceTargetElement, runTests } from "@webfeet/reflect-harness";
 import {
   BaseElement,
   reflectString,
@@ -19,7 +16,7 @@ import {
   reflectPositiveDouble,
   reflectElementReference,
   reflectElementReferences,
-} from "@platformer/reflect-vanilla/cached.js";
+} from "@webfeet/reflect-vanilla/cached.js";
 
 customElements.define(
   "test-string",

@@ -6,8 +6,8 @@ For plain text values (such as an element's `title`), things are rather easy (an
 
 If you're curious, you can find details of what that all means [on my blog](https://blog.ltgt.net/web-component-properties/ "Making Web Component properties behave closer to the platform").
 
-- The [**@platformer/reflect**](core/README.md) packages provides helpers to implement attribute reflection in custom elements behaving as closely as possible to built-in elements.
-- The [**@platformer/reflect-vanilla**](vanilla/README.md) package provides decorators for use with vanilla custom elements
-- The [**@platformer/reflect-lit**](lit/README.md) package provides decorators for use with [Lit](https://lit/dev) elements
+- The [**@webfeet/reflect**](core/README.md) packages provides helpers to implement attribute reflection in custom elements behaving as closely as possible to built-in elements.
+- The [**@webfeet/reflect-vanilla**](vanilla/README.md) package provides decorators for use with vanilla custom elements
+- The [**@webfeet/reflect-lit**](lit/README.md) package provides decorators for use with [Lit](https://lit/dev) elements
 
 If you want to implement a new integration (in addition to vanilla and Lit above), test it with the [test harness](harness/README.md).

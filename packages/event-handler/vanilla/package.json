@@ -1,15 +1,15 @@
 {
-  "name": "@platformer/event-handler-vanilla",
+  "name": "@webfeet/event-handler-vanilla",
   "version": "0.0.0",
   "publishConfig": {
     "access": "public"
   },
   "description": "Decorator to implement event handlers in vanilla custom elements",
   "license": "BSD-3-Clause",
-  "homepage": "https://github.com/tbroyer/platformer/tree/main/packages/event-handler/vanilla#readme",
+  "homepage": "https://github.com/tbroyer/webfeet/tree/main/packages/event-handler/vanilla#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tbroyer/platformer.git",
+    "url": "git+https://github.com/tbroyer/webfeet.git",
     "directory": "packages/event-handler/vanilla"
   },
   "type": "module",
@@ -23,7 +23,7 @@
     "test": "wtr test.js && tstyche"
   },
   "dependencies": {
-    "@platformer/event-handler": "^0.0.0",
-    "@platformer/vanilla-core": "^0.0.0"
+    "@webfeet/event-handler": "^0.0.0",
+    "@webfeet/vanilla-core": "^0.0.0"
   }
 }

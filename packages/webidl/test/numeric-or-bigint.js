@@ -1,10 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import {
-  coerceToBigIntOrNumericType,
-  coerceToDouble,
-} from "@platformer/webidl";
+import { coerceToBigIntOrNumericType, coerceToDouble } from "@webfeet/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 const sut = (value) => coerceToBigIntOrNumericType(coerceToDouble, value);

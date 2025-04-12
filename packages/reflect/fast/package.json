@@ -1,5 +1,5 @@
 {
-  "name": "@platformer/reflect-fast",
+  "name": "@webfeet/reflect-fast",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "@microsoft/fast-element": "^2.2.0",
-    "@platformer/reflect": "^0.0.0"
+    "@webfeet/reflect": "^0.0.0"
   }
 }

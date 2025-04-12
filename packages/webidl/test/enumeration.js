@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { coerceToEnumeration } from "@platformer/webidl";
+import { coerceToEnumeration } from "@webfeet/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 describe("WebIDL enumeration type", () => {

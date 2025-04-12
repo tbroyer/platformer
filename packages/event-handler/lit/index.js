@@ -1,4 +1,4 @@
-import { EventHandlerHelper } from "@platformer/event-handler/with-attribute.js";
+import { EventHandlerHelper } from "@webfeet/event-handler/with-attribute.js";
 
 /**
  * @param {NonNullable<Parameters<import("./index.js").eventHandler>[0]>} options

@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { coerceToSymbol as sut } from "@platformer/webidl";
+import { coerceToSymbol as sut } from "@webfeet/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 describe("WebIDL symbol type", () => {

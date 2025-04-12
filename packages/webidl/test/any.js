@@ -3,7 +3,7 @@ import { describe, it } from 'node:test';
 
 // Copied from the webidl-conversions@7.0.0 NPM package
 
-import { coerceToAny as sut } from "@platformer/webidl";
+import { coerceToAny as sut } from "@webfeet/webidl";
 
 describe("WebIDL any type", () => {
   it("should return `undefined` for `undefined`", () => {

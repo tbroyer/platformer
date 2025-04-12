@@ -1,6 +1,6 @@
-# @platformer/reflect-lit
+# @webfeet/reflect-lit
 
-This package exports decorators encapsulating the [_@platformer/reflect_ package](../core/README.md) to cut verbosity by at least 50%, while integrating with Lit's reactive lifecycle (changes to properties, either directly or through HTML attributes, trigger an update).
+This package exports decorators encapsulating the [_@webfeet/reflect_ package](../core/README.md) to cut verbosity by at least 50%, while integrating with Lit's reactive lifecycle (changes to properties, either directly or through HTML attributes, trigger an update).
 
 Those decorators **replace** Lit's `@property()` decorators, though you can safely mix them on **different** properties inside the same element.
 They work the same as `@property()` when it comes to the reactive lifecycle, so the changed properties can be observed in `willUpdate()` or `updated()` ; they differ on when they reflect values to the attributes though, and you cannot cancel such reflection with `shouldUpdate()` like with `@property()` (in other words, reflecting to attributes is decoupled from the reactive lifecycle)

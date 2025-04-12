@@ -1,4 +1,4 @@
-import { runTests } from "@platformer/reflect-harness";
+import { runTests } from "@webfeet/reflect-harness";
 import {
   reflectBoolean,
   reflectClampedInt,
@@ -13,7 +13,7 @@ import {
   reflectString,
   reflectURL,
   reflectUnsignedInt,
-} from "@platformer/reflect";
+} from "@webfeet/reflect";
 import { FASTElement } from "@microsoft/fast-element";
 
 FASTElement.define(

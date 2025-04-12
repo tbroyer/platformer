@@ -7,13 +7,13 @@ import {
   coerceToDouble,
   coerceToInterface,
   coerceToFrozenArray,
-} from "@platformer/webidl";
+} from "@webfeet/webidl";
 import {
   enumerated,
   parseInteger,
   parseNonNegativeInteger,
   parseDouble,
-} from "@platformer/microsyntaxes";
+} from "@webfeet/microsyntaxes";
 
 /** @type {import("./index.d.ts").reflectString} */
 export const reflectString = Object.freeze({

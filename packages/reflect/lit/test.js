@@ -1,8 +1,5 @@
 import { assert } from "chai";
-import {
-  runTests,
-  TestReferenceTargetElement,
-} from "@platformer/reflect-harness";
+import { runTests, TestReferenceTargetElement } from "@webfeet/reflect-harness";
 import { LitElement } from "lit";
 import { customElement } from "lit/decorators.js";
 import {
@@ -21,7 +18,7 @@ import {
   reflectString,
   reflectURL,
   reflectUnsignedInt,
-} from "@platformer/reflect-lit";
+} from "@webfeet/reflect-lit";
 
 /* eslint-disable no-unused-vars */
 

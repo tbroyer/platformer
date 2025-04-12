@@ -1,5 +1,5 @@
-import { EventHandlerHelper } from "@platformer/event-handler/with-attribute.js";
-import { runTests } from "@platformer/event-handler-harness";
+import { EventHandlerHelper } from "@webfeet/event-handler/with-attribute.js";
+import { runTests } from "@webfeet/event-handler-harness";
 
 customElements.define(
   "test-handler",

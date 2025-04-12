@@ -1,4 +1,4 @@
-# @platformer/event-handler
+# @webfeet/event-handler
 
 This package provides helpers to implement an [event handler](https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-attributes) on a custom element.
 Event handlers are those `onxxx` attributes and properties that allow listening to a `xxx` event, like `onload` or `onclick`.
@@ -6,7 +6,7 @@ Event handlers are those `onxxx` attributes and properties that allow listening 
 ## API
 
 This package exports an `EventHandlerHelper` class, as well as an `@eventHandler()` decorator, that only support properties.
-It also exports another flavor of `EventHandlerHelper` at `@platformer/event-handler/with-attribute.js` with support for attributes.
+It also exports another flavor of `EventHandlerHelper` at `@webfeet/event-handler/with-attribute.js` with support for attributes.
 
 ### Helper class
 
@@ -23,7 +23,7 @@ The exported `EventHandlerHelper` class has:
 Assuming an `onfoo` event handler for a `foo` event:
 
 ```js
-import { EventHandlerHelper } from "@platformer/event-handler";
+import { EventHandlerHelper } from "@webfeet/event-handler";
 
 class MyObject extends EventTarget {
   #onfoo = new EventHandlerHelper("foo", this);
@@ -46,7 +46,7 @@ The event name to be listened to is derived from the annotated property name (st
 #### Usage
 
 ```js
-import { eventHandler } from "@platformer/event-handler";
+import { eventHandler } from "@webfeet/event-handler";
 
 class MyObject extends EventTarget {
   @eventHandler()
@@ -71,7 +71,7 @@ class MyObject extends EventTarget {
 
 ### Helper class with attribute support
 
-The `EventHandlerHelper` class exported at `@platformer/event-handler/with-attribute.js` extends from the `EventHandlerHelper` class of the package's root (see above) but adds support for event handler attributes, with a new method:
+The `EventHandlerHelper` class exported at `@webfeet/event-handler/with-attribute.js` extends from the `EventHandlerHelper` class of the package's root (see above) but adds support for event handler attributes, with a new method:
 
 - `fromAttribute` that takes a string or `null` value as its single argument, coming directly from an HTML attribute, and implements the _attribute change steps_ for an _event handler content attribute_; it's thus expected to be called from `attributeChangedCallback`
 
@@ -86,7 +86,7 @@ The `EventHandlerHelper` class exported at `@platformer/event-handler/with-attri
 Assuming an `onfoo` event handler for a `foo` event:
 
 ```js
-import { EventHandlerHelper } from "@platformer/event-handler/with-attribute.js";
+import { EventHandlerHelper } from "@webfeet/event-handler/with-attribute.js";
 
 class MyElement extends HTMLElement {
   #onfoo = new EventHandlerHelper("foo", this);

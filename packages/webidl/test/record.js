@@ -5,7 +5,7 @@ import {
   coerceToByteString,
   coerceToDouble,
   coerceToRecord,
-} from "@platformer/webidl";
+} from "@webfeet/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 describe("WebIDL enumeration type", () => {

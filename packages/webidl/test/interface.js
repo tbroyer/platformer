@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
 
-import { coerceToInterface } from "@platformer/webidl";
+import { coerceToInterface } from "@webfeet/webidl";
 import assertThrows from "./helpers/assertThrows.js";
 
 describe("WebIDL interface type", () => {

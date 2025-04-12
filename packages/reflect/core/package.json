@@ -1,15 +1,15 @@
 {
-  "name": "@platformer/reflect",
+  "name": "@webfeet/reflect",
   "version": "0.0.0",
   "publishConfig": {
     "access": "public"
   },
   "description": "Helper classes implementing HTML attribute reflection rules for use in custom elements",
   "license": "BSD-3-Clause",
-  "homepage": "https://github.com/tbroyer/platformer/tree/main/packages/reflect/core#readme",
+  "homepage": "https://github.com/tbroyer/webfeet/tree/main/packages/reflect/core#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tbroyer/platformer.git",
+    "url": "git+https://github.com/tbroyer/webfeet.git",
     "directory": "packages/reflect/core"
   },
   "type": "module",
@@ -24,7 +24,7 @@
     "test": ""
   },
   "dependencies": {
-    "@platformer/microsyntaxes": "^0.0.0",
-    "@platformer/webidl": "^0.0.0"
+    "@webfeet/microsyntaxes": "^0.0.0",
+    "@webfeet/webidl": "^0.0.0"
   }
 }

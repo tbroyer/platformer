@@ -1,4 +1,4 @@
-# @platformer/reflect
+# @webfeet/reflect
 
 Implements the [HTML attribute reflection rules](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes)
 
@@ -12,7 +12,7 @@ no `DOMTokenList` (technically impossible, but could be approximated).
 This package exports constants and functions whose name starts with `reflect` and whose value or the value they return, collectively known as _reflectors_, is an object with three functions and one constant:
 
 - `fromAttribute` takes a string or `null` as its single argument, coming directly from an HTML attribute, and implements the _getter_ steps of the reflection rules, returning a value of the appropriate type
-- `coerceValue` takes any value as its single argument, and coerces it to the appropriate type following the [WebIDL rules](https://webidl.spec.whatwg.org/#js-type-mapping); it's generally directly one of the `coerceTo` functions exported by [_@platformer/webidl_](../webidl/README.md)
+- `coerceValue` takes any value as its single argument, and coerces it to the appropriate type following the [WebIDL rules](https://webidl.spec.whatwg.org/#js-type-mapping); it's generally directly one of the `coerceTo` functions exported by [_@webfeet/webidl_](../webidl/README.md)
 - `setAttribute` takes three arguments: the HTML element, the attribute name, and the attribute's value (of the same type as returned by `coerceValue`), and implements the _setter_ steps of the reflection rules
 - `defaultValue` is the default value one should initialize a property to behave as if an element had no HTML attribute (in other words, this is the value that will be returned by `fromAttribute(null)`)
 

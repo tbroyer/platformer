@@ -1,15 +1,15 @@
 {
-  "name": "@platformer/vanilla-core",
+  "name": "@webfeet/vanilla-core",
   "version": "0.0.0",
   "publishConfig": {
     "access": "public"
   },
   "description": "Helpers to observe custom element attributes from decorators",
   "license": "BSD-3-Clause",
-  "homepage": "https://github.com/tbroyer/platformer/tree/main/packages/vanilla-core#readme",
+  "homepage": "https://github.com/tbroyer/webfeet/tree/main/packages/vanilla-core#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tbroyer/platformer.git",
+    "url": "git+https://github.com/tbroyer/webfeet.git",
     "directory": "packages/vanilla-core"
   },
   "type": "module",
