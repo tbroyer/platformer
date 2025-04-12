@@ -119,3 +119,33 @@ class Foo {
 | [`record<K,V>`](https://webidl.spec.whatwg.org/#idl-record)                  | `coerceToRecord`              | `record`              | Two coercion functions to be applied to each record key and value respectively, where the key has to be a string type, default to `coerceToDOMString` and `coerceToAny` |
 | [`Promise<T>`](https://webidl.spec.whatwg.org/#idl-promise)                  | `coerceToPromise`             | `promise`             | Another coercion function to be applied to the resolved value                                                                                                           |
 | [`FrozenArray<T>`](https://webidl.spec.whatwg.org/#idl-frozen-array)         | `coerceToFrozenArray`         | `frozenArray`         | Another coercion function to be applied to each sequence member, defaults to `coerceToAny`                                                                              |
+
+### TypeScript
+
+Most functions and decorators are _losely_ typed in that they're generic with _target_ types that can be any subtype of the actual type that can be returned from the coercion. While this makes for somewhat inaccurate typing, this greatly simplifies usage as you'd actually want a strictly-typed API to guide users, and using those coercions for strict runtime compliance:
+
+```ts
+function foo(value: "one" | "two" | "three") {
+  value = coerceToDOMString(value);
+  // If coerceToDOMString was typed with a `string` return type,
+  // you couldn't assing the result back to `value`.
+}
+```
+
+In some cases, you might want to use stricter conversions (here `coerceToEnumeration`) but it's not always possible (e.g. a template literal string, or a _dictionary_), and it would have a small overhead for something that you possibly already handle in another way:
+
+```ts
+const STRATEGIES = {
+  one: …,
+  two: …,
+  three: …,
+}
+function foo(value: keyof typeof STRATEGIES) {
+  value = coerceToDOMString(value);
+  const strategy = strategies[value];
+  if (strategy == null) {
+    throw new TypeError();
+  }
+  // …
+}
+```
