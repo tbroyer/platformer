@@ -1,5 +1,8 @@
 import { expect } from "tstyche";
-import { enumerated, EnumeratedAttributeOptions } from "@webfeet/microsyntaxes";
+import {
+  enumerated,
+  type EnumeratedAttributeOptions,
+} from "@webfeet/microsyntaxes";
 
 expect({
   keywords: ["", "one", "two", "three"],
@@ -41,7 +44,7 @@ expect(
     invalid: "not-in-keywords",
   }),
 ).type.toRaiseError(
-  `Type '"not-in-keywords"' is not assignable to type '"" | "one" | "two" | "three" | undefined'`,
+  `Type '"not-in-keywords"' is not assignable to type '"" | "one" | "two" | "three"'`,
 );
 expect(
   enumerated({
@@ -49,5 +52,5 @@ expect(
     missing: "not-in-keywords",
   }),
 ).type.toRaiseError(
-  `Type '"not-in-keywords"' is not assignable to type '"" | "one" | "two" | "three" | undefined'`,
+  `Type '"not-in-keywords"' is not assignable to type '"" | "one" | "two" | "three"'`,
 );
