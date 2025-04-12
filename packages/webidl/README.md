@@ -1,5 +1,9 @@
 # @webfeet/webidl
 
+Add webfeet to your APIs to help make them [~~swim like a duck~~](https://en.wikipedia.org/wiki/Duck_test) behave like native.
+
+> If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.
+
 This package implements the [WebIDL type coercion rules](https://webidl.spec.whatwg.org/#js-type-mapping), with exceptions for some edge cases to keep the library lightweight.
 
 ## Deviations from WebIDL

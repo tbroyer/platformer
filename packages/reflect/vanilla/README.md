@@ -1,5 +1,9 @@
 # @webfeet/reflect-vanilla
 
+Add webfeet to your APIs to help make them [~~swim like a duck~~](https://en.wikipedia.org/wiki/Duck_test) behave like native.
+
+> If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.
+
 This package exports decorators encapsulating the [_@webfeet/reflect_ package](../core/README.md) to cut verbosity by at least 50%.
 
 There are two sets of reflection decorators: direct and cached.

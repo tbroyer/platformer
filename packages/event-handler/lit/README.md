@@ -1,6 +1,10 @@
 # @webfeet/event-handler-lit
 
-Exports a decorator to turn an auto-accessor property (whose names must start with `on`) into an event handler, with support for an event handler attribute.
+Add webfeet to your APIs to help make them [~~swim like a duck~~](https://en.wikipedia.org/wiki/Duck_test) behave like native.
+
+> If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.
+
+This package exports a decorator to turn an auto-accessor property (whose names must start with `on`) into an event handler, with support for an event handler attribute.
 
 The decorator accepts an optional argument as an object with optional properties:
 
