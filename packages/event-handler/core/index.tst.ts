@@ -9,20 +9,15 @@ declare global {
   }
 }
 
-expect(
-  class MyObject extends EventTarget {
-    @eventHandler({ type: "foo" }) accessor onfoo:
-      | ((this: MyObject, event: FooEvent) => any)
-      | null = null;
-  },
-).type.not.toRaiseError();
+class MyObject extends EventTarget {
+  @(expect(eventHandler({ type: "foo" })).type.toBeApplicable)
+  accessor onfoo: ((this: MyObject, event: FooEvent) => any) | null = null;
+}
 
 test("not an EventTarget", () => {
-  expect(
-    class NotAnEventTarget {
-      @eventHandler() accessor onfoo:
-        | ((this: NotAnEventTarget, event: FooEvent) => any)
-        | null = null;
-    },
-  ).type.toRaiseError(1240, 1270);
+  class NotAnEventTarget {
+    @(expect(eventHandler()).type.not.toBeApplicable)
+    accessor onfoo: ((this: NotAnEventTarget, event: FooEvent) => any) | null =
+      null;
+  }
 });

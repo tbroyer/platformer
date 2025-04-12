@@ -1,11 +1,12 @@
 {
-  "include": ["packages/**/*.d.ts"],
+  "include": ["packages/**/*.ts"],
   "compilerOptions": {
     "noEmit": true,
-    "esModuleInterop": true,
     "module": "NodeNext",
     "target": "ESNext",
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "exactOptionalPropertyTypes": true
   }
 }
