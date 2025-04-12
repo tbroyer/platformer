@@ -54,182 +54,260 @@ import {
   usvString,
 } from "@webfeet/webidl/decorators.js";
 
-expect(
-  class {
-    @any accessor any: any;
-    @any set anySetter(value: any) {}
+class AllDecorators {
+  @(expect(any).type.toBeApplicable)
+  accessor any: any;
+  @(expect(any).type.toBeApplicable)
+  set anySetter(value: any) {}
 
-    @boolean accessor boolean!: boolean;
-    @boolean set booleanSetter(value: boolean) {}
+  @(expect(boolean).type.toBeApplicable)
+  accessor boolean!: boolean;
+  @(expect(boolean).type.toBeApplicable)
+  set booleanSetter(value: boolean) {}
 
-    @bigInt accessor bigInt!: bigint;
-    @bigInt set bigIntSetter(value: bigint) {}
+  @(expect(bigInt).type.toBeApplicable)
+  accessor bigInt!: bigint;
+  @(expect(bigInt).type.toBeApplicable)
+  set bigIntSetter(value: bigint) {}
 
-    @bigIntOrNumericType() accessor bigIntOrDouble!: bigint | number;
-    @bigIntOrNumericType() set bigIntOrDoubleSetter(value: bigint | number) {}
+  @(expect(bigIntOrNumericType()).type.toBeApplicable)
+  accessor bigIntOrDouble!: bigint | number;
+  @(expect(bigIntOrNumericType()).type.toBeApplicable)
+  set bigIntOrDoubleSetter(value: bigint | number) {}
 
-    @domString accessor domString!: string;
-    @domString set domStringSetter(value: string) {}
+  @(expect(domString).type.toBeApplicable)
+  accessor domString!: string;
+  @(expect(domString).type.toBeApplicable)
+  set domStringSetter(value: string) {}
 
-    @byteString accessor byteString!: string;
-    @byteString set byteStringSetter(value: string) {}
+  @(expect(byteString).type.toBeApplicable)
+  accessor byteString!: string;
+  @(expect(byteString).type.toBeApplicable)
+  set byteStringSetter(value: string) {}
 
-    @usvString accessor usvString!: string;
-    @usvString set usvStringSetter(value: string) {}
+  @(expect(usvString).type.toBeApplicable)
+  accessor usvString!: string;
+  @(expect(usvString).type.toBeApplicable)
+  set usvStringSetter(value: string) {}
 
-    @object accessor object!: object;
-    @object set objectSetter(value: object) {}
+  @(expect(object).type.toBeApplicable)
+  accessor object!: object;
+  @(expect(object).type.toBeApplicable)
+  set objectSetter(value: object) {}
 
-    @symbol accessor symbol!: symbol;
-    @symbol set symbolSetter(value: symbol) {}
+  @(expect(symbol).type.toBeApplicable)
+  accessor symbol!: symbol;
+  @(expect(symbol).type.toBeApplicable)
+  set symbolSetter(value: symbol) {}
 
-    @interfaceType(HTMLElement) accessor element!: HTMLElement;
-    @interfaceType(HTMLElement) set elementSetter(value: HTMLElement) {}
+  @(expect(interfaceType(HTMLElement)).type.toBeApplicable)
+  accessor element!: HTMLElement;
+  @(expect(interfaceType(HTMLElement)).type.toBeApplicable)
+  set elementSetter(value: HTMLElement) {}
 
-    @enumeration<string>(["up", "down", "left", "right"])
-    accessor enumeration!: string;
-    @enumeration<string>("up", "down", "left", "right")
-    set enumerationSetter(value: string) {}
+  @enumeration<string>(["up", "down", "left", "right"])
+  accessor enumeration!: string;
+  @enumeration<string>("up", "down", "left", "right")
+  set enumerationSetter(value: string) {}
 
-    @promise() accessor promise!: Promise<boolean>;
-    @promise(coerceToBoolean) set promiseSetter(value: Promise<boolean>) {}
+  @(expect(promise()).type.toBeApplicable)
+  accessor promise!: Promise<boolean>;
+  @(expect(promise(coerceToBoolean)).type.toBeApplicable)
+  set promiseSetter(value: Promise<boolean>) {}
 
-    @callbackFunction accessor callbackFunction!: (
-      a: number,
-      b: string,
-    ) => boolean;
-    @callbackFunction set callbackFunctionSetter(
-      value: (a: number, b: string) => boolean,
-    ) {}
+  @(expect(callbackFunction).type.toBeApplicable)
+  accessor callbackFunction!: (a: number, b: string) => boolean;
+  @(expect(callbackFunction).type.toBeApplicable)
+  set callbackFunctionSetter(value: (a: number, b: string) => boolean) {}
 
-    @legacyCallbackFunction accessor legacyCallbackFunction!:
-      | ((a: number, b: string) => boolean)
-      | null;
-    @legacyCallbackFunction set legacyCallbackFunctionSetter(
-      value: ((a: number, b: string) => boolean) | null,
-    ) {}
+  @(expect(legacyCallbackFunction).type.toBeApplicable)
+  accessor legacyCallbackFunction!: ((a: number, b: string) => boolean) | null;
+  @(expect(legacyCallbackFunction).type.toBeApplicable)
+  set legacyCallbackFunctionSetter(
+    value: ((a: number, b: string) => boolean) | null,
+  ) {}
 
-    @sequence(coerceToDOMString) accessor strings!: string[];
-    @sequence(coerceToDOMString) set stringsSetter(value: string[]) {}
-    @sequence() accessor anys!: any[];
+  @(expect(sequence(coerceToDOMString)).type.toBeApplicable)
+  accessor strings!: string[];
+  @(expect(sequence(coerceToDOMString)).type.toBeApplicable)
+  set stringsSetter(value: string[]) {}
+  @(expect(sequence()).type.toBeApplicable)
+  accessor anys!: any[];
 
-    @record(coerceToDouble) accessor record!: Record<string, number>;
-    @record(coerceToByteString, coerceToBoolean) set recordSetter(
-      value: Record<string, boolean>,
-    ) {}
-    @record() accessor record2!: Record<string, boolean>;
+  @(expect(record(coerceToDouble)).type.toBeApplicable)
+  accessor record!: Record<string, number>;
+  @(expect(record(coerceToByteString, coerceToBoolean)).type.toBeApplicable)
+  set recordSetter(value: Record<string, boolean>) {}
+  @(expect(record()).type.toBeApplicable)
+  accessor record2!: Record<string, boolean>;
 
-    @frozenArray(coerceToDouble) accessor numbers!: readonly number[];
-    @frozenArray(coerceToDouble) set numbersSetter(value: readonly number[]) {}
-    @frozenArray() accessor frozenAnys!: readonly any[];
+  @(expect(frozenArray(coerceToDouble)).type.toBeApplicable)
+  accessor numbers!: readonly number[];
+  @(expect(frozenArray(coerceToDouble)).type.toBeApplicable)
+  set numbersSetter(value: readonly number[]) {}
+  @(expect(frozenArray()).type.toBeApplicable)
+  accessor frozenAnys!: readonly any[];
 
-    // byte
+  // byte
 
-    @byte accessor byte!: number;
-    @byte set byteSetter(value: number) {}
+  @(expect(byte).type.toBeApplicable)
+  accessor byte!: number;
+  @(expect(byte).type.toBeApplicable)
+  set byteSetter(value: number) {}
 
-    @clampedByte accessor clampedByte!: number;
-    @clampedByte set clampedByteSetter(value: number) {}
+  @(expect(clampedByte).type.toBeApplicable)
+  accessor clampedByte!: number;
+  @(expect(clampedByte).type.toBeApplicable)
+  set clampedByteSetter(value: number) {}
 
-    @enforcedByte accessor enforcedByte!: number;
-    @enforcedByte set enforcedByteSetter(value: number) {}
+  @(expect(enforcedByte).type.toBeApplicable)
+  accessor enforcedByte!: number;
+  @(expect(enforcedByte).type.toBeApplicable)
+  set enforcedByteSetter(value: number) {}
 
-    // octet
+  // octet
 
-    @octet accessor octet!: number;
-    @octet set octetSetter(value: number) {}
+  @(expect(octet).type.toBeApplicable)
+  accessor octet!: number;
+  @(expect(octet).type.toBeApplicable)
+  set octetSetter(value: number) {}
 
-    @clampedOctet accessor clampedOctet!: number;
-    @clampedOctet set clampedOctetSetter(value: number) {}
+  @(expect(clampedOctet).type.toBeApplicable)
+  accessor clampedOctet!: number;
+  @(expect(clampedOctet).type.toBeApplicable)
+  set clampedOctetSetter(value: number) {}
 
-    @enforcedOctet accessor enforcedOctet!: number;
-    @enforcedOctet set enforcedOctetSetter(value: number) {}
+  @(expect(enforcedOctet).type.toBeApplicable)
+  accessor enforcedOctet!: number;
+  @(expect(enforcedOctet).type.toBeApplicable)
+  set enforcedOctetSetter(value: number) {}
 
-    // short
+  // short
 
-    @short accessor short!: number;
-    @short set shortSetter(value: number) {}
+  @(expect(short).type.toBeApplicable)
+  accessor short!: number;
+  @(expect(short).type.toBeApplicable)
+  set shortSetter(value: number) {}
 
-    @clampedShort accessor clampedShort!: number;
-    @clampedShort set clampedShortSetter(value: number) {}
+  @(expect(clampedShort).type.toBeApplicable)
+  accessor clampedShort!: number;
+  @(expect(clampedShort).type.toBeApplicable)
+  set clampedShortSetter(value: number) {}
 
-    @enforcedShort accessor enforcedShort!: number;
-    @enforcedShort set enforcedShortSetter(value: number) {}
+  @(expect(enforcedShort).type.toBeApplicable)
+  accessor enforcedShort!: number;
+  @(expect(enforcedShort).type.toBeApplicable)
+  set enforcedShortSetter(value: number) {}
 
-    // unsignedShort
+  // unsignedShort
 
-    @unsignedShort accessor unsignedshort!: number;
-    @unsignedShort set unsignedshortSetter(value: number) {}
+  @(expect(unsignedShort).type.toBeApplicable)
+  accessor unsignedshort!: number;
+  @(expect(unsignedShort).type.toBeApplicable)
+  set unsignedshortSetter(value: number) {}
 
-    @clampedUnsignedShort accessor clampedUnsignedShort!: number;
-    @clampedUnsignedShort set clampedUnsignedShortSetter(value: number) {}
+  @(expect(clampedUnsignedShort).type.toBeApplicable)
+  accessor clampedUnsignedShort!: number;
+  @(expect(clampedUnsignedShort).type.toBeApplicable)
+  set clampedUnsignedShortSetter(value: number) {}
 
-    @enforcedUnsignedShort accessor enforcedUnsignedShort!: number;
-    @enforcedUnsignedShort set enforcedUnsignedShortSetter(value: number) {}
+  @(expect(enforcedUnsignedShort).type.toBeApplicable)
+  accessor enforcedUnsignedShort!: number;
+  @(expect(enforcedUnsignedShort).type.toBeApplicable)
+  set enforcedUnsignedShortSetter(value: number) {}
 
-    // long
+  // long
 
-    @long accessor long!: number;
-    @long set longSetter(value: number) {}
+  @(expect(long).type.toBeApplicable)
+  accessor long!: number;
+  @(expect(long).type.toBeApplicable)
+  set longSetter(value: number) {}
 
-    @clampedLong accessor clampedLong!: number;
-    @clampedLong set clampedLongSetter(value: number) {}
+  @(expect(clampedLong).type.toBeApplicable)
+  accessor clampedLong!: number;
+  @(expect(clampedLong).type.toBeApplicable)
+  set clampedLongSetter(value: number) {}
 
-    @enforcedLong accessor enforcedLong!: number;
-    @enforcedLong set enforcedLongSetter(value: number) {}
+  @(expect(enforcedLong).type.toBeApplicable)
+  accessor enforcedLong!: number;
+  @(expect(enforcedLong).type.toBeApplicable)
+  set enforcedLongSetter(value: number) {}
 
-    // unsignedLong
+  // unsignedLong
 
-    @unsignedLong accessor unsignedlong!: number;
-    @unsignedLong set unsignedlongSetter(value: number) {}
+  @(expect(unsignedLong).type.toBeApplicable)
+  accessor unsignedlong!: number;
+  @(expect(unsignedLong).type.toBeApplicable)
+  set unsignedlongSetter(value: number) {}
 
-    @clampedUnsignedLong accessor clampedUnsignedLong!: number;
-    @clampedUnsignedLong set clampedUnsignedLongSetter(value: number) {}
+  @(expect(clampedUnsignedLong).type.toBeApplicable)
+  accessor clampedUnsignedLong!: number;
+  @(expect(clampedUnsignedLong).type.toBeApplicable)
+  set clampedUnsignedLongSetter(value: number) {}
 
-    @enforcedUnsignedLong accessor enforcedUnsignedLong!: number;
-    @enforcedUnsignedLong set enforcedUnsignedLongSetter(value: number) {}
+  @(expect(enforcedUnsignedLong).type.toBeApplicable)
+  accessor enforcedUnsignedLong!: number;
+  @(expect(enforcedUnsignedLong).type.toBeApplicable)
+  set enforcedUnsignedLongSetter(value: number) {}
 
-    // longlong
+  // longlong
 
-    @longLong accessor longLong!: number;
-    @longLong set longLongSetter(value: number) {}
+  @(expect(longLong).type.toBeApplicable)
+  accessor longLong!: number;
+  @(expect(longLong).type.toBeApplicable)
+  set longLongSetter(value: number) {}
 
-    @clampedLongLong accessor clampedLongLong!: number;
-    @clampedLongLong set clampedLongLongSetter(value: number) {}
+  @(expect(clampedLongLong).type.toBeApplicable)
+  accessor clampedLongLong!: number;
+  @(expect(clampedLongLong).type.toBeApplicable)
+  set clampedLongLongSetter(value: number) {}
 
-    @enforcedLongLong accessor enforcedLongLong!: number;
-    @enforcedLongLong set enforcedLongLongSetter(value: number) {}
+  @(expect(enforcedLongLong).type.toBeApplicable)
+  accessor enforcedLongLong!: number;
+  @(expect(enforcedLongLong).type.toBeApplicable)
+  set enforcedLongLongSetter(value: number) {}
 
-    // unsignedLongLong
+  // unsignedLongLong
 
-    @unsignedLongLong accessor unsignedlonglong!: number;
-    @unsignedLongLong set unsignedlonglongSetter(value: number) {}
+  @(expect(unsignedLongLong).type.toBeApplicable)
+  accessor unsignedlonglong!: number;
+  @(expect(unsignedLongLong).type.toBeApplicable)
+  set unsignedlonglongSetter(value: number) {}
 
-    @clampedUnsignedLongLong accessor clampedUnsignedLongLong!: number;
-    @clampedUnsignedLongLong set clampedUnsignedLongLongSetter(value: number) {}
+  @(expect(clampedUnsignedLongLong).type.toBeApplicable)
+  accessor clampedUnsignedLongLong!: number;
+  @(expect(clampedUnsignedLongLong).type.toBeApplicable)
+  set clampedUnsignedLongLongSetter(value: number) {}
 
-    @enforcedUnsignedLongLong accessor enforcedUnsignedLongLong!: number;
-    @enforcedUnsignedLongLong set enforcedUnsignedLongLongSetter(
-      value: number,
-    ) {}
+  @(expect(enforcedUnsignedLongLong).type.toBeApplicable)
+  accessor enforcedUnsignedLongLong!: number;
+  @(expect(enforcedUnsignedLongLong).type.toBeApplicable)
+  set enforcedUnsignedLongLongSetter(value: number) {}
 
-    // float
+  // float
 
-    @float accessor float!: number;
-    @float set floatSetter(value: number) {}
+  @(expect(float).type.toBeApplicable)
+  accessor float!: number;
+  @(expect(float).type.toBeApplicable)
+  set floatSetter(value: number) {}
 
-    @unrestrictedFloat accessor unrestrictedFloat!: number;
-    @unrestrictedFloat set unrestrictedFloatSetter(value: number) {}
+  @(expect(unrestrictedFloat).type.toBeApplicable)
+  accessor unrestrictedFloat!: number;
+  @(expect(unrestrictedFloat).type.toBeApplicable)
+  set unrestrictedFloatSetter(value: number) {}
 
-    // double
+  // double
 
-    @double accessor double!: number;
-    @double set doubleSetter(value: number) {}
+  @(expect(double).type.toBeApplicable)
+  accessor double!: number;
+  @(expect(double).type.toBeApplicable)
+  set doubleSetter(value: number) {}
 
-    @unrestrictedDouble accessor unrestrictedDouble!: number;
-    @unrestrictedDouble set unrestrictedDoubleSetter(value: number) {}
-  },
-).type.not.toRaiseError();
+  @(expect(unrestrictedDouble).type.toBeApplicable)
+  accessor unrestrictedDouble!: number;
+  @(expect(unrestrictedDouble).type.toBeApplicable)
+  set unrestrictedDoubleSetter(value: number) {}
+}
 
 test("subtypes", () => {
   enum NumericEnum {
@@ -257,282 +335,279 @@ test("subtypes", () => {
     Right = "RIGHT",
   }
 
-  expect(
-    class {
-      @bigInt accessor bigInt!: 1n | 42n;
-      @bigInt set bigIntSetter(value: 1n | 42n) {}
+  class AllDecoratorsWithSubtypes {
+    @(expect(bigInt).type.toBeApplicable)
+    accessor bigInt!: 1n | 42n;
+    @(expect(bigInt).type.toBeApplicable)
+    set bigIntSetter(value: 1n | 42n) {}
 
-      @bigIntOrNumericType() accessor bigIntOrDouble!: 1n | 42;
-      @bigIntOrNumericType() set bigIntOrDoubleSetter(value: 1n | 42) {}
+    @(expect(bigIntOrNumericType()).type.toBeApplicable)
+    accessor bigIntOrDouble!: 1n | 42;
+    @(expect(bigIntOrNumericType()).type.toBeApplicable)
+    set bigIntOrDoubleSetter(value: 1n | 42) {}
 
-      @domString accessor domString!: StringEnum;
-      @domString set domStringSetter(value: StringEnum) {}
+    @(expect(domString).type.toBeApplicable)
+    accessor domString!: StringEnum;
+    @(expect(domString).type.toBeApplicable)
+    set domStringSetter(value: StringEnum) {}
 
-      @byteString accessor byteString!: ConstStringEnum;
-      @byteString set byteStringSetter(value: ConstStringEnum) {}
+    @(expect(byteString).type.toBeApplicable)
+    accessor byteString!: ConstStringEnum;
+    @(expect(byteString).type.toBeApplicable)
+    set byteStringSetter(value: ConstStringEnum) {}
 
-      @usvString
-      accessor usvString!: `on${Capitalize<keyof typeof StringEnum>}`;
-      @usvString set usvStringSetter(
-        value: `on${Capitalize<keyof typeof StringEnum>}`,
-      ) {}
+    @usvString
+    accessor usvString!: `on${Capitalize<keyof typeof StringEnum>}`;
+    @(expect(usvString).type.toBeApplicable)
+    set usvStringSetter(value: `on${Capitalize<keyof typeof StringEnum>}`) {}
 
-      @object accessor object!: { a: number; b: boolean };
-      @object set objectSetter(value: { a: number; b: boolean }) {}
+    @(expect(object).type.toBeApplicable)
+    accessor object!: { a: number; b: boolean };
+    @(expect(object).type.toBeApplicable)
+    set objectSetter(value: { a: number; b: boolean }) {}
 
-      @symbol accessor symbol!:
-        | typeof Symbol.iterator
-        | typeof Symbol.asyncIterator;
-      @symbol set symbolSetter(
-        value: typeof Symbol.iterator | typeof Symbol.asyncIterator,
-      ) {}
+    @(expect(symbol).type.toBeApplicable)
+    accessor symbol!: typeof Symbol.iterator | typeof Symbol.asyncIterator;
+    @(expect(symbol).type.toBeApplicable)
+    set symbolSetter(
+      value: typeof Symbol.iterator | typeof Symbol.asyncIterator,
+    ) {}
 
-      @enumeration("up", "down", "left", "right") accessor enumeration!:
-        | "up"
-        | "down"
-        | "left"
-        | "right";
-      @enumeration(Object.values(StringEnum))
-      set enumerationSetter(value: StringEnum) {}
+    @(expect(enumeration("up", "down", "left", "right")).type.toBeApplicable)
+    accessor enumeration!: "up" | "down" | "left" | "right";
+    @(expect(enumeration(Object.values(StringEnum))).type.toBeApplicable)
+    set enumerationSetter(value: StringEnum) {}
 
-      // note: non-null
-      @legacyCallbackFunction accessor legacyCallbackFunction!: (
-        a: number,
-      ) => boolean;
+    // note: non-null
+    @(expect(legacyCallbackFunction).type.toBeApplicable)
+    accessor legacyCallbackFunction!: (a: number) => boolean;
 
-      @sequence(coerceToDOMString) accessor strings!: StringEnum[];
-      @sequence(coerceToDOMString) set stringsSetter(
-        value: ConstStringEnum[],
-      ) {}
+    @(expect(sequence(coerceToDOMString)).type.toBeApplicable)
+    accessor strings!: StringEnum[];
+    @(expect(sequence(coerceToDOMString)).type.toBeApplicable)
+    set stringsSetter(value: ConstStringEnum[]) {}
 
-      @record(coerceToDouble) accessor record!: Record<
-        string,
-        ConstNumericEnum
-      >;
-      @record(coerceToByteString, coerceToObject) set recordSetter(
-        value: Record<StringEnum, { a: number; b: boolean }>,
-      ) {}
+    @(expect(record(coerceToDouble)).type.toBeApplicable)
+    accessor record!: Record<string, ConstNumericEnum>;
+    @(expect(record(coerceToByteString, coerceToObject)).type.toBeApplicable)
+    set recordSetter(value: Record<StringEnum, { a: number; b: boolean }>) {}
 
-      @promise(coerceToDOMString) accessor promise!: Promise<StringEnum>;
-      @promise(coerceToDOMString) set promiseSetter(
-        value: Promise<ConstStringEnum>,
-      ) {}
+    @(expect(promise(coerceToDOMString)).type.toBeApplicable)
+    accessor promise!: Promise<StringEnum>;
+    @(expect(promise(coerceToDOMString)).type.toBeApplicable)
+    set promiseSetter(value: Promise<ConstStringEnum>) {}
 
-      @frozenArray(coerceToDouble) accessor numbers!: readonly NumericEnum[];
-      @frozenArray(coerceToDouble) set numbersSetter(
-        value: readonly ConstNumericEnum[],
-      ) {}
+    @(expect(frozenArray(coerceToDouble)).type.toBeApplicable)
+    accessor numbers!: readonly NumericEnum[];
+    @(expect(frozenArray(coerceToDouble)).type.toBeApplicable)
+    set numbersSetter(value: readonly ConstNumericEnum[]) {}
 
-      // byte
+    // byte
 
-      @byte accessor byte!: NumericEnum;
-      @byte set byteSetter(value: NumericEnum) {}
+    @(expect(byte).type.toBeApplicable)
+    accessor byte!: NumericEnum;
+    @(expect(byte).type.toBeApplicable)
+    set byteSetter(value: NumericEnum) {}
 
-      @clampedByte accessor clampedByte!: ConstNumericEnum;
-      @clampedByte set clampedByteSetter(value: ConstNumericEnum) {}
+    @(expect(clampedByte).type.toBeApplicable)
+    accessor clampedByte!: ConstNumericEnum;
+    @(expect(clampedByte).type.toBeApplicable)
+    set clampedByteSetter(value: ConstNumericEnum) {}
 
-      @enforcedByte accessor enforcedByte!: 1 | 2 | 3;
-      @enforcedByte set enforcedByteSetter(value: 1 | 2 | 3) {}
+    @(expect(enforcedByte).type.toBeApplicable)
+    accessor enforcedByte!: 1 | 2 | 3;
+    @(expect(enforcedByte).type.toBeApplicable)
+    set enforcedByteSetter(value: 1 | 2 | 3) {}
 
-      // octet
+    // octet
 
-      @octet accessor octet!: ConstNumericEnum;
-      @octet set octetSetter(value: ConstNumericEnum) {}
+    @(expect(octet).type.toBeApplicable)
+    accessor octet!: ConstNumericEnum;
+    @(expect(octet).type.toBeApplicable)
+    set octetSetter(value: ConstNumericEnum) {}
 
-      @clampedOctet accessor clampedOctet!: 1 | 2 | 3;
-      @clampedOctet set clampedOctetSetter(value: 1 | 2 | 3) {}
+    @(expect(clampedOctet).type.toBeApplicable)
+    accessor clampedOctet!: 1 | 2 | 3;
+    @(expect(clampedOctet).type.toBeApplicable)
+    set clampedOctetSetter(value: 1 | 2 | 3) {}
 
-      @enforcedOctet accessor enforcedOctet!: NumericEnum;
-      @enforcedOctet set enforcedOctetSetter(value: NumericEnum) {}
+    @(expect(enforcedOctet).type.toBeApplicable)
+    accessor enforcedOctet!: NumericEnum;
+    @(expect(enforcedOctet).type.toBeApplicable)
+    set enforcedOctetSetter(value: NumericEnum) {}
 
-      // short
+    // short
 
-      @short accessor short!: 1 | 2 | 3;
-      @short set shortSetter(value: 1 | 2 | 3) {}
+    @(expect(short).type.toBeApplicable)
+    accessor short!: 1 | 2 | 3;
+    @(expect(short).type.toBeApplicable)
+    set shortSetter(value: 1 | 2 | 3) {}
 
-      @clampedShort accessor clampedShort!: NumericEnum;
-      @clampedShort set clampedShortSetter(value: NumericEnum) {}
+    @(expect(clampedShort).type.toBeApplicable)
+    accessor clampedShort!: NumericEnum;
+    @(expect(clampedShort).type.toBeApplicable)
+    set clampedShortSetter(value: NumericEnum) {}
 
-      @enforcedShort accessor enforcedShort!: ConstNumericEnum;
-      @enforcedShort set enforcedShortSetter(value: ConstNumericEnum) {}
+    @(expect(enforcedShort).type.toBeApplicable)
+    accessor enforcedShort!: ConstNumericEnum;
+    @(expect(enforcedShort).type.toBeApplicable)
+    set enforcedShortSetter(value: ConstNumericEnum) {}
 
-      // unsignedShort
+    // unsignedShort
 
-      @unsignedShort accessor unsignedshort!: NumericEnum;
-      @unsignedShort set unsignedshortSetter(value: NumericEnum) {}
+    @(expect(unsignedShort).type.toBeApplicable)
+    accessor unsignedshort!: NumericEnum;
+    @(expect(unsignedShort).type.toBeApplicable)
+    set unsignedshortSetter(value: NumericEnum) {}
 
-      @clampedUnsignedShort accessor clampedUnsignedShort!: ConstNumericEnum;
-      @clampedUnsignedShort set clampedUnsignedShortSetter(
-        value: ConstNumericEnum,
-      ) {}
+    @(expect(clampedUnsignedShort).type.toBeApplicable)
+    accessor clampedUnsignedShort!: ConstNumericEnum;
+    @(expect(clampedUnsignedShort).type.toBeApplicable)
+    set clampedUnsignedShortSetter(value: ConstNumericEnum) {}
 
-      @enforcedUnsignedShort accessor enforcedUnsignedShort!: 1 | 2 | 3;
-      @enforcedUnsignedShort set enforcedUnsignedShortSetter(
-        value: 1 | 2 | 3,
-      ) {}
+    @(expect(enforcedUnsignedShort).type.toBeApplicable)
+    accessor enforcedUnsignedShort!: 1 | 2 | 3;
+    @(expect(enforcedUnsignedShort).type.toBeApplicable)
+    set enforcedUnsignedShortSetter(value: 1 | 2 | 3) {}
 
-      // long
+    // long
 
-      @long accessor long!: ConstNumericEnum;
-      @long set longSetter(value: ConstNumericEnum) {}
+    @(expect(long).type.toBeApplicable)
+    accessor long!: ConstNumericEnum;
+    @(expect(long).type.toBeApplicable)
+    set longSetter(value: ConstNumericEnum) {}
 
-      @clampedLong accessor clampedLong!: 1 | 2 | 3;
-      @clampedLong set clampedLongSetter(value: 1 | 2 | 3) {}
+    @(expect(clampedLong).type.toBeApplicable)
+    accessor clampedLong!: 1 | 2 | 3;
+    @(expect(clampedLong).type.toBeApplicable)
+    set clampedLongSetter(value: 1 | 2 | 3) {}
 
-      @enforcedLong accessor enforcedLong!: NumericEnum;
-      @enforcedLong set enforcedLongSetter(value: NumericEnum) {}
+    @(expect(enforcedLong).type.toBeApplicable)
+    accessor enforcedLong!: NumericEnum;
+    @(expect(enforcedLong).type.toBeApplicable)
+    set enforcedLongSetter(value: NumericEnum) {}
 
-      // unsignedLong
+    // unsignedLong
 
-      @unsignedLong accessor unsignedlong!: 1 | 2 | 3;
-      @unsignedLong set unsignedlongSetter(value: 1 | 2 | 3) {}
+    @(expect(unsignedLong).type.toBeApplicable)
+    accessor unsignedlong!: 1 | 2 | 3;
+    @(expect(unsignedLong).type.toBeApplicable)
+    set unsignedlongSetter(value: 1 | 2 | 3) {}
 
-      @clampedUnsignedLong accessor clampedUnsignedLong!: NumericEnum;
-      @clampedUnsignedLong set clampedUnsignedLongSetter(value: NumericEnum) {}
+    @(expect(clampedUnsignedLong).type.toBeApplicable)
+    accessor clampedUnsignedLong!: NumericEnum;
+    @(expect(clampedUnsignedLong).type.toBeApplicable)
+    set clampedUnsignedLongSetter(value: NumericEnum) {}
 
-      @enforcedUnsignedLong accessor enforcedUnsignedLong!: ConstNumericEnum;
-      @enforcedUnsignedLong set enforcedUnsignedLongSetter(
-        value: ConstNumericEnum,
-      ) {}
+    @(expect(enforcedUnsignedLong).type.toBeApplicable)
+    accessor enforcedUnsignedLong!: ConstNumericEnum;
+    @(expect(enforcedUnsignedLong).type.toBeApplicable)
+    set enforcedUnsignedLongSetter(value: ConstNumericEnum) {}
 
-      // longlong
+    // longlong
 
-      @longLong accessor longLong!: NumericEnum;
-      @longLong set longLongSetter(value: NumericEnum) {}
+    @(expect(longLong).type.toBeApplicable)
+    accessor longLong!: NumericEnum;
+    @(expect(longLong).type.toBeApplicable)
+    set longLongSetter(value: NumericEnum) {}
 
-      @clampedLongLong accessor clampedLongLong!: ConstNumericEnum;
-      @clampedLongLong set clampedLongLongSetter(value: ConstNumericEnum) {}
+    @(expect(clampedLongLong).type.toBeApplicable)
+    accessor clampedLongLong!: ConstNumericEnum;
+    @(expect(clampedLongLong).type.toBeApplicable)
+    set clampedLongLongSetter(value: ConstNumericEnum) {}
 
-      @enforcedLongLong accessor enforcedLongLong!: 1 | 2 | 3;
-      @enforcedLongLong set enforcedLongLongSetter(value: 1 | 2 | 3) {}
+    @(expect(enforcedLongLong).type.toBeApplicable)
+    accessor enforcedLongLong!: 1 | 2 | 3;
+    @(expect(enforcedLongLong).type.toBeApplicable)
+    set enforcedLongLongSetter(value: 1 | 2 | 3) {}
 
-      // unsignedLongLong
+    // unsignedLongLong
 
-      @unsignedLongLong accessor unsignedlonglong!: ConstNumericEnum;
-      @unsignedLongLong set unsignedlonglongSetter(value: ConstNumericEnum) {}
+    @(expect(unsignedLongLong).type.toBeApplicable)
+    accessor unsignedlonglong!: ConstNumericEnum;
+    @(expect(unsignedLongLong).type.toBeApplicable)
+    set unsignedlonglongSetter(value: ConstNumericEnum) {}
 
-      @clampedUnsignedLongLong accessor clampedUnsignedLongLong!: 1 | 2 | 3;
-      @clampedUnsignedLongLong set clampedUnsignedLongLongSetter(
-        value: 1 | 2 | 3,
-      ) {}
+    @(expect(clampedUnsignedLongLong).type.toBeApplicable)
+    accessor clampedUnsignedLongLong!: 1 | 2 | 3;
+    @(expect(clampedUnsignedLongLong).type.toBeApplicable)
+    set clampedUnsignedLongLongSetter(value: 1 | 2 | 3) {}
 
-      @enforcedUnsignedLongLong accessor enforcedUnsignedLongLong!: NumericEnum;
-      @enforcedUnsignedLongLong set enforcedUnsignedLongLongSetter(
-        value: NumericEnum,
-      ) {}
+    @(expect(enforcedUnsignedLongLong).type.toBeApplicable)
+    accessor enforcedUnsignedLongLong!: NumericEnum;
+    @(expect(enforcedUnsignedLongLong).type.toBeApplicable)
+    set enforcedUnsignedLongLongSetter(value: NumericEnum) {}
 
-      // float
+    // float
 
-      @float accessor float!: 1 | 2 | 3;
-      @float set floatSetter(value: 1 | 2 | 3) {}
+    @(expect(float).type.toBeApplicable)
+    accessor float!: 1 | 2 | 3;
+    @(expect(float).type.toBeApplicable)
+    set floatSetter(value: 1 | 2 | 3) {}
 
-      @unrestrictedFloat accessor unrestrictedFloat!: NumericEnum;
-      @unrestrictedFloat set unrestrictedFloatSetter(value: NumericEnum) {}
+    @(expect(unrestrictedFloat).type.toBeApplicable)
+    accessor unrestrictedFloat!: NumericEnum;
+    @(expect(unrestrictedFloat).type.toBeApplicable)
+    set unrestrictedFloatSetter(value: NumericEnum) {}
 
-      // double
+    // double
 
-      @double accessor double!: ConstNumericEnum;
-      @double set doubleSetter(value: ConstNumericEnum) {}
+    @(expect(double).type.toBeApplicable)
+    accessor double!: ConstNumericEnum;
+    @(expect(double).type.toBeApplicable)
+    set doubleSetter(value: ConstNumericEnum) {}
 
-      @unrestrictedDouble accessor unrestrictedDouble!: 1 | 2 | 3;
-      @unrestrictedDouble set unrestrictedDoubleSetter(value: 1 | 2 | 3) {}
-    },
-  ).type.not.toRaiseError();
+    @(expect(unrestrictedDouble).type.toBeApplicable)
+    accessor unrestrictedDouble!: 1 | 2 | 3;
+    @(expect(unrestrictedDouble).type.toBeApplicable)
+    set unrestrictedDoubleSetter(value: 1 | 2 | 3) {}
+  }
 });
 
-test("errors", () => {
-  expect(
-    class {
-      @boolean accessor notBoolean!: number;
-    },
-  ).type.toRaiseError(1240, 1270);
+test("wrong type", () => {
+  class WrongType {
+    @(expect(boolean).type.not.toBeApplicable)
+    accessor notBoolean!: number;
 
-  expect(
-    class {
-      @bigIntOrNumericType() accessor notNumeric!: string;
-    },
-  ).type.toRaiseError(1240, 1270);
+    @(expect(bigIntOrNumericType()).type.not.toBeApplicable)
+    accessor notNumeric!: string;
 
-  expect(
-    class {
-      @bigIntOrNumericType(coerceToDOMString) accessor bigIntOrNumericType!:
-        | bigint
-        | number;
-    },
-  ).type.toRaiseError(2345);
+    @(expect(sequence(coerceToDOMString)).type.not.toBeApplicable)
+    accessor strings!: number[];
 
-  expect(
-    class {
-      @bigIntOrNumericType accessor bigIntOrNumericType!: bigint | number;
-    },
-  ).type.toRaiseError(1240, 1270);
+    @(expect(record(coerceToDOMString)).type.not.toBeApplicable)
+    accessor record!: Record<string, number>;
 
-  expect(
-    class {
-      @interfaceType accessor element!: Element;
-    },
-  ).type.toRaiseError(1240, 1270);
+    @(expect(promise(coerceToDouble)).type.not.toBeApplicable)
+    accessor string!: Promise<string>;
 
-  expect(
-    class {
-      @interfaceType() accessor element!: Element;
-    },
-  ).type.toRaiseError(2554);
+    @(expect(frozenArray(coerceToDouble)).type.not.toBeApplicable)
+    accessor numbers!: readonly string[];
+  }
 
-  expect(
-    class {
-      @sequence(coerceToDOMString) accessor strings!: number[];
-    },
-  ).type.toRaiseError(1240, 1270);
+  expect(bigIntOrNumericType).type.not.toBeCallableWith(coerceToDOMString);
+  expect(record).type.not.toBeCallableWith(coerceToDouble, coerceToDOMString);
+});
+test("missing options", () => {
+  class MissingOptions {
+    @(expect(bigIntOrNumericType).type.not.toBeApplicable)
+    accessor bigIntOrNumericType!: bigint | number;
 
-  expect(
-    class {
-      @sequence accessor strings!: string[];
-    },
-  ).type.toRaiseError(1240, 1270);
+    @(expect(interfaceType).type.not.toBeApplicable)
+    accessor element!: Element;
 
-  expect(
-    class {
-      @record(coerceToDouble, coerceToDOMString) accessor record!: Record<
-        string,
-        number
-      >;
-    },
-  ).type.toRaiseError(2345);
+    @(expect(sequence).type.not.toBeApplicable)
+    accessor strings!: string[];
 
-  expect(
-    class {
-      @record(coerceToDOMString) accessor record!: Record<string, number>;
-    },
-  ).type.toRaiseError(1240, 1270);
+    @(expect(record).type.not.toBeApplicable)
+    accessor record!: Record<string, string>;
 
-  expect(
-    class {
-      @record accessor record!: Record<string, string>;
-    },
-  ).type.toRaiseError(1240, 1270);
+    @(expect(promise).type.not.toBeApplicable)
+    accessor number!: Promise<number>;
 
-  expect(
-    class {
-      @promise(coerceToDouble) accessor string!: Promise<string>;
-    },
-  ).type.toRaiseError(1240, 1270);
+    @(expect(frozenArray).type.not.toBeApplicable)
+    accessor numbers!: readonly number[];
+  }
 
-  expect(
-    class {
-      @promise accessor number!: Promise<number>;
-    },
-  ).type.toRaiseError(1240, 1270);
-
-  expect(
-    class {
-      @frozenArray(coerceToDouble) accessor numbers!: readonly string[];
-    },
-  ).type.toRaiseError(1240, 1270);
-
-  expect(
-    class {
-      @frozenArray accessor numbers!: readonly number[];
-    },
-  ).type.toRaiseError(1240, 1270);
+  expect(interfaceType).type.not.toBeCallableWith();
 });

@@ -9,39 +9,22 @@ declare global {
   }
 }
 
-expect(
-  class MyElement extends HTMLElement {
-    @eventHandler({ type: "foo", attribute: "onfoo" })
-    accessor onfoo: ((this: MyElement, event: FooEvent) => any) | null = null;
-  },
-).type.not.toRaiseError();
+class MyElement extends HTMLElement {
+  @(expect(eventHandler({ type: "foo", attribute: "onfoo" })).type
+    .toBeApplicable)
+  accessor onfoo: ((this: MyElement, event: FooEvent) => any) | null = null;
+}
 
 test("not an HTMLElement", () => {
-  expect(
-    class NotAnHTMLElement {
-      @eventHandler() accessor onfoo:
-        | ((this: NotAnHTMLElement, event: FooEvent) => any)
-        | null = null;
-    },
-  ).type.toRaiseError(1240, 1270);
+  class NotAnHTMLElement {
+    @(expect(eventHandler()).type.not.toBeApplicable)
+    accessor onfoo: ((this: NotAnHTMLElement, event: FooEvent) => any) | null =
+      null;
+  }
 });
 test("event type not registered on HTMLElementEventMap", () => {
-  expect(
-    class extends HTMLElement {
-      @eventHandler({ type: "bar" })
-      accessor onfoo: ((event: FooEvent) => any) | null = null;
-    },
-  ).type.toRaiseError(
-    `Type '"bar"' is not assignable to type 'keyof HTMLElementEventMap | undefined'`,
-  );
+  expect(eventHandler).type.not.toBeCallableWith({ type: "bar" });
 });
 test("attribute name does not start with 'on'", () => {
-  expect(
-    class extends HTMLElement {
-      @eventHandler({ attribute: "foo" })
-      accessor onfoo: ((event: FooEvent) => any) | null = null;
-    },
-  ).type.toRaiseError(
-    "Type '\"foo\"' is not assignable to type '`on${string}`'.",
-  );
+  expect(eventHandler).type.not.toBeCallableWith({ attribute: "foo" });
 });

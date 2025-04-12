@@ -10,54 +10,36 @@ declare global {
   }
 }
 
-expect(
-  class MyElement extends ReactiveElement {
-    @eventHandler({ type: "foo", attribute: "onfoo" })
-    accessor onfoo: ((this: MyElement, event: FooEvent) => any) | null = null;
-  },
-).type.not.toRaiseError();
-expect(
-  class MyElement extends LitElement {
-    @eventHandler({ type: "foo", attribute: "onfoo" })
-    accessor onfoo: ((this: MyElement, event: FooEvent) => any) | null = null;
-  },
-).type.not.toRaiseError();
+class MyReactiveElement extends ReactiveElement {
+  @(expect(eventHandler({ type: "foo", attribute: "onfoo" })).type
+    .toBeApplicable)
+  accessor onfoo: ((this: MyReactiveElement, event: FooEvent) => any) | null =
+    null;
+}
+class MyLitElement extends LitElement {
+  @(expect(eventHandler({ type: "foo", attribute: "onfoo" })).type
+    .toBeApplicable)
+  accessor onfoo: ((this: MyLitElement, event: FooEvent) => any) | null = null;
+}
 
 test("not an EventTarget", () => {
-  expect(
-    class NotAnEventTarget {
-      @eventHandler() accessor onfoo:
-        | ((this: NotAnEventTarget, event: FooEvent) => any)
-        | null = null;
-    },
-  ).type.toRaiseError(1240, 1270);
+  class NotAnEventTarget {
+    @(expect(eventHandler()).type.not.toBeApplicable)
+    accessor onfoo: ((this: NotAnEventTarget, event: FooEvent) => any) | null =
+      null;
+  }
 });
 test("not a ReactiveElement", () => {
-  expect(
-    class NotAReactiveElement extends HTMLElement {
-      @eventHandler() accessor onfoo:
-        | ((this: NotAReactiveElement, event: FooEvent) => any)
-        | null = null;
-    },
-  ).type.toRaiseError(1240, 1270);
+  class NotAReactiveElement extends HTMLElement {
+    @(expect(eventHandler()).type.not.toBeApplicable)
+    accessor onfoo:
+      | ((this: NotAReactiveElement, event: FooEvent) => any)
+      | null = null;
+  }
 });
 test("event type not registered on HTMLElementEventMap", () => {
-  expect(
-    class extends ReactiveElement {
-      @eventHandler({ type: "bar" })
-      accessor onfoo: ((event: FooEvent) => any) | null = null;
-    },
-  ).type.toRaiseError(
-    `Type '"bar"' is not assignable to type 'keyof HTMLElementEventMap | undefined'`,
-  );
+  expect(eventHandler).type.not.toBeCallableWith({ type: "bar" });
 });
 test("attribute name does not start with 'on'", () => {
-  expect(
-    class extends ReactiveElement {
-      @eventHandler({ attribute: "foo" })
-      accessor onfoo: ((event: FooEvent) => any) | null = null;
-    },
-  ).type.toRaiseError(
-    "Type '\"foo\"' is not assignable to type '`on${string}`'.",
-  );
+  expect(eventHandler).type.not.toBeCallableWith({ attribute: "foo" });
 });
