@@ -1,9 +1,10 @@
 {
-  "name": "platformer",
+  "name": "@platformer/monorepo",
   "private": true,
   "type": "module",
   "workspaces": [
     "packages/*",
+    "packages/barrel/*",
     "packages/event-handler/*",
     "packages/reflect/*"
   ],
