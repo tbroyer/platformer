@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "@microsoft/fast-element": "^2.2.0",
-    "@webfeet/reflect": "^0.0.0"
+    "@webfeet/reflect": "^0.1.0"
   }
 }

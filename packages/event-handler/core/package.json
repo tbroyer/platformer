@@ -1,6 +1,6 @@
 {
   "name": "@webfeet/event-handler",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -26,6 +26,6 @@
     "test": "wtr test.js && tstyche"
   },
   "dependencies": {
-    "@webfeet/webidl": "^0.0.0"
+    "@webfeet/webidl": "^0.1.0"
   }
 }

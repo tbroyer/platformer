@@ -1,6 +1,6 @@
 {
   "name": "@webfeet/reflect-vanilla",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -25,7 +25,7 @@
     "test": "wtr test.js cached.test.js && tstyche"
   },
   "dependencies": {
-    "@webfeet/reflect": "^0.0.0",
-    "@webfeet/vanilla-core": "^0.0.0"
+    "@webfeet/reflect": "^0.1.0",
+    "@webfeet/vanilla-core": "^0.1.0"
   }
 }

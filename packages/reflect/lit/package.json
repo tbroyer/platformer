@@ -1,6 +1,6 @@
 {
   "name": "@webfeet/reflect-lit",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -23,7 +23,7 @@
     "test": "wtr test.js && tstyche"
   },
   "dependencies": {
-    "@webfeet/reflect": "^0.0.0"
+    "@webfeet/reflect": "^0.1.0"
   },
   "peerDependencies": {
     "@lit/reactive-element": "^2.0.0"

@@ -1,6 +1,6 @@
 {
   "name": "@webfeet/reflect",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -24,7 +24,7 @@
     "test": ""
   },
   "dependencies": {
-    "@webfeet/microsyntaxes": "^0.0.0",
-    "@webfeet/webidl": "^0.0.0"
+    "@webfeet/microsyntaxes": "^0.1.0",
+    "@webfeet/webidl": "^0.1.0"
   }
 }
