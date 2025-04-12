@@ -29,6 +29,6 @@
     "@lit/reactive-element": "^2.0.0"
   },
   "devDependencies": {
-    "lit": "^3.2.1"
+    "lit": "^3.3.0"
   }
 }
