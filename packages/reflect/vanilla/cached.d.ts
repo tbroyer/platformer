@@ -197,10 +197,24 @@ export interface ReflectStatefulDecorator<Value> {
   ): ClassAccessorDecoratorResult<This, Value | null>;
 }
 
+/**
+ * Implements the property to reflect a DOM attribute as a `T?`, where `T` is or extends `Element.
+ *
+ * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:element | the HTML specification}
+ *
+ * @param options Options of the reflected property, including the DOM attribute name.
+ */
 export declare function reflectElementReference<Value extends Element>(
   options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
 ): ReflectStatefulDecorator<Value>;
 
+/**
+ * Implements the property to reflect a DOM attribute as a `FrozenArray<T>?`, where `T` is or extends `Element.
+ *
+ * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:element-3 | the HTML specification}
+ *
+ * @param options Options of the reflected property, including the DOM attribute name.
+ */
 export declare function reflectElementReferences<Value extends Element>(
   options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
 ): ReflectStatefulDecorator<readonly Value[]>;

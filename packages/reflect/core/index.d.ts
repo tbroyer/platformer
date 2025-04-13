@@ -199,6 +199,11 @@ export interface StatefulReflector<T extends Element | readonly Element[]> {
   setAttribute(attribute: string, value: T | null): void;
 }
 
+/**
+ * Returns a stateful reflector for an attribute of type `T?` where `T` is or extends `Element`.
+ *
+ * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:element | the HTML specification}
+ */
 export declare const reflectElementReference: {
   (element: HTMLElement): StatefulReflector<Element>;
   <T extends Element>(
@@ -207,6 +212,11 @@ export declare const reflectElementReference: {
   ): StatefulReflector<T>;
 };
 
+/**
+ * Returns a reflector for an attribute of type `FrozenArray<T>?` where `T` is or extends `Element`.
+ *
+ * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:element-3 | the HTML specification}
+ */
 export declare const reflectElementReferences: {
   (element: HTMLElement): StatefulReflector<readonly Element[]>;
   <T extends Element>(
