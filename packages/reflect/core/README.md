@@ -4,12 +4,7 @@ Add webfeet to your APIs to help make them [~~swim like a duck~~](https://en.wik
 
 > If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.
 
-This package implements the [HTML attribute reflection rules](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes)
-
-## TODO
-
-Currently, reflection is implemented for IDL attributes of type `DOMString`, `DOMString?`, `USVString` representing an URL, `boolean`, `long`, `unsigned long`, `double`, element, and frozen array of elements are implemented,
-no `DOMTokenList` (technically impossible, but could be approximated).
+This package implements the [HTML attribute reflection rules](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes) for all types (`DOMString`, `DOMString?`, `USVString` representing an URL, `boolean`, `long`, `unsigned long`, `double`, element, and frozen array of elements) _except_ `DOMTokenList` (technically impossible, though could be approximated).
 
 ## API
 
