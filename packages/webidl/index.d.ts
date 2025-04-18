@@ -323,4 +323,37 @@ export declare function coerceToFrozenArray<R = any>(
   value: any,
 ): readonly R[];
 
+/**
+ * Implement coercion of an optional argument's value.
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#ref-for-dfn-optionality-value%E2%91%A3 | The WebIDL specification}
+ */
+export declare function coerceOptional<R>(
+  coerceValue: (value: any) => R,
+  value: any,
+): R | undefined;
+export declare function coerceOptional<R>(
+  coerceValue: (value: any) => R,
+  defaultValue: R | undefined,
+  value: any,
+): R | undefined;
+
+/**
+ * Implement coercion of a variadic argument's value.
+ *
+ * @see {@link https://webidl.spec.whatwg.org/#ref-for-dfn-convert-ecmascript-to-idl-value%E2%91%A6%E2%91%A0 | The WebIDL specification}
+ */
+export declare function coerceVariadic<R = any>(
+  coerceValue: ((value: any) => R) | undefined,
+  value: any[],
+): R[];
+
+/**
+ * Implement the "_P_ is an array index" algorithm.
+ *
+ * @returns `false` if the algorithm returns false, the _index_ when it's specified to return true
+ * @see {@link https://webidl.spec.whatwg.org/#is-an-array-index | The WebIDL specification}
+ */
+export declare function isArrayIndex(property: any): number | false;
+
 // Callback interface types, dictionary types, unions, buffer sources

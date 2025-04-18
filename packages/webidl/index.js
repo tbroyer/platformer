@@ -347,6 +347,38 @@ export function coerceToFrozenArray(coerceValue = coerceToAny, value) {
   return Object.freeze(coerceToSequence(coerceValue, value));
 }
 
+export function coerceOptional(coerceValue, defaultValue, value) {
+  return value === undefined
+    ? defaultValue === undefined
+      ? undefined
+      : coerceValue(defaultValue)
+    : coerceValue(value);
+}
+
+export function coerceVariadic(coerceValue = coerceToAny, value) {
+  return value.map((v) => coerceValue(v));
+}
+
+export function isArrayIndex(property) {
+  if (typeof property !== "string") {
+    return false;
+  }
+  const index = toNumber(property);
+  if (coerceToDOMString(index) !== property) {
+    return false;
+  }
+  if (!Number.isInteger(index)) {
+    return false;
+  }
+  if (Object.is(index, -0)) {
+    return false;
+  }
+  if (index < MIN_UNSIGNED_LONG || index > MAX_UNSIGNED_LONG) {
+    return false;
+  }
+  return index;
+}
+
 // eslint-disable-next-line no-unused-vars
 export function coerceToInt8Array(value) {
   throw new Error("unimplemented");

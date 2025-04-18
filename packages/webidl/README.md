@@ -120,6 +120,60 @@ class Foo {
 | [`Promise<T>`](https://webidl.spec.whatwg.org/#idl-promise)                  | `coerceToPromise`             | `promise`             | Another coercion function to be applied to the resolved value                                                                                                           |
 | [`FrozenArray<T>`](https://webidl.spec.whatwg.org/#idl-frozen-array)         | `coerceToFrozenArray`         | `frozenArray`         | Another coercion function to be applied to each sequence member, defaults to `coerceToAny`                                                                              |
 
+### Other related functions
+
+The package also exports a few functions related to type coercions but specific to some situations. Those don't have decorators as it wouldn't make sense.
+
+- `coerceOptional` is meant for coercing optional function arguments. It takes a coercion function as the first argument, and the argument value (which will be `undefined` it not given by the caller) as the second. It then passes `undefined` through, and coerces other values through the coercion function (note that `null` will be passed to the coerction function, so `null` and `undefined` are treated differently).
+
+  ```js
+  /**
+   * @param {string} [optString] - An optional string value
+   */
+  function myFunc(optString) {
+    optString = coerceOptional(coerceToDOMString, optString);
+    // …
+  ```
+
+  For cases where an optional argument should have a default value, that default value can be passed as a second argument in between the coerction function and the actual argument value, but the JavaScript default value notation should rather be used instead.
+
+  In other words, do not use:
+
+  ```js
+  /**
+   * @param {string} [optString=default value] - An optional string value
+   */
+  function myFunc(optString) {
+    optString = coerceOptional(coerceToDOMString, "default value", optString);
+    // …
+  ```
+
+  but instead prefer using:
+
+  ```js
+  /**
+   * @param {string} [optString=default value] - An optional string value
+   */
+  function myFunc(optString = "default value") {
+    optString = coerceOptional(coerceTODOMString, optString);
+    // …
+  ```
+
+  Technically, you can also use the _nullish coalescing_ operator, but **only** if the coercion function is guaranteed to never return `null`.
+
+- `coerceVariadic` is meant for coercing the final argument of a variadic function, also called _rest_ argument (using the JavaScript `...` _rest_ operator). It takes a coercion function as the first argment, and the _rest_ argument value (which must be a non-nullish array) as the second. It then applies the coercion function to each item of the array and returns a new array of the coerced values. It thus produces the same result as `coerceToSequence` with the same arguments, but won't actually check the type of its argument, as the JavaScript engine already ensures it is an array.
+
+  ```js
+  /**
+   * @param {...string} rest - A variadic list of string values
+   */
+  function myFunc(...rest) {
+    rest = coerceVariadic(coerceToDOMString, rest);
+    // …
+  ```
+
+- `isArrayIndex` is meant to check if a property name is an _array index_. In JavaScript, accessing array-like items by index will actually coerce the index to a string and access a property with that name. Custom array-like objects can be implemented using a `Proxy`, checking `isArrayIndex` in its various _traps_. The function returns the _array index_ as a number if the property is an array index, and `false` otherwise.
+
 ### TypeScript
 
 Most functions and decorators are _losely_ typed in that they're generic with _target_ types that can be any subtype of the actual type that can be returned from the coercion. While this makes for somewhat inaccurate typing, this greatly simplifies usage as you'd actually want a strictly-typed API to guide users, and using those coercions for strict runtime compliance:
@@ -128,8 +182,7 @@ Most functions and decorators are _losely_ typed in that they're generic with _t
 function foo(value: "one" | "two" | "three") {
   value = coerceToDOMString(value);
   // If coerceToDOMString was typed with a `string` return type,
-  // you couldn't assing the result back to `value`.
-}
+  // you couldn't assign the result back to `value`.
 ```
 
 In some cases, you might want to use stricter conversions (here `coerceToEnumeration`) but it's not always possible (e.g. a template literal string, or a _dictionary_), and it would have a small overhead for something that you possibly already handle in another way:
@@ -147,5 +200,4 @@ function foo(value: keyof typeof STRATEGIES) {
     throw new TypeError();
   }
   // …
-}
 ```
