@@ -175,7 +175,9 @@ export declare function reflectPositiveDouble(
  * Implements the steps for [reflecting content attributes in IDL attributes](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes)
  * from the HTML specification, for element references (`T?` or `FrozenArray<T>?`, where `T extends Element`).
  */
-export interface StatefulReflector<T extends Element | readonly Element[]> {
+export interface ElementReferenceReflector<
+  T extends Element | readonly Element[],
+> {
   /**
    * Computes and returns the referenced element(s).
    *
@@ -204,26 +206,26 @@ export interface StatefulReflector<T extends Element | readonly Element[]> {
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:element | the HTML specification}
  */
-export declare const reflectElementReference: {
-  (element: HTMLElement): StatefulReflector<Element>;
-  <T extends Element>(
-    element: HTMLElement,
-    type: { new (): T; prototype: T },
-  ): StatefulReflector<T>;
-};
+export declare function reflectElementReference(
+  element: HTMLElement,
+): ElementReferenceReflector<Element>;
+export declare function reflectElementReference<T extends Element>(
+  element: HTMLElement,
+  type: { new (): T; prototype: T },
+): ElementReferenceReflector<T>;
 
 /**
  * Returns a reflector for an attribute of type `FrozenArray<T>?` where `T` is or extends `Element`.
  *
  * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:element-3 | the HTML specification}
  */
-export declare const reflectElementReferences: {
-  (element: HTMLElement): StatefulReflector<readonly Element[]>;
-  <T extends Element>(
-    element: HTMLElement,
-    type: { new (): T; prototype: T },
-  ): StatefulReflector<readonly T[]>;
-};
+export declare function reflectElementReferences(
+  element: HTMLElement,
+): ElementReferenceReflector<readonly Element[]>;
+export declare function reflectElementReferences<T extends Element>(
+  element: HTMLElement,
+  type: { new (): T; prototype: T },
+): ElementReferenceReflector<readonly T[]>;
 
 export interface ReflectElementReferenceOptions<T extends Element> {
   type?: { new (): T; prototype: T };

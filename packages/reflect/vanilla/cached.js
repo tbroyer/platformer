@@ -212,40 +212,43 @@ export const reflectPositiveDouble = reflectWithOptions(
 
 /**
  * @template T
- * @typedef {import("@webfeet/reflect").StatefulReflector<T>} StatefulReflector
+ * @typedef {import("@webfeet/reflect").ElementReferenceReflector<T>} ElementReferenceReflector
  */
 /**
  * @template T
- * @typedef {import("@webfeet/reflect-vanilla/cached.js").ReflectStatefulDecorator<T>} ReflectStatefulDecorator
+ * @typedef {import("@webfeet/reflect-vanilla/cached.js").ReflectElementReferenceDecorator<T>} ReflectElementReferenceDecorator
  */
 
-const STATEFUL_REFLECTORS = Symbol();
+const ELEMENT_REFERENCE_REFLECTORS = Symbol();
 
 // XXX: typing is not accurate, but just enough to get some useful help in editor
 /**
  * @template T
- * @param {(element: HTMLElement, type?: { new(): T, prototype: T }) => StatefulReflector<T>} reflectorFactory
+ * @param {(element: HTMLElement, type?: { new(): T, prototype: T }) => ElementReferenceReflector<T>} reflectorFactory
  * @param {string} suffix
- * @returns {(options: ReflectOptions & { type?: { new(): T, prototype: T }}) => ReflectStatefulDecorator<T>}
+ * @returns {(options: ReflectOptions & { type?: { new(): T, prototype: T }}) => ReflectElementReferenceDecorator<T>}
  */
-function reflectStateful(reflectorFactory, suffix) {
+function reflectElementReferenceImpl(reflectorFactory, suffix) {
   return function ({ attribute, type } = {}) {
     return function (_, context) {
       validateContext(context);
       const { name } = context;
       attribute ??= stripSuffix(name, suffix).toLowerCase();
       context.addInitializer(function () {
-        (this[STATEFUL_REFLECTORS] ??= {})[name] = reflectorFactory(this, type);
+        (this[ELEMENT_REFERENCE_REFLECTORS] ??= {})[name] = reflectorFactory(
+          this,
+          type,
+        );
       });
       addAttribute(context.metadata, attribute, function (_, newValue) {
-        this[STATEFUL_REFLECTORS][name].fromAttribute(newValue);
+        this[ELEMENT_REFERENCE_REFLECTORS][name].fromAttribute(newValue);
       });
       return {
         get() {
-          return this[STATEFUL_REFLECTORS][name].get();
+          return this[ELEMENT_REFERENCE_REFLECTORS][name].get();
         },
         set(value) {
-          const reflector = this[STATEFUL_REFLECTORS][name];
+          const reflector = this[ELEMENT_REFERENCE_REFLECTORS][name];
           value = reflector.coerceValue(value);
           reflector.setAttribute(attribute, value);
         },
@@ -273,13 +276,13 @@ function stripSuffix(name, suffix) {
 }
 
 /** @type {import("@webfeet/reflect-vanilla/cached.js").reflectElementReference} */
-export const reflectElementReference = reflectStateful(
+export const reflectElementReference = reflectElementReferenceImpl(
   reflectElementReferenceReflectorFactory,
   "Element",
 );
 
 /** @type {import("@webfeet/reflect-vanilla/cached.js").reflectElementReferences} */
-export const reflectElementReferences = reflectStateful(
+export const reflectElementReferences = reflectElementReferenceImpl(
   reflectElementReferencesReflectorFactory,
   "Elements",
 );

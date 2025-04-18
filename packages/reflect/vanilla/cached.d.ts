@@ -190,7 +190,7 @@ export declare function reflectPositiveDouble(
   options?: ReflectOptions & ReflectNumberOptions,
 ): ReflectDecorator<number>;
 
-export interface ReflectStatefulDecorator<Value> {
+export interface ReflectElementReferenceDecorator<Value> {
   <This extends HTMLElement>(
     target: ClassAccessorDecoratorTarget<This, Value | null>,
     context: ClassAccessorDecoratorContext<This, Value | null>,
@@ -206,7 +206,7 @@ export interface ReflectStatefulDecorator<Value> {
  */
 export declare function reflectElementReference<Value extends Element>(
   options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
-): ReflectStatefulDecorator<Value>;
+): ReflectElementReferenceDecorator<Value>;
 
 /**
  * Implements the property to reflect a DOM attribute as a `FrozenArray<T>?`, where `T` is or extends `Element.
@@ -217,6 +217,6 @@ export declare function reflectElementReference<Value extends Element>(
  */
 export declare function reflectElementReferences<Value extends Element>(
   options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
-): ReflectStatefulDecorator<readonly Value[]>;
+): ReflectElementReferenceDecorator<readonly Value[]>;
 
 // TBC: tokenlist
