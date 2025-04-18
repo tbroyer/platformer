@@ -1,26 +1,26 @@
 {
   "name": "@webfeet/microsyntaxes",
   "version": "0.1.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Functions implementing the HTML common microsyntaxes",
-  "license": "BSD-3-Clause",
   "homepage": "https://github.com/tbroyer/webfeet/tree/main/packages/microsyntaxes#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tbroyer/webfeet.git",
     "directory": "packages/microsyntaxes"
   },
+  "license": "BSD-3-Clause",
   "type": "module",
-  "main": "index.js",
   "exports": {
     ".": "./index.js"
   },
+  "main": "index.js",
   "files": [
     "index.{js,d.ts}"
   ],
   "scripts": {
     "test": "tstyche"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

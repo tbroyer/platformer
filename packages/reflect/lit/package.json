@@ -1,17 +1,14 @@
 {
   "name": "@webfeet/reflect-lit",
   "version": "0.1.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Decorators implementing HTML attribute reflection rules for Lit elements",
-  "license": "BSD-3-Clause",
   "homepage": "https://github.com/tbroyer/webfeet/tree/main/packages/reflect/lit#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tbroyer/webfeet.git",
     "directory": "packages/reflect/lit"
   },
+  "license": "BSD-3-Clause",
   "type": "module",
   "exports": {
     ".": "./index.js"
@@ -25,11 +22,14 @@
   "dependencies": {
     "@webfeet/reflect": "^0.1.0"
   },
-  "peerDependencies": {
-    "@lit/reactive-element": "^2.0.0"
-  },
   "devDependencies": {
     "chai": "^5.2.0",
     "lit": "^3.3.0"
+  },
+  "peerDependencies": {
+    "@lit/reactive-element": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -2,8 +2,19 @@ import { defineConfig } from "eslint/config";
 import js from "@eslint/js";
 import globals from "globals";
 import babelParser from "@babel/eslint-parser";
+import packageJson from "eslint-plugin-package-json";
 
 export default defineConfig([
+  {
+    files: ["**/package.json"],
+    plugins: {
+      "package-json": packageJson,
+    },
+    extends: ["package-json/recommended"],
+    rules: {
+      "package-json/require-version": "off",
+    },
+  },
   {
     files: ["**/*.js"],
     plugins: {

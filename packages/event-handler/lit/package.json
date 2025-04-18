@@ -1,17 +1,14 @@
 {
   "name": "@webfeet/event-handler-lit",
   "version": "0.1.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Decorator to implement event handlers in Lit elements",
-  "license": "BSD-3-Clause",
   "homepage": "https://github.com/tbroyer/webfeet/tree/main/packages/event-handler/lit#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tbroyer/webfeet.git",
     "directory": "packages/event-handler/lit"
   },
+  "license": "BSD-3-Clause",
   "type": "module",
   "exports": {
     ".": "./index.js"
@@ -25,10 +22,13 @@
   "dependencies": {
     "@webfeet/event-handler": "^0.1.0"
   },
+  "devDependencies": {
+    "lit": "^3.3.0"
+  },
   "peerDependencies": {
     "@lit/reactive-element": "^2.0.0"
   },
-  "devDependencies": {
-    "lit": "^3.3.0"
+  "publishConfig": {
+    "access": "public"
   }
 }

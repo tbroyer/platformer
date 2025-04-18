@@ -2,10 +2,10 @@
   "name": "@webfeet/event-handler-harness",
   "private": true,
   "type": "module",
-  "main": "index.js",
   "exports": {
     ".": "./index.js"
   },
+  "main": "index.js",
   "scripts": {
     "test": ""
   },

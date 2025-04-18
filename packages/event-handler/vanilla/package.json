@@ -1,17 +1,14 @@
 {
   "name": "@webfeet/event-handler-vanilla",
   "version": "0.1.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Decorator to implement event handlers in vanilla custom elements",
-  "license": "BSD-3-Clause",
   "homepage": "https://github.com/tbroyer/webfeet/tree/main/packages/event-handler/vanilla#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tbroyer/webfeet.git",
     "directory": "packages/event-handler/vanilla"
   },
+  "license": "BSD-3-Clause",
   "type": "module",
   "exports": {
     ".": "./index.js"
@@ -25,5 +22,8 @@
   "dependencies": {
     "@webfeet/event-handler": "^0.1.0",
     "@webfeet/vanilla-core": "^0.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

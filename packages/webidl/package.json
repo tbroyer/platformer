@@ -1,28 +1,28 @@
 {
   "name": "@webfeet/webidl",
   "version": "0.1.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Functions and decorators implementing the WebIDL type coercion rules",
-  "license": "BSD-3-Clause",
   "homepage": "https://github.com/tbroyer/webfeet/tree/main/packages/webidl#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tbroyer/webfeet.git",
     "directory": "packages/webidl"
   },
+  "license": "BSD-3-Clause",
   "type": "module",
-  "main": "index.js",
   "exports": {
     ".": "./index.js",
     "./decorators.js": "./decorators.js"
   },
+  "main": "index.js",
   "files": [
     "index.{js,d.ts}",
     "decorators.{js,d.ts}"
   ],
   "scripts": {
     "test": "node --test && tstyche"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
