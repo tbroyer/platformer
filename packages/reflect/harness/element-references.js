@@ -355,14 +355,14 @@ export function reflectElementReference(elementName, typed = false) {
       assert_equals(fromDiv.getAttribute("test"), "", "Content attribute remains empty, as it is only updated at set time.");
     });
   });
-  if (!typed || typeof customElements.initialize === "function") {
+  if (!typed || customElements === document.customElementRegistry) {
     suite("Cross-document references and moves", () => {
       const [, { originalDocumentDiv } ] = setupTestContent(html`
   <${elementName} id='originalDocumentDiv'></${elementName}>
       `);
       test("Cross-document references and moves", () => {
         const newDoc = document.implementation.createHTMLDocument('new document');
-        if (typeof customElements.initialize === "function") {
+        if (customElements === document.customElementRegistry) {
           customElements.initialize(newDoc);
         }
         const newDocSpan = newDoc.createElement(targetReferenceElementName);
@@ -383,7 +383,7 @@ export function reflectElementReference(elementName, typed = false) {
       });
     });
   }
-  if (typeof customElements.initialize === "function") {
+  if (customElements === document.customElementRegistry) {
     test("Adopting element keeps references", () => {
       const otherDoc = document.implementation.createHTMLDocument('otherDoc');
       customElements.initialize(otherDoc);
