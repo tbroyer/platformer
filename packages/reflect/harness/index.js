@@ -204,18 +204,18 @@ export function runTests({
 
   if (!disableElementReferences) {
     suite("element reference", () => {
-      test("element", () => {
+      suite("element", () => {
         reflectElementReference("test-element-reference");
       });
-      test("typed element", () => {
+      suite("typed element", () => {
         reflectElementReference("test-typed-element-reference", true);
       });
     });
     suite("typed element reference", () => {
-      test("element", () => {
+      suite("element", () => {
         reflectElementReferences("test-element-references");
       });
-      test("typed element", () => {
+      suite("typed element", () => {
         reflectElementReferences("test-typed-element-references", true);
       });
     });
