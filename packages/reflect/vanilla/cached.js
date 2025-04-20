@@ -14,6 +14,7 @@ import {
   reflectPositiveDouble as reflectPositiveDoubleReflectorFactory,
   reflectElementReference as reflectElementReferenceReflectorFactory,
   reflectElementReferences as reflectElementReferencesReflectorFactory,
+  reflectDOMTokenList as reflectDOMTokenListReflectorFactory,
 } from "@webfeet/reflect";
 import { addAttribute } from "@webfeet/vanilla-core";
 
@@ -286,3 +287,60 @@ export const reflectElementReferences = reflectElementReferenceImpl(
   reflectElementReferencesReflectorFactory,
   "Elements",
 );
+
+/**
+ * @template T
+ * @typedef {import("@webfeet/reflect").DOMTokenListReflector} DOMTokenListReflector
+ */
+/**
+ * @template T
+ * @typedef {import("@webfeet/reflect-vanilla/cached.js").ReflectDOMTokenListDecorator} ReflectDOMTokenListDecorator
+ */
+
+const DOM_TOKEN_LIST_REFLECTORS = Symbol();
+
+/** @type {import("@webfeet/reflect-vanilla/cached.js").reflectDOMTokenList} */
+export function reflectDOMTokenList({ attribute, supportedTokens } = {}) {
+  return function (target, context) {
+    validateContext(context);
+    const { name } = context;
+    attribute ??= context.name.toLowerCase();
+    addAttribute(context.metadata, attribute, function (_, newValue) {
+      this[DOM_TOKEN_LIST_REFLECTORS][name].fromAttribute(newValue);
+    });
+    switch (context.kind) {
+      case "accessor":
+        return {
+          set(value) {
+            this[DOM_TOKEN_LIST_REFLECTORS][name].value = value;
+          },
+          init(value) {
+            if (value !== undefined) {
+              throw new Error(`Default value must not be set`);
+            }
+            const reflector = reflectDOMTokenListReflectorFactory(
+              this,
+              attribute,
+              supportedTokens,
+            );
+            (this[DOM_TOKEN_LIST_REFLECTORS] ??= {})[name] = reflector;
+            return reflector.value;
+          },
+        };
+      case "getter":
+        context.addInitializer(function () {
+          (this[DOM_TOKEN_LIST_REFLECTORS] ??= {})[name] =
+            reflectDOMTokenListReflectorFactory(
+              this,
+              attribute,
+              supportedTokens,
+            );
+        });
+        return function () {
+          this[DOM_TOKEN_LIST_REFLECTORS][name].value;
+        };
+      default:
+        throw new Error(`Unsupported decorator location: ${context.kind}`);
+    }
+  };
+}

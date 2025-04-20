@@ -14,6 +14,7 @@ import {
   reflectPositiveDouble as reflectPositiveDoubleReflectorFactory,
   reflectElementReference as reflectElementReferenceReflectorFactory,
   reflectElementReferences as reflectElementReferencesReflectorFactory,
+  reflectDOMTokenList as reflectDOMTokenListReflectorFactory,
 } from "@webfeet/reflect";
 
 /**
@@ -310,3 +311,83 @@ export const reflectElementReferences = reflectElementReferenceImpl(
   reflectElementReferencesReflectorFactory,
   "Elements",
 );
+
+/**
+ * @template T
+ * @typedef {import("@webfeet/reflect").DOMTokenListReflector} DOMTokenListReflector
+ */
+/**
+ * @template T
+ * @typedef {import("@webfeet/reflect-lit").ReflectDOMTokenListDecorator} ReflectDOMTokenListDecorator
+ */
+
+const DOM_TOKEN_LIST_REFLECTORS = Symbol();
+
+/** @type {import("@webfeet/reflect-lit").reflectDOMTokenList} */
+export function reflectDOMTokenList({ attribute, supportedTokens } = {}) {
+  return function (target, context) {
+    validateContext(context);
+    const { name } = context;
+    attribute ??= context.name.toLowerCase();
+
+    const privateProperty = Symbol(context.name);
+
+    let properties = globalThis.litPropertyMetadata.get(context.metadata);
+    if (properties === undefined) {
+      globalThis.litPropertyMetadata.set(
+        context.metadata,
+        (properties = new Map()),
+      );
+    }
+    properties.set(privateProperty, {
+      attribute,
+    });
+
+    switch (context.kind) {
+      case "accessor":
+        context.addInitializer(function () {
+          Object.defineProperty(this, privateProperty, {
+            set(value) {
+              this[DOM_TOKEN_LIST_REFLECTORS][name].fromAttribute(value);
+            },
+          });
+        });
+        return {
+          set(value) {
+            this[DOM_TOKEN_LIST_REFLECTORS][name].value = value;
+          },
+          init(value) {
+            if (value !== undefined) {
+              throw new Error(`Default value must not be set`);
+            }
+            const reflector = reflectDOMTokenListReflectorFactory(
+              this,
+              attribute,
+              supportedTokens,
+            );
+            (this[DOM_TOKEN_LIST_REFLECTORS] ??= {})[name] = reflector;
+            return reflector.value;
+          },
+        };
+      case "getter":
+        context.addInitializer(function () {
+          const reflector = reflectDOMTokenListReflectorFactory(
+            this,
+            attribute,
+            supportedTokens,
+          );
+          (this[DOM_TOKEN_LIST_REFLECTORS] ??= {})[name] = reflector;
+          Object.defineProperty(this, privateProperty, {
+            set(value) {
+              reflector.fromAttribute(value);
+            },
+          });
+        });
+        return function () {
+          this[DOM_TOKEN_LIST_REFLECTORS][name].value;
+        };
+      default:
+        throw new Error(`Unsupported decorator location: ${context.kind}`);
+    }
+  };
+}

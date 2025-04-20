@@ -11,10 +11,14 @@ import {
   reflectElementReference,
   reflectElementReferences,
 } from "./element-references.js";
+import { reflectDOMTokenList } from "./domtokenlist.js";
 
 export { TestReferenceTargetElement } from "./element-references.js";
 
-export function runTests({ disableElementReferences = false } = {}) {
+export function runTests({
+  disableElementReferences = false,
+  disableDOMTokenList = false,
+} = {}) {
   suite("string", () => {
     test("with Gecko harness", () => {
       reflectString({
@@ -213,6 +217,17 @@ export function runTests({ disableElementReferences = false } = {}) {
       });
       test("typed element", () => {
         reflectElementReferences("test-typed-element-references", true);
+      });
+    });
+  }
+
+  if (!disableDOMTokenList) {
+    suite("DOMTokenList", () => {
+      suite("DOMTokenList", () => {
+        reflectDOMTokenList("test-domtokenlist");
+      });
+      suite("DOMTokenList with supported tokens", () => {
+        reflectDOMTokenList("test-domtokenlist-supportedtokens", true);
       });
     });
   }

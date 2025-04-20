@@ -335,4 +335,4 @@ FASTElement.define(
   },
 );
 
-runTests({ disableElementReferences: true });
+runTests({ disableElementReferences: true, disableDOMTokenList: true });

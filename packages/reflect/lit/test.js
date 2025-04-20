@@ -5,6 +5,7 @@ import { customElement } from "lit/decorators.js";
 import {
   reflectBoolean,
   reflectClampedInt,
+  reflectDOMTokenList,
   reflectDouble,
   reflectElementReference,
   reflectElementReferences,
@@ -115,6 +116,16 @@ class TestElementReferences extends LitElement {
 class TestTypedElementReferences extends LitElement {
   @reflectElementReferences({ type: TestReferenceTargetElement })
   accessor testElements;
+}
+@customElement("test-domtokenlist")
+class TestDOMTokenList extends LitElement {
+  @reflectDOMTokenList()
+  accessor test;
+}
+@customElement("test-domtokenlist-supportedtokens")
+class TestDOMTokenListSupportedTokens extends LitElement {
+  @reflectDOMTokenList({ supportedTokens: ["one", "two", "three"] })
+  accessor test;
 }
 
 runTests();

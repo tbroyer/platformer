@@ -16,6 +16,7 @@ import {
   reflectPositiveDouble,
   reflectElementReference,
   reflectElementReferences,
+  reflectDOMTokenList,
 } from "@webfeet/reflect-vanilla/cached.js";
 
 customElements.define(
@@ -135,6 +136,20 @@ customElements.define(
   class extends BaseElement {
     @reflectElementReferences({ type: TestReferenceTargetElement })
     accessor testElements;
+  },
+);
+
+customElements.define(
+  "test-domtokenlist",
+  class extends BaseElement {
+    @reflectDOMTokenList() accessor test;
+  },
+);
+customElements.define(
+  "test-domtokenlist-supportedtokens",
+  class extends BaseElement {
+    @reflectDOMTokenList({ supportedTokens: ["one", "two", "three"] })
+    accessor test;
   },
 );
 

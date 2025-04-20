@@ -231,4 +231,67 @@ export interface ReflectElementReferenceOptions<T extends Element> {
   type?: { new (): T; prototype: T };
 }
 
-// TBC: tokenlist
+/**
+ * An emulation of the native {@link globalThis.DOMTokenList DOMTokenList}.
+ *
+ * {@inheritDoc globalThis.DOMTokenList}
+ *
+ * @see {@link https://dom.spec.whatwg.org/#interface-domtokenlist | the DOM specification}
+ */
+// Explicitly pick the implemented members, for forward compatibility
+export type DOMTokenList = Pick<
+  globalThis.DOMTokenList,
+  | "length"
+  | "toString"
+  | "item"
+  | number
+  | "contains"
+  | "add"
+  | "remove"
+  | "toggle"
+  | "replace"
+  | "supports"
+  | "value"
+  | typeof Symbol.iterator
+  | "entries"
+  | "keys"
+  | "values"
+  | "forEach"
+>;
+
+/**
+ * Implements the steps for [reflecting content attributes in IDL attributes](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:domtokenlist)
+ * from the HTML specification, for `DOMTokenList`.
+ */
+export interface DOMTokenListReflector {
+  /**
+   * The value of the reflecting property.
+   *
+   * Can be assigned a `string` value; this is equivalent to setting the {@link DOMTokenList.value} property.
+   */
+  get value(): DOMTokenList;
+  set value(value: string);
+  /**
+   * Updates the {@link DOMTokenListReflector.value DOMTokenList value} with the attribute value.
+   *
+   * @param value - The attribute value, or `null` if the attribute is absent.
+   */
+  fromAttribute(value: string | null): void;
+  /** {@inheritDoc Reflector<string>.coerceValue} */
+  coerceValue(value: any): string;
+}
+
+/**
+ * Returns a reflector for an attribute of type `DOMTokenList`.
+ *
+ * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:domtokenlist | the HTML specification}
+ */
+export declare function reflectDOMTokenList(
+  element: HTMLElement,
+  attribute: string,
+  supportedTokens?: string[],
+): DOMTokenListReflector;
+
+export interface ReflectDOMTokenListOptions {
+  supportedTokens?: string[];
+}

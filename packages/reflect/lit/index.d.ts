@@ -3,6 +3,8 @@ import type {
   ReflectNumberOptions,
   ReflectClampedIntOptions,
   ReflectElementReferenceOptions,
+  ReflectDOMTokenListOptions,
+  DOMTokenList,
 } from "@webfeet/reflect";
 import { ReactiveElement } from "@lit/reactive-element";
 
@@ -214,4 +216,41 @@ export declare function reflectElementReferences<Value extends Element>(
   options?: ReflectOptions & ReflectElementReferenceOptions<Value>,
 ): ReflectElementReferenceDecorator<readonly Value[]>;
 
-// TBC: tokenlist
+export interface ReflectDOMTokenListDecorator {
+  <This extends HTMLElement>(
+    target: (this: This) => DOMTokenList,
+    context: ClassGetterDecoratorContext<This, DOMTokenList>,
+  ): (this: This) => DOMTokenList;
+  <This extends HTMLElement>(
+    target: ClassAccessorDecoratorTarget<This, DOMTokenList>,
+    context: ClassAccessorDecoratorContext<This, DOMTokenList>,
+  ): ClassAccessorDecoratorResult<This, DOMTokenList>;
+}
+
+/**
+ * Implements the property to reflect a DOM attribute as (an emulation of) a `DOMTokenList`.
+ *
+ * ```js
+ * class MyElement extends LitElement {
+ *   @reflectDOMTokenList()
+ *   accessor prop;
+ * }
+ * ```
+ *
+ * With an `accessor`, the typings in TypeScript would be wrong though. The only way is to annotate a getter, and have an accompagnying setter taking a `string` argument and following it down to the `DOMTokenList.value`:
+ *
+ * ```ts
+ * class MyElement extends LitElement {
+ *   @reflectDOMTokenList()
+ *   get prop(): DOMTokenList { throw "will never be reached"; }
+ *   set prop(value: string) { this.prop.value = value; }
+ * }
+ * ```
+ *
+ * @see {@link https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes:domtokenlist | the HTML specification}
+ *
+ * @param options Options of the reflected property, including the DOM attribute name.
+ */
+export declare function reflectDOMTokenList(
+  options?: ReflectOptions & ReflectDOMTokenListOptions,
+): ReflectDOMTokenListDecorator;

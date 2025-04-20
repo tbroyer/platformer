@@ -109,3 +109,11 @@ If element references aren't implemented, pass `{ disableElementReferences: true
 
 The `test-typed-element-references` element's `testElements` property is of type `FrozenArray<TestReferenceTargetElement>?` (element type exported by the package) and reflects the `test` attribute.
 If element references aren't implemented, pass `{ disableElementReferences: true }` to `runTests()`.
+
+### test-domtokenlist
+
+The `test-domtokenlist` element's `test` attribute is of type `DOMTokenList` with no _supported tokens_. If `DOMTokenList` aren't implemented, pass `{ disableDOMTokenList: true }` to `runTests()`.
+
+### test-domtokenlist-supportedtokens
+
+The `test-domtokenlist-supportedtokens` element's `test` attribute is of type `DOMTokenList` with the _supported tokens_ being `one`, `two`, and `three`. If `DOMTokenList` aren't implemented, pass `{ disableDOMTokenList: true }` to `runTests()`.
