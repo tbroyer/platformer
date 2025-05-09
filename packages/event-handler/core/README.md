@@ -4,6 +4,8 @@ Add webfeet to your APIs to help make them [~~swim like a duck~~](https://en.wik
 
 > If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.
 
+[![Published on npm](https://img.shields.io/npm/v/@webfeet%2Fevent-handler?logo=npm)](https://www.npmjs.com/package/@webfeet/event-handler)
+
 This package provides helpers to implement an [event handler](https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-attributes) on a custom element.
 Event handlers are those `onxxx` attributes and properties that allow listening to a `xxx` event, like `onload` or `onclick`.
 

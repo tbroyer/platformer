@@ -1,5 +1,7 @@
 # Webfeet
 
+[![Published on npm](https://img.shields.io/badge/npm-@webfeet-blue?logo=npm)](https://www.npmjs.com/org/webfeet)
+
 This repository contains libraries to help create objects (including custom elements) that behave closer to the _web platform_ as currently spec'd; namely:
 
 - [**attribute reflection**](packages/reflect/README.md) in custom elements

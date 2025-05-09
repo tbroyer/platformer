@@ -4,6 +4,8 @@ Add webfeet to your APIs to help make them [~~swim like a duck~~](https://en.wik
 
 > If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.
 
+[![Published on npm](https://img.shields.io/npm/v/@webfeet%2Freflect-lit?logo=npm)](https://www.npmjs.com/package/@webfeet/reflect-lit)
+
 This package exports decorators encapsulating the [_@webfeet/reflect_ package](../core/README.md) to cut verbosity by at least 50%, while integrating with Lit's reactive lifecycle (changes to properties, either directly or through HTML attributes, trigger an update).
 
 Those decorators **replace** Lit's `@property()` decorators, though you can safely mix them on **different** properties inside the same element.

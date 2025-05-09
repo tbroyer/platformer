@@ -1,5 +1,11 @@
 # @webfeet/vanilla-core
 
+Add webfeet to your APIs to help make them [~~swim like a duck~~](https://en.wikipedia.org/wiki/Duck_test) behave like native.
+
+> If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.
+
+[![Published on npm](https://img.shields.io/npm/v/@webfeet%2Fvanilla-core?logo=npm)](https://www.npmjs.com/package/@webfeet/vanilla-core)
+
 This package exports a few helpers to observe custom element attributes from decorators.
 
 Decorators will declare attributes their need to observe, and users of those decorators will have to actually observe those attributes and defer handling to the decorators somehow.
